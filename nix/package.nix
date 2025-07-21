@@ -4,7 +4,7 @@
   blas64 ? false,
   ...
 }: let
-  inherit (pkgs) lib stdenv;
+  inherit (pkgs) lib stdenv testers;
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "liblapack";
