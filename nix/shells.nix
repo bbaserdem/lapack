@@ -15,7 +15,7 @@ in {
       gfortran
       cmake
       # Some ai stuff
-      claude-code
+      #claude-code
       quaestor
     ];
     # Shell hooks

@@ -17,7 +17,13 @@
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = pkg:
+          builtins.elem (pkgs.lib.getName pkg) [
+            "claude-code"
+          ];
+      };
     in {
       packages = import ./nix/packages.nix {inherit pkgs;};
       devShells = import ./nix/shells.nix {inherit pkgs inputs system;};
