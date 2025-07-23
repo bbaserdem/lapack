@@ -64,7 +64,7 @@ in
 
     # This command depends on the script at docker.nix
     ${docker} run --rm \
-      --mount type=bind,source="$TARGET_WORKTREE",target=/repo \
+      --mount type=bind,source="$TARGET_WORKTREE",target=/workspace \
       claude-flow-container-claudeSwarm:latest \
       "$LONGSTRING"
   ''
