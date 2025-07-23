@@ -25,6 +25,7 @@
           ];
       };
     in {
+      apps = import ./nix/apps.nix {inherit pkgs;};
       packages = import ./nix/packages.nix {inherit pkgs inputs system;};
       devShells = import ./nix/shells.nix {inherit pkgs inputs system;};
     });

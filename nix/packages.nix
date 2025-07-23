@@ -89,4 +89,6 @@ in {
   default = callPackage lapackDerivation {};
   # Make lapack-reference available as the direct derivation
   lapack-reference = lapackDerivation;
+  # Our docker container for running swarms
+  docker-claudeSwarm = import ./claudeSwarm/docker.nix {inherit pkgs;};
 }
