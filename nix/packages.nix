@@ -1,5 +1,9 @@
-{pkgs}: let
-  inherit (pkgs) lib stdenv testers;
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+  inherit (pkgs) lib stdenv testers callPackage;
   lapackDerivation = {
     shared ? true,
     blas64 ? false,
@@ -82,7 +86,7 @@
     });
 in {
   # Default lapack image
-  default = pkgs.callPackage lapackDerivation {};
+  default = callPackage lapackDerivation {};
   # Make lapack-reference available as the direct derivation
   lapack-reference = lapackDerivation;
 }

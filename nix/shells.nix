@@ -14,8 +14,11 @@ in {
       # Grab build tools
       gfortran
       cmake
+      # Needed for mcp's
+      nodejs
+      typescript
       # Some ai stuff
-      #claude-code
+      claude-code
       quaestor
     ];
     # Shell hooks
