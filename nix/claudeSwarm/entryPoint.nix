@@ -21,13 +21,8 @@ pkgs.writeShellApplication {
     # Also set NODE_PATH for module resolution
     export NODE_PATH="/workspace/node_modules:${node}/lib/node_modules"
 
-    # Install deps if needed (only if node_modules absent, for speed)
-    if [ ! -d node_modules ]; then
-      echo "node_modules missing, running npm install..."
-      ${npm} install
-    else
-      echo "node_modules exists, skipping npm install"
-    fi
+    # Install deps
+    ${npm} install
 
     # .env file is assumed present in /workspace already, picked up by npm packages
     if [ ! -f .env ]; then

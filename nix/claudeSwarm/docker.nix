@@ -49,6 +49,9 @@ in
         "NODE_OPTIONS=--max-old-space-size=4096"
         "CLAUDE_CONFIG_DIR=/home/node/.claude"
         "POWERLEVEL9K_DISABLE_GITSTATUS=true"
+        "NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-bundle.crt"
+        "SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt"
+        "NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt"
       ];
       Entrypoint = ["/bin/entrypoint"];
     };
