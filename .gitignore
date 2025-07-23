@@ -119,7 +119,6 @@ __pycache__/
 *.webm
 
 # Claude Flow generated files
-.claude
 .claude/settings.local.json
 .mcp.json
 claude-flow.config.json
