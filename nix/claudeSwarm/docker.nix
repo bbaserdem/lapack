@@ -12,7 +12,7 @@ in
         nodePackages_latest.nodejs
         git
         bash
-        coreutils
+        coreutils-full
         gawk
         gnugrep
         gnused

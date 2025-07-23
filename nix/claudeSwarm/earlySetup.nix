@@ -3,17 +3,17 @@
 pkgs.writeShellApplication {
   name = "earlysetup";
   runtimeInputs = with pkgs; [
-    coreutils
+    coreutils-full
     shadow
     sudo
   ];
   text = let
-    mkdir = "${pkgs.coreutils}/bin/mkdir";
+    mkdir = "${pkgs.coreutils-full}/bin/mkdir";
     groupadd = "${pkgs.shadow}/bin/groupadd";
     useradd = "${pkgs.shadow}/bin/useradd";
-    chown = "${pkgs.coreutils}/bin/chown";
-    touch = "${pkgs.coreutils}/bin/touch";
-    chmod = "${pkgs.coreutils}/bin/chmod";
+    chown = "${pkgs.coreutils-full}/bin/chown";
+    touch = "${pkgs.coreutils-full}/bin/touch";
+    chmod = "${pkgs.coreutils-full}/bin/chmod";
   in ''
     # Create node user and group
     ${groupadd} -g 1000 node

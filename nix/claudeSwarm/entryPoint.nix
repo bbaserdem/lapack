@@ -5,7 +5,6 @@ pkgs.writeShellApplication {
   runtimeInputs = with pkgs; [
     nodePackages_latest.nodejs
     git
-    coreutils
   ];
   text = let
     npm = "${pkgs.nodePackages_latest.nodejs}/lib/node_modules/npm/bin/npm-cli.js";

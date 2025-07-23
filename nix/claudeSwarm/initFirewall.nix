@@ -9,7 +9,7 @@ pkgs.writeShellApplication {
     dnsutils
     aggregate6
     iproute2
-    coreutils
+    coreutils-full
     gnugrep
     gnused
   ];
@@ -21,7 +21,7 @@ pkgs.writeShellApplication {
     dig = "${pkgs.dnsutils}/bin/dig";
     aggregate = "${pkgs.aggregate6}/bin/aggregate";
     grep = "${pkgs.gnugrep}/bin/grep";
-    cut = "${pkgs.coreutils}/bin/cut";
+    cut = "${pkgs.coreutils-full}/bin/cut";
     sed = "${pkgs.gnused}/bin/sed";
   in ''
         set -euo pipefail  # Exit on error, undefined vars, and pipeline failures
