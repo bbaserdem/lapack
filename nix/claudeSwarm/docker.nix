@@ -13,7 +13,7 @@ in
         coreutils
         gawk
         gnugrep
-        sed
+        gnused
         entrypoint
       ];
       pathsToLink = ["/bin"];
