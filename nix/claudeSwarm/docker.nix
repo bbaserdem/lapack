@@ -27,12 +27,15 @@ in
         wget
         findutils
         ripgrep
+        shadow
+        busybox
+        cacert  # CA certificates bundle for SSL verification
         # User apps
         earlySetup
         initFirewall
         entrypoint
       ];
-      pathsToLink = ["/bin" "/etc"];
+      pathsToLink = ["/bin" "/etc" "/usr"];
     };
     runAsRoot = "/bin/earlysetup";
     config = {
@@ -42,7 +45,7 @@ in
         # add any fixed env vars here, if needed
         "DEVCONTAINER=true"
         "NPM_CONFIG_PREFIX=/usr/local/share/npm-global"
-        "PATH=/usr/local/share/npm-global/bin:$PATH"
+        #"PATH=/usr/local/share/npm-global/bin:$PATH"
         "NODE_OPTIONS=--max-old-space-size=4096"
         "CLAUDE_CONFIG_DIR=/home/node/.claude"
         "POWERLEVEL9K_DISABLE_GITSTATUS=true"

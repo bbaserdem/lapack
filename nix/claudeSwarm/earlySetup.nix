@@ -6,6 +6,7 @@ pkgs.writeShellApplication {
     coreutils-full
     shadow
     sudo
+    bash
   ];
   text = let
     mkdir = "${pkgs.coreutils-full}/bin/mkdir";
@@ -14,6 +15,7 @@ pkgs.writeShellApplication {
     chown = "${pkgs.coreutils-full}/bin/chown";
     touch = "${pkgs.coreutils-full}/bin/touch";
     chmod = "${pkgs.coreutils-full}/bin/chmod";
+    ln = "${pkgs.coreutils-full}/bin/ln";
   in ''
     # Create node user and group
     ${groupadd} -g 1000 node
@@ -38,5 +40,9 @@ pkgs.writeShellApplication {
     # Set up sudo for firewall script
     echo "node ALL=(root) NOPASSWD: /bin/initfirewall" > /etc/sudoers.d/node-firewall
     ${chmod} 0440 /etc/sudoers.d/node-firewall
+
+    # Let us mimic FSH standards
+    ${mkdir} -p /usr/bin
+    ${ln} -s /bin/env /usr/bin/env
   '';
 }

@@ -7,11 +7,19 @@ pkgs.writeShellApplication {
     git
   ];
   text = let
+    node = pkgs.nodePackages_latest.nodejs;
     npm = "${pkgs.nodePackages_latest.nodejs}/lib/node_modules/npm/bin/npm-cli.js";
     npx = "${pkgs.nodePackages_latest.nodejs}/lib/node_modules/npm/bin/npx-cli.js";
+    workspaceNode = "/workspace/node_modules/.bin";
+    localNode = "/usr/local/share/npm-global/bin";
   in ''
     set -e
     cd /workspace
+
+    # Set up path to include local node_modules binaries
+    export PATH="${workspaceNode}:${localNode}:$PATH"
+    # Also set NODE_PATH for module resolution
+    export NODE_PATH="/workspace/node_modules:${node}/lib/node_modules"
 
     # Install deps if needed (only if node_modules absent, for speed)
     if [ ! -d node_modules ]; then
@@ -28,14 +36,13 @@ pkgs.writeShellApplication {
     fi
 
     # Configure claude
-    ${npx} claude --dangerously-skip-permissions
+    # ${npx} claude --dangerously-skip-permissions
 
     # Configure claude-flow
     ${npx} claude-flow@alpha init --force
 
     # Run the requested command; pass through all arguments
     # ${npx} claude-flow@alpha hive-mind spawn "$@" --agents 8 --claude
-
     # Just do testing for now
     echo "Command to run: np-x claude-flow@alpha hive-mind spawn <PROMPT> --agents 8 --claude"
     echo "All args: $*"
