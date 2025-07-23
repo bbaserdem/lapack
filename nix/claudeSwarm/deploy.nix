@@ -28,7 +28,7 @@ in
     current_branch=""
 
     WORKTREES_DIR="$REPO_BASE/worktrees"
-    TARGET_WORKTREE="$WORKTREES_DIR/$BRANCH"
+    TARGET_WORKTREE="$WORKTREES_DIR/$TARGET_BRANCH"
 
     while IFS= read -r line; do
       case "$line" in
@@ -58,13 +58,13 @@ in
       exit 3
     fi
 
-    if [[ ! -f "$TARGET_WORKTREE/.env" ]]; then
-      echo "Warning: .env does not exist in $TARGET_WORKTREE"
+    if [[ ! -f "$TARGET_WORKTREE_DIR/.env" ]]; then
+      echo "Warning: .env does not exist in $TARGET_WORKTREE_DIR"
     fi
 
     # This command depends on the script at docker.nix
     ${docker} run --rm \
-      --mount type=bind,source="$TARGET_WORKTREE",target=/workspace \
+      --mount type=bind,source="$TARGET_WORKTREE_DIR",target=/workspace \
       claude-flow-container-claudeSwarm:latest \
       "$LONGSTRING"
   ''
