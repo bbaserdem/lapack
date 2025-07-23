@@ -9,7 +9,7 @@ in
     copyToRoot = pkgs.buildEnv {
       name = "image-root";
       paths = with pkgs; [
-        nodejs-slim_24
+        nodePackages_latest.nodejs
         git
         bash
         coreutils

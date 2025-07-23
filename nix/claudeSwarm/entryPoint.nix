@@ -3,13 +3,13 @@
 pkgs.writeShellApplication {
   name = "entrypoint";
   runtimeInputs = with pkgs; [
-    nodejs-slim_24
+    nodePackages_latest.nodejs
     git
     coreutils
   ];
   text = let
-    npm = "${pkgs.nodejs-slim_24}/lib/node_modules/npm/bin/npm-cli.js";
-    npx = "${pkgs.nodejs-slim_24}/lib/node_modules/npm/bin/npx-cli.js";
+    npm = "${pkgs.nodePackages_latest.nodejs}/lib/node_modules/npm/bin/npm-cli.js";
+    npx = "${pkgs.nodePackages_latest.nodejs}/lib/node_modules/npm/bin/npx-cli.js";
   in ''
     set -e
     cd /workspace
