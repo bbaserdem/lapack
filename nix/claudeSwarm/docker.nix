@@ -4,7 +4,7 @@
   earlySetup = import ./earlySetup.nix {inherit pkgs;};
 in
   pkgs.dockerTools.buildImage {
-    name = "claude-flow-container-claudeSwarm";
+    name = "aicontainer-claudeswarm";
     tag = "latest";
     copyToRoot = pkgs.buildEnv {
       name = "image-root";
