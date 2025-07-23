@@ -32,7 +32,7 @@ in
       ];
       pathsToLink = ["/bin" "/etc"];
     };
-    runAsRoot = ["/bin/earlysetup"];
+    runAsRoot = "/bin/earlysetup";
     config = {
       User = "node";
       WorkingDir = "/workspace";
