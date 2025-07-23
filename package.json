@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "claude-flow": "^2.0.0-alpha.72"
+    "claude-flow": "^2.0.0-alpha.72",
+    "task-master-ai": "^0.21.0"
   }
 }

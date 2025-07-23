@@ -121,7 +121,6 @@ __pycache__/
 
 # Claude Flow generated files
 .claude/settings.local.json
-.mcp.json
 claude-flow.config.json
 .swarm/
 .hive-mind/
@@ -143,3 +142,22 @@ claude-flow
 claude-flow.bat
 claude-flow.ps1
 hive-mind-prompt-*.txt
+
+*.log
+# Dependency directories
+# Environment variables
+.env
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+.DS_Store
+
+# Task files
+tasks.json
+tasks/ 
