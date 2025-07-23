@@ -25,6 +25,8 @@ in
         gnupg
         jq
         wget
+        findutils
+        ripgrep
         # User apps
         earlySetup
         initFirewall
