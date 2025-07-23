@@ -20,6 +20,8 @@ in {
       # Some ai stuff
       claude-code
       quaestor
+      # Probe docker if needed
+      podman
     ];
     # Shell hooks
     shellHook = ''
