@@ -1,19 +1,19 @@
-# Basic deploy-swarm script
+# Basic deploy-flow script
 {pkgs, ...}: let
   docker = "${pkgs.podman}/bin/podman";
   git = "${pkgs.git}/bin/git";
 in
-  pkgs.writeShellScript "deploy-claudeSwarm.sh" ''
+  pkgs.writeShellScript "deploy-claudeFlow.sh" ''
     set -euo pipefail
 
-    # Usage: deploy-swarm <worktree-branch-name> "<long-string>"
-    if [[ $# -ne 2 ]]; then
-      echo "Usage: $0 <worktree-branch-name> \"<long-string>\""
+    # Usage: deploy-claudeFlow.sh <worktree-branch-name> [args...]
+    if [[ $# -lt 1 ]]; then
+      echo "Usage: $0 <worktree-branch-name> [args...]"
       exit 1
     fi
 
     TARGET_BRANCH="$1"
-    LONGSTRING="$2"
+    shift  # Remove first argument from $@
 
     # Find repo base
     REPO_BASE=$(${git} rev-parse --show-toplevel 2>/dev/null || true)
@@ -26,9 +26,6 @@ in
     TARGET_WORKTREE_DIR=""
     current_path=""
     current_branch=""
-
-    WORKTREES_DIR="$REPO_BASE/worktrees"
-    TARGET_WORKTREE="$WORKTREES_DIR/$TARGET_BRANCH"
 
     while IFS= read -r line; do
       case "$line" in
@@ -63,8 +60,8 @@ in
     fi
 
     # This command depends on the script at docker.nix
-    ${docker} run --rm \
+    ${docker} run --rm --userns=keep-id \
       --mount type=bind,source="$TARGET_WORKTREE_DIR",target=/workspace \
-      aicontainer-claudeswarm:latest \
-      "$LONGSTRING"
+      aicontainer-claudeflow:latest \
+      "$@"
   ''

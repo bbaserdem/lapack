@@ -37,9 +37,6 @@ pkgs.writeShellApplication {
     ${npx} claude-flow@alpha init --force
 
     # Run the requested command; pass through all arguments
-    # ${npx} claude-flow@alpha hive-mind spawn "$@" --agents 8 --claude
-    # Just do testing for now
-    echo "Command to run: np-x claude-flow@alpha hive-mind spawn <PROMPT> --agents 8 --claude"
-    echo "All args: $*"
+    ${npx} claude-flow@alpha "$@"
   '';
 }

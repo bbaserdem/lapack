@@ -1,9 +1,9 @@
 # Scripts for different types of swarms
 {pkgs, ...}: let
-  claudeSwarmDeploy = import ./claudeSwarm/deploy.nix {inherit pkgs;};
+  claudeFlowDeploy = import ./claudeFlow/deploy.nix {inherit pkgs;};
 in {
-  deploy-claudeSwarm = {
+  deploy-claudeFlow = {
     type = "app";
-    program = "${claudeSwarmDeploy}";
+    program = "${claudeFlowDeploy}";
   };
 }
