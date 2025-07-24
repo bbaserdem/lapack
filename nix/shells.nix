@@ -6,7 +6,7 @@
   ...
 }: let
   quaestor = inputs.quaestor.packages.${system}.default;
-in {
+in rec {
   # Main dev shell
   default = pkgs.mkShell {
     packages = with pkgs; [
@@ -29,4 +29,15 @@ in {
       export PATH="./node_modules/.bin:$PATH"
     '';
   };
+
+  # Organize dev shell; generate code reports as well
+  organize = default.overrideAttrs (old: {
+    packages =
+      old.packages
+      ++ (with pkgs; [
+        haskellPackages.fortran-src
+        uv # For neo4j and fortdepend
+        fortran-fpm # For fpm-modules
+      ]);
+  });
 }
