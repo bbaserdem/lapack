@@ -91,6 +91,11 @@ in {
   lapack-reference = lapackDerivation;
   # Our docker container for running swarms
   docker-claudeFlow = import ./claudeFlow/docker.nix {inherit pkgs;};
-  # Fortran package manager dependency tool
-  fpm-deps = callPackage ./fpm-deps.nix {};
+  
+  # Fortran package manager tools and builders
+  fpm-deps-tool = callPackage ./fpm-deps/fpm-deps-tool.nix {};
+  fpm-builder = callPackage ./fpm-deps/builder.nix {};
+  
+  # Example FPM package (commented out until needed)
+  # fortran-stdlib = callPackage ./fpm-deps/example-package.nix {};
 }
