@@ -64,6 +64,6 @@ in {
   organize = pkgs.mkShell {
     packages = defaultPackages ++ organizePackages ++ uvShellSet.packages;
     env = defaultEnv // organizeEnv // uvShellSet.env;
-    shellHook = defaultHooks + "\n" organizeHooks + "\n" + uvShellSet.shellHook;
+    shellHook = defaultHooks + "\n" + organizeHooks + "\n" + uvShellSet.shellHook;
   };
 }
