@@ -1,25 +1,26 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "lapack-util"
 version = "0.1.0"
-description = "Python utilities for analyzing LAPACK/BLAS source code and generating graph databases"
-readme = "README.md"
-authors = [
-    { name = "bbaserdem", email = "baserdemb@gmail.com" }
-]
-requires-python = ">=3.12"
+description = "LAPACK computational graph analysis utilities"
+authors = [{name = "LAPACK Analysis Team"}]
+requires-python = ">=3.8"
 dependencies = [
-    "neo4j>=5.0.0",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
+    "neo4j>=5.0",
 ]
 
 [project.scripts]
-lapack-to-neo4j = "lapack_util:main"
+lapack-util = "lapack_util.__main__:main"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
