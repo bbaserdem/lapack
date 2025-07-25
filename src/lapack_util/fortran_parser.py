@@ -39,11 +39,25 @@ class Routine:
 
 
 @dataclass
+class ParseError:
+    """Structured error information"""
+    type: str  # 'syntax_error', 'file_not_found', 'encoding_error', etc.
+    severity: str = 'error'  # 'error', 'warning', 'info'
+    message: str = ''
+    line_number: Optional[int] = None
+    column_number: Optional[int] = None
+    context: Optional[str] = None
+    timestamp: Optional[int] = None
+    parser_version: str = 'fortran-src'
+
+
+@dataclass
 class ParseResult:
     """Result of parsing a Fortran file"""
     file_path: str
     routines: List[Routine]
     error: Optional[str] = None
+    structured_errors: List[ParseError] = field(default_factory=list)
 
 
 class FortranParser:
@@ -91,10 +105,33 @@ class FortranParser:
             
         except subprocess.CalledProcessError as e:
             logger.error(f"Failed to parse {file_path}: {e.stderr}")
+            
+            # Try to extract error details from stderr
+            import time
+            error_msg = e.stderr if e.stderr else str(e)
+            
+            # Try to parse fortran-src error output for line numbers
+            line_number = None
+            if 'line' in error_msg.lower():
+                import re
+                line_match = re.search(r'line\s+(\d+)', error_msg, re.IGNORECASE)
+                if line_match:
+                    line_number = int(line_match.group(1))
+            
+            structured_error = ParseError(
+                type='syntax_error' if 'syntax' in error_msg.lower() else 'parse_error',
+                severity='error',
+                message=error_msg,
+                line_number=line_number,
+                timestamp=int(time.time()),
+                parser_version='fortran-src'
+            )
+            
             return ParseResult(
                 file_path=str(file_path),
                 routines=[],
-                error=str(e)
+                error=str(e),
+                structured_errors=[structured_error]
             )
     
     def _extract_routines(self, ast_output: str, reprint_output: str, 
