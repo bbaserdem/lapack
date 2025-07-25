@@ -17,7 +17,12 @@ import json
 import sys
 
 from .fortran_parser import FortranParser, ParseResult
-from .graph_schema import GraphSchema, create_schema_from_routines, SCHEMA_DOCUMENTATION
+from .graph_schema import (
+    GraphSchema, 
+    create_schema_from_routines, 
+    create_schema_from_routines_with_errors,
+    SCHEMA_DOCUMENTATION
+)
 
 
 # Configure logging
@@ -37,12 +42,17 @@ class LAPACKGraphBuilder:
         self.results: List[ParseResult] = []
         self.schema: Optional[GraphSchema] = None
     
-    def parse_sources(self, directories: Optional[List[str]] = None) -> Dict[str, List]:
-        """Parse all Fortran source files in specified directories"""
+    def parse_sources(self, directories: Optional[List[str]] = None) -> tuple[Dict[str, List], Dict[str, List]]:
+        """Parse all Fortran source files in specified directories
+        
+        Returns:
+            Tuple of (routines_by_file, errors_by_file)
+        """
         if directories is None:
             directories = ["BLAS/SRC", "SRC"]
         
         routines_by_file = {}
+        errors_by_file = {}
         total_files = 0
         failed_files = 0
         
@@ -60,6 +70,34 @@ class LAPACKGraphBuilder:
                 if result.error:
                     failed_files += 1
                     logger.error(f"Failed to parse {result.file_path}: {result.error}")
+                    
+                    # Store structured errors if available
+                    if result.structured_errors:
+                        errors_by_file[result.file_path] = [
+                            {
+                                'type': err.type,
+                                'severity': err.severity,
+                                'message': err.message,
+                                'line_number': err.line_number,
+                                'column_number': err.column_number,
+                                'context': err.context,
+                                'timestamp': err.timestamp,
+                                'parser_version': err.parser_version
+                            }
+                            for err in result.structured_errors
+                        ]
+                    else:
+                        # Create a basic error entry if no structured errors
+                        errors_by_file[result.file_path] = [{
+                            'type': 'parse_error',
+                            'severity': 'error',
+                            'message': result.error,
+                            'parser_version': 'fortran-src'
+                        }]
+                        
+                    # Still include routines if any were partially parsed
+                    if result.routines:
+                        routines_by_file[result.file_path] = result.routines
                 else:
                     if result.routines:
                         routines_by_file[result.file_path] = result.routines
@@ -69,14 +107,20 @@ class LAPACKGraphBuilder:
         
         logger.info(f"Parsed {total_files} files, {failed_files} failed")
         logger.info(f"Found {sum(len(r) for r in routines_by_file.values())} total routines")
+        logger.info(f"Tracked {len(errors_by_file)} files with errors")
         
-        return routines_by_file
+        return routines_by_file, errors_by_file
     
-    def build_graph_schema(self, routines_by_file: Dict[str, List]) -> GraphSchema:
+    def build_graph_schema(self, routines_by_file: Dict[str, List], 
+                          errors_by_file: Optional[Dict[str, List]] = None,
+                          include_errors: bool = True) -> GraphSchema:
         """Build the graph schema from parsed routines"""
         logger.info("Building graph schema...")
         
-        self.schema = create_schema_from_routines(routines_by_file)
+        if include_errors and errors_by_file:
+            self.schema = create_schema_from_routines_with_errors(routines_by_file, errors_by_file)
+        else:
+            self.schema = create_schema_from_routines(routines_by_file)
         
         logger.info(f"Created {len(self.schema.nodes)} nodes and "
                    f"{len(self.schema.relationships)} relationships")

@@ -21,6 +21,7 @@ class NodeType(Enum):
     LIBRARY = "Library"
     OPERATION = "Operation"
     PRECISION = "Precision"
+    PARSE_ERROR = "ParseError"  # New node type for errors
 
 
 class RelationType(Enum):
@@ -32,6 +33,8 @@ class RelationType(Enum):
     IMPLEMENTS = "IMPLEMENTS"
     HAS_PRECISION = "HAS_PRECISION"
     NEXT_VERSION = "NEXT_VERSION"  # For precision variants
+    HAS_ERROR = "HAS_ERROR"  # File has parsing error
+    PARTIAL_PARSE = "PARTIAL_PARSE"  # File was partially parsed despite errors
 
 
 @dataclass
@@ -52,6 +55,8 @@ class GraphNode:
                 self.node_id = f"operation:{self.properties.get('name', '')}"
             elif self.node_type == NodeType.PRECISION:
                 self.node_id = f"precision:{self.properties.get('symbol', '')}"
+            elif self.node_type == NodeType.PARSE_ERROR:
+                self.node_id = f"error:{self.properties.get('id', '')}"
 
 
 @dataclass
@@ -91,9 +96,14 @@ class GraphSchema:
             "CREATE CONSTRAINT IF NOT EXISTS FOR (f:File) REQUIRE f.path IS UNIQUE;",
             "CREATE CONSTRAINT IF NOT EXISTS FOR (o:Operation) REQUIRE o.name IS UNIQUE;",
             "CREATE CONSTRAINT IF NOT EXISTS FOR (p:Precision) REQUIRE p.symbol IS UNIQUE;",
+            "CREATE CONSTRAINT IF NOT EXISTS FOR (e:ParseError) REQUIRE e.id IS UNIQUE;",
             "CREATE INDEX IF NOT EXISTS FOR (r:Routine) ON (r.precision);",
             "CREATE INDEX IF NOT EXISTS FOR (r:Routine) ON (r.operation);",
-            "CREATE INDEX IF NOT EXISTS FOR (f:File) ON (f.library);"
+            "CREATE INDEX IF NOT EXISTS FOR (f:File) ON (f.library);",
+            "CREATE INDEX IF NOT EXISTS FOR (f:File) ON (f.has_errors);",
+            "CREATE INDEX IF NOT EXISTS FOR (e:ParseError) ON (e.severity);",
+            "CREATE INDEX IF NOT EXISTS FOR (e:ParseError) ON (e.error_type);",
+            "CREATE INDEX IF NOT EXISTS FOR (e:ParseError) ON (e.timestamp);"
         ])
         
         # Create nodes
@@ -190,6 +200,171 @@ class GraphSchema:
                         }
                         row.update(rel.properties)
                         writer.writerow(row)
+
+
+def create_schema_from_routines_with_errors(routines_by_file: Dict[str, List], 
+                                           errors_by_file: Dict[str, List] = None) -> GraphSchema:
+    """Create a graph schema from parsed routine data including error tracking"""
+    schema = GraphSchema()
+    
+    # Track unique operations and precisions
+    operations = set()
+    precisions = set()
+    
+    for file_path, routines in routines_by_file.items():
+        # Create file node
+        path = Path(file_path)
+        library = "UNKNOWN"
+        
+        # Determine library from path
+        if "BLAS" in str(path):
+            library = "BLAS"
+        elif "LAPACK" in str(path) or "SRC" in str(path):
+            library = "LAPACK"
+        
+        # Check if this file has errors
+        has_errors = errors_by_file and file_path in errors_by_file
+        
+        file_node = GraphNode(
+            node_type=NodeType.FILE,
+            properties={
+                "path": str(path),
+                "name": path.name,
+                "library": library,
+                "directory": str(path.parent),
+                "has_errors": has_errors,
+                "parse_status": "partial" if has_errors else "complete"
+            }
+        )
+        schema.add_node(file_node)
+        
+        # Create error nodes if any
+        if errors_by_file and file_path in errors_by_file:
+            for idx, error in enumerate(errors_by_file[file_path]):
+                import hashlib
+                import time
+                
+                # Generate unique error ID
+                error_hash = hashlib.md5(f"{file_path}_{idx}_{error.get('message', '')}".encode()).hexdigest()[:8]
+                error_id = f"{int(time.time())}_{error_hash}"
+                
+                error_node = GraphNode(
+                    node_type=NodeType.PARSE_ERROR,
+                    properties={
+                        "id": error_id,
+                        "error_type": error.get('type', 'unknown_error'),
+                        "severity": error.get('severity', 'error'),
+                        "message": error.get('message', ''),
+                        "line_number": error.get('line_number'),
+                        "column_number": error.get('column_number'),
+                        "context": error.get('context', ''),
+                        "timestamp": error.get('timestamp', int(time.time())),
+                        "parser_version": error.get('parser_version', 'unknown')
+                    }
+                )
+                schema.add_node(error_node)
+                
+                # Create HAS_ERROR relationship
+                schema.add_relationship(GraphRelationship(
+                    rel_type=RelationType.HAS_ERROR,
+                    from_node_id=file_node.node_id,
+                    to_node_id=error_node.node_id,
+                    properties={"position": idx + 1}
+                ))
+        
+        # Create routine nodes and relationships
+        for routine in routines:
+            # Create routine node
+            routine_node = GraphNode(
+                node_type=NodeType.ROUTINE,
+                properties={
+                    "name": routine.name,
+                    "type": routine.routine_type,
+                    "precision": routine.precision or "unknown",
+                    "operation": routine.operation or routine.name,
+                    "line_start": routine.line_start,
+                    "line_end": routine.line_end
+                }
+            )
+            schema.add_node(routine_node)
+            
+            # Create relationship based on parse status
+            if has_errors:
+                # Use PARTIAL_PARSE for files with errors
+                schema.add_relationship(GraphRelationship(
+                    rel_type=RelationType.PARTIAL_PARSE,
+                    from_node_id=file_node.node_id,
+                    to_node_id=routine_node.node_id,
+                    properties={
+                        "confidence": 0.8,  # Could be calculated based on error severity
+                        "warnings": ["File had parsing errors, routine may be incomplete"]
+                    }
+                ))
+            else:
+                # Use standard DEFINED_IN for clean parses
+                schema.add_relationship(GraphRelationship(
+                    rel_type=RelationType.DEFINED_IN,
+                    from_node_id=routine_node.node_id,
+                    to_node_id=file_node.node_id
+                ))
+            
+            # Track operations and precisions
+            if routine.operation:
+                operations.add(routine.operation)
+            if routine.precision:
+                precisions.add(routine.precision)
+            
+            # Create CALLS relationships
+            for called in routine.calls:
+                called_id = f"routine:{called}"
+                schema.add_relationship(GraphRelationship(
+                    rel_type=RelationType.CALLS,
+                    from_node_id=routine_node.node_id,
+                    to_node_id=called_id,
+                    properties={"direct": True}
+                ))
+    
+    # Create operation nodes
+    for op in operations:
+        op_node = GraphNode(
+            node_type=NodeType.OPERATION,
+            properties={"name": op}
+        )
+        schema.add_node(op_node)
+        
+        # Link routines to operations
+        for node in schema.nodes:
+            if (node.node_type == NodeType.ROUTINE and 
+                node.properties.get("operation") == op):
+                schema.add_relationship(GraphRelationship(
+                    rel_type=RelationType.IMPLEMENTS,
+                    from_node_id=node.node_id,
+                    to_node_id=op_node.node_id
+                ))
+    
+    # Create precision nodes
+    precision_map = {'s': 'single', 'd': 'double', 'c': 'complex', 'z': 'double complex'}
+    for prec in precisions:
+        prec_node = GraphNode(
+            node_type=NodeType.PRECISION,
+            properties={
+                "symbol": prec,
+                "name": precision_map.get(prec, prec)
+            }
+        )
+        schema.add_node(prec_node)
+        
+        # Link routines to precisions
+        for node in schema.nodes:
+            if (node.node_type == NodeType.ROUTINE and 
+                node.properties.get("precision") == prec):
+                schema.add_relationship(GraphRelationship(
+                    rel_type=RelationType.HAS_PRECISION,
+                    from_node_id=node.node_id,
+                    to_node_id=prec_node.node_id
+                ))
+    
+    return schema
 
 
 def create_schema_from_routines(routines_by_file: Dict[str, List]) -> GraphSchema:
