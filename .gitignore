@@ -171,3 +171,4 @@ hive-mind-prompt-*.txt
 # Task files
 # tasks.json
 # tasks/ 
+neo4j-data/
