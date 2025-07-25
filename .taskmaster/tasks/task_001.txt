@@ -1,0 +1,28 @@
+# Task ID: 1
+# Title: Setup Development Environment
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Set up the development environment by adding pytest and other development dependencies to pyproject.toml, configuring uv, and ensuring all dependencies are properly installed.
+# Details:
+1. Add pytest, neo4j Python driver, and any other necessary development tools to the `pyproject.toml` file.
+2. Configure `uv` to manage the project's virtual environment and dependencies.
+3. Use `uv pip install -e .[dev]` to install the project and its development dependencies.
+4. Verify the installation by running `pytest --version` and ensuring that pytest is correctly installed and configured.
+
+# Test Strategy:
+Run `pytest --version` to confirm pytest is installed. Check the `pyproject.toml` file to ensure all dependencies are listed. Manually inspect the virtual environment to verify the presence of installed packages.
+
+# Subtasks:
+## 1. Add pytest and pytest-cov to pyproject.toml [pending]
+### Dependencies: None
+### Description: Add pytest>=7.0.0 and pytest-cov>=4.0.0 to the dev dependencies in pyproject.toml
+### Details:
+
+
+## 2. Install dependencies with uv [pending]
+### Dependencies: None
+### Description: Run uv sync or uv pip install to install the development dependencies
+### Details:
+
+

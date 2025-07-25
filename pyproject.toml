@@ -1,13 +1,24 @@
 [project]
 name = "lapack-util"
 version = "0.1.0"
-description = "Add your description here"
+description = "Python utilities for analyzing LAPACK/BLAS source code and generating graph databases"
 readme = "README.md"
 authors = [
     { name = "bbaserdem", email = "baserdemb@gmail.com" }
 ]
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.12"
+dependencies = [
+    "neo4j>=5.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+lapack-to-neo4j = "lapack_util:main"
 
 [build-system]
 requires = ["hatchling"]

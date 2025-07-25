@@ -1,0 +1,51 @@
+# Task ID: 4
+# Title: Implement and Test Export Formats
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Implement and test the export functionality for JSON, CSV, and Cypher formats. Ensure all formats preserve data integrity and are suitable for visualization tools and Neo4j import.
+# Details:
+1. Implement JSON export for visualization tools.
+2. Implement CSV export for neo4j-admin bulk import.
+3. Implement Cypher statement generation for direct Neo4j import.
+4. Ensure all formats preserve data integrity by correctly mapping AST data to the export formats.
+```python
+class Exporter:
+    def __init__(self, graph):
+        self.graph = graph
+
+    def to_json(self, filepath):
+        # Export graph to JSON format
+        pass
+
+    def to_csv(self, filepath):
+        # Export graph to CSV format
+        pass
+
+    def to_cypher(self, filepath):
+        # Generate Cypher statements for graph import
+        pass
+```
+
+# Test Strategy:
+Create unit tests for each export format. Verify that the exported data matches the expected format and content. Test JSON export with visualization tools. Test CSV export with neo4j-admin. Validate Cypher statements by importing them into a Neo4j database. Compare the original data with the imported data to ensure integrity.
+
+# Subtasks:
+## 1. Test JSON export functionality [pending]
+### Dependencies: None
+### Description: Verify that graph schema exports correctly to JSON format for visualization
+### Details:
+
+
+## 2. Test CSV export for neo4j-admin [pending]
+### Dependencies: None
+### Description: Verify CSV export creates proper files for bulk import into Neo4j
+### Details:
+
+
+## 3. Test Cypher statement generation [pending]
+### Dependencies: None
+### Description: Verify that Cypher CREATE statements are generated correctly for direct Neo4j import
+### Details:
+
+

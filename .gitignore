@@ -169,5 +169,5 @@ hive-mind-prompt-*.txt
 .DS_Store
 
 # Task files
-tasks.json
-tasks/ 
+# tasks.json
+# tasks/ 

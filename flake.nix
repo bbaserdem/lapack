@@ -35,12 +35,11 @@
   } @ inputs: let
     outputs = self;
     projectName = "lapack-util";
-    projectDir = "lapack_util";
   in
     flake-utils.lib.eachDefaultSystem (system: let
       # Grab UV stuff
       uvBoilerplate = import nix/uv.nix {
-        inherit inputs system projectName projectDir;
+        inherit inputs system projectName;
       };
       pkgs = import nixpkgs {
         inherit system;
@@ -51,7 +50,7 @@
       };
     in {
       checks = import ./nix/checks.nix {
-        inherit uvBoilerplate projectName projectDir;
+        inherit uvBoilerplate projectName;
       };
       apps = import ./nix/apps.nix {
         inherit outputs pkgs uvBoilerplate projectName;
