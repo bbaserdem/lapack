@@ -1,0 +1,28 @@
+# Task ID: 5
+# Title: Perform Integration Testing
+# Status: pending
+# Dependencies: 2, 4
+# Priority: high
+# Description: Perform integration testing by parsing multiple related LAPACK files, building complete dependency graphs, and testing with different routine types. Verify cross-file dependency resolution.
+# Details:
+1. Parse multiple related LAPACK files using the `FortranParser`.
+2. Build complete dependency graphs from the parsed files.
+3. Test with different routine types (BLAS Level 1, 2, 3, LAPACK solvers).
+4. Verify cross-file dependency resolution by ensuring that dependencies between files are correctly identified and represented in the graph.
+
+# Test Strategy:
+Create integration tests that parse multiple LAPACK files and build dependency graphs. Verify that all dependencies are correctly resolved, including cross-file dependencies. Test with different routine types to ensure comprehensive coverage. Use a Neo4j database to visualize and validate the generated graphs.
+
+# Subtasks:
+## 1. Create integration test for multiple files [pending]
+### Dependencies: None
+### Description: Test parsing multiple related LAPACK files and building complete dependency graphs
+### Details:
+
+
+## 2. Test cross-file dependency resolution [pending]
+### Dependencies: None
+### Description: Verify that calls between routines in different files are properly tracked
+### Details:
+
+

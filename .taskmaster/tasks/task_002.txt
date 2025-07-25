@@ -1,0 +1,56 @@
+# Task ID: 2
+# Title: Implement and Test Fortran Parser
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Implement and test the FortranParser class to parse LAPACK/BLAS source files, extract ASTs, detect routines, and extract call graphs. Handle LAPACK naming conventions and error cases.
+# Details:
+1. Create a `FortranParser` class that uses the `fortran-src` Haskell tool to parse Fortran source code.
+2. Implement methods to extract the AST from the parsed code.
+3. Implement routine detection and call graph extraction logic.
+4. Add support for parsing LAPACK naming conventions (S/D/C/Z prefixes).
+5. Implement error handling for malformed Fortran files.
+```python
+class FortranParser:
+    def __init__(self, filepath):
+        self.filepath = filepath
+
+    def parse(self):
+        # Use fortran-src to parse the file
+        pass
+
+    def extract_ast(self):
+        # Extract AST from the parsed code
+        pass
+
+    def detect_routines(self):
+        # Detect routines in the code
+        pass
+
+    def extract_call_graph(self):
+        # Extract call graph from the code
+        pass
+```
+
+# Test Strategy:
+Create a suite of unit tests using pytest. Test with various LAPACK/BLAS source files, including those with different prefixes and malformed syntax. Verify that the AST is correctly extracted, routines are detected, and call graphs are accurately generated. Check error handling by providing intentionally malformed files.
+
+# Subtasks:
+## 1. Run existing Fortran parser tests [pending]
+### Dependencies: None
+### Description: Execute tests/test_fortran_parser.py to verify current parser functionality
+### Details:
+
+
+## 2. Test parser with real LAPACK/BLAS files [pending]
+### Dependencies: None
+### Description: Run the parser on actual LAPACK source files (e.g., BLAS/SRC/dgemm.f) and verify AST extraction
+### Details:
+
+
+## 3. Verify LAPACK naming convention parsing [pending]
+### Dependencies: None
+### Description: Test that S/D/C/Z prefixes are correctly parsed and precision/operation extraction works
+### Details:
+
+

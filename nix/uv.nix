@@ -4,11 +4,13 @@
   inputs,
   system,
   projectName,
-  projectDir,
   ...
 }: rec {
   # Explicitly name our inputs that we'll use
   inherit (inputs) nixpkgs uv2nix pyproject-nix pyproject-build-systems;
+
+  # Tranlate to dirname
+  projectDir = builtins.replaceStrings ["-"] ["_"] projectName;
 
   # Pull lib into scope
   inherit (nixpkgs) lib;

@@ -12,6 +12,18 @@
   # Input packages
   quaestor = inputs.quaestor.packages.${system}.default;
 
+  # Shell aliases
+  # Function to create script
+  mkScript = name: text: let
+    script = pkgs.writeShellScriptBin name text;
+  in
+    script;
+
+  # Define script; these are going to be functionally aliases
+  scripts = [
+    (mkScript "tm" ''npx --yes --package=task-master-ai task-master "$@"'')
+  ];
+
   # Default shell
   defaultPackages = with pkgs; [
     git
@@ -22,6 +34,8 @@
     nodejs
     typescript
     quaestor
+    # Shell aliases
+    scripts
   ];
   defaultHooks = ''
     # Make our local node packages available to our shell; for mcp's
@@ -62,7 +76,7 @@ in {
 
   # Organize dev shell; generate code reports as well
   organize = pkgs.mkShell {
-    packages = defaultPackages ++ organizePackages ++ uvShellSet.packages;
+    packages = uvShellSet.packages ++ defaultPackages ++ organizePackages;
     env = defaultEnv // organizeEnv // uvShellSet.env;
     shellHook = defaultHooks + "\n" + organizeHooks + "\n" + uvShellSet.shellHook;
   };

@@ -1,0 +1,220 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Development Environment",
+        "description": "Set up the development environment by adding pytest and other development dependencies to pyproject.toml, configuring uv, and ensuring all dependencies are properly installed.",
+        "details": "1. Add pytest, neo4j Python driver, and any other necessary development tools to the `pyproject.toml` file.\n2. Configure `uv` to manage the project's virtual environment and dependencies.\n3. Use `uv pip install -e .[dev]` to install the project and its development dependencies.\n4. Verify the installation by running `pytest --version` and ensuring that pytest is correctly installed and configured.",
+        "testStrategy": "Run `pytest --version` to confirm pytest is installed. Check the `pyproject.toml` file to ensure all dependencies are listed. Manually inspect the virtual environment to verify the presence of installed packages.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Add pytest and pytest-cov to pyproject.toml",
+            "description": "Add pytest>=7.0.0 and pytest-cov>=4.0.0 to the dev dependencies in pyproject.toml",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          },
+          {
+            "id": 2,
+            "title": "Install dependencies with uv",
+            "description": "Run uv sync or uv pip install to install the development dependencies",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement and Test Fortran Parser",
+        "description": "Implement and test the FortranParser class to parse LAPACK/BLAS source files, extract ASTs, detect routines, and extract call graphs. Handle LAPACK naming conventions and error cases.",
+        "details": "1. Create a `FortranParser` class that uses the `fortran-src` Haskell tool to parse Fortran source code.\n2. Implement methods to extract the AST from the parsed code.\n3. Implement routine detection and call graph extraction logic.\n4. Add support for parsing LAPACK naming conventions (S/D/C/Z prefixes).\n5. Implement error handling for malformed Fortran files.\n```python\nclass FortranParser:\n    def __init__(self, filepath):\n        self.filepath = filepath\n\n    def parse(self):\n        # Use fortran-src to parse the file\n        pass\n\n    def extract_ast(self):\n        # Extract AST from the parsed code\n        pass\n\n    def detect_routines(self):\n        # Detect routines in the code\n        pass\n\n    def extract_call_graph(self):\n        # Extract call graph from the code\n        pass\n```",
+        "testStrategy": "Create a suite of unit tests using pytest. Test with various LAPACK/BLAS source files, including those with different prefixes and malformed syntax. Verify that the AST is correctly extracted, routines are detected, and call graphs are accurately generated. Check error handling by providing intentionally malformed files.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Run existing Fortran parser tests",
+            "description": "Execute tests/test_fortran_parser.py to verify current parser functionality",
+            "details": "<info added on 2025-07-25T16:01:06.239Z>\nTests completed successfully. The existing Fortran parser tests all pass (6/6 tests). The parser correctly handles routine extraction, LAPACK naming conventions, and basic call graph extraction.\n</info added on 2025-07-25T16:01:06.239Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 2,
+            "title": "Test parser with real LAPACK/BLAS files",
+            "description": "Run the parser on actual LAPACK source files (e.g., BLAS/SRC/dgemm.f) and verify AST extraction",
+            "details": "<info added on 2025-07-25T16:02:26.244Z>\nSuccessfully tested parser with real LAPACK/BLAS files. Parsed 6 files including dgemm.f, sgemm.f, cgemm.f, zgemm.f (BLAS Level 3), and dgetrf.f, dgetrs.f (LAPACK). All files parsed correctly, extracting routine names, types, and call relationships. The parser correctly identified calls to XERBLA, DGEMM, DTRSM, DLASWP, etc.\n</info added on 2025-07-25T16:02:26.244Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 3,
+            "title": "Verify LAPACK naming convention parsing",
+            "description": "Test that S/D/C/Z prefixes are correctly parsed and precision/operation extraction works",
+            "details": "<info added on 2025-07-25T16:03:46.402Z>\nVerified LAPACK naming convention parsing works correctly. Tested all 4 precision types: S (single), D (double), C (complex), Z (double complex). The parser correctly extracts precision from first character and operation from remaining characters. Also correctly handles non-LAPACK routines like XERBLA and LSAME by returning None for precision/operation.\n</info added on 2025-07-25T16:03:46.402Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Design and Validate Graph Schema",
+        "description": "Design and validate the graph schema for Neo4j import, including node types (Routine, File, Operation, Precision) and relationship types (CALLS, DEFINED_IN, IMPLEMENTS, HAS_PRECISION). Ensure schema consistency and uniqueness constraints.",
+        "details": "1. Define the graph schema with node types: Routine, File, Operation, Precision.\n2. Define relationship types: CALLS, DEFINED_IN, IMPLEMENTS, HAS_PRECISION.\n3. Implement a `GraphSchema` class to create and validate the schema.\n4. Implement uniqueness constraints for nodes and relationships.\n```python\nclass GraphSchema:\n    def __init__(self):\n        self.node_types = ['Routine', 'File', 'Operation', 'Precision']\n        self.relationship_types = ['CALLS', 'DEFINED_IN', 'IMPLEMENTS', 'HAS_PRECISION']\n\n    def validate(self, graph):\n        # Validate the graph against the schema\n        pass\n```",
+        "testStrategy": "Create unit tests to verify the graph schema. Test node and relationship types. Validate schema consistency by attempting to create invalid graphs. Ensure uniqueness constraints are enforced. Use a mock Neo4j database for testing.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Run graph schema tests",
+            "description": "Execute tests/test_graph_schema.py to verify graph creation functionality",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 2,
+            "title": "Verify node and relationship creation",
+            "description": "Test that all node types (Routine, File, Operation, Precision) and relationships are created correctly",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement and Test Export Formats",
+        "description": "Implement and test the export functionality for JSON, CSV, and Cypher formats. Ensure all formats preserve data integrity and are suitable for visualization tools and Neo4j import.",
+        "details": "1. Implement JSON export for visualization tools.\n2. Implement CSV export for neo4j-admin bulk import.\n3. Implement Cypher statement generation for direct Neo4j import.\n4. Ensure all formats preserve data integrity by correctly mapping AST data to the export formats.\n```python\nclass Exporter:\n    def __init__(self, graph):\n        self.graph = graph\n\n    def to_json(self, filepath):\n        # Export graph to JSON format\n        pass\n\n    def to_csv(self, filepath):\n        # Export graph to CSV format\n        pass\n\n    def to_cypher(self, filepath):\n        # Generate Cypher statements for graph import\n        pass\n```",
+        "testStrategy": "Create unit tests for each export format. Verify that the exported data matches the expected format and content. Test JSON export with visualization tools. Test CSV export with neo4j-admin. Validate Cypher statements by importing them into a Neo4j database. Compare the original data with the imported data to ensure integrity.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Test JSON export functionality",
+            "description": "Verify that graph schema exports correctly to JSON format for visualization",
+            "details": "<info added on 2025-07-25T16:57:29.731Z>\nSuccessfully tested JSON export functionality. The GraphSchema class already had a to_json() method that exports nodes and relationships. Created an Exporter wrapper class as requested that provides to_json(), to_csv(), and to_cypher() methods. Implemented comprehensive unit tests in test_exporter.py that verify JSON export creates valid files with all nodes and relationships preserved. Integration tests confirm JSON export works correctly with real LAPACK routine data.\n</info added on 2025-07-25T16:57:29.731Z>",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 2,
+            "title": "Test CSV export for neo4j-admin",
+            "description": "Verify CSV export creates proper files for bulk import into Neo4j",
+            "details": "<info added on 2025-07-25T16:58:01.583Z>\nSuccessfully tested CSV export functionality. The GraphSchema class had a to_csv() method that creates separate CSV files for each node type and relationship type, suitable for neo4j-admin bulk import. Created comprehensive tests that verify: CSV files are created for each node/relationship type, headers contain all properties, data integrity is preserved, and the format is compatible with neo4j-admin import tool. The export creates files like routine_nodes.csv, file_nodes.csv, calls_relationships.csv, etc.\n</info added on 2025-07-25T16:58:01.583Z>",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 3,
+            "title": "Test Cypher statement generation",
+            "description": "Verify that Cypher CREATE statements are generated correctly for direct Neo4j import",
+            "details": "<info added on 2025-07-25T17:00:14.492Z>\nSuccessfully tested Cypher statement generation. The GraphSchema class had a to_cypher_statements() method that generates: 1) CREATE CONSTRAINT statements for ensuring unique nodes, 2) CREATE INDEX statements for performance optimization, 3) MERGE statements for creating nodes with properties, 4) MERGE statements for creating relationships. The Exporter wrapper writes these to a file with proper formatting and comments. Tests verify that the generated Cypher is valid and contains all expected elements for direct import into Neo4j.\n</info added on 2025-07-25T17:00:14.492Z>",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Perform Integration Testing",
+        "description": "Perform integration testing by parsing multiple related LAPACK files, building complete dependency graphs, and testing with different routine types. Verify cross-file dependency resolution.",
+        "details": "1. Parse multiple related LAPACK files using the `FortranParser`.\n2. Build complete dependency graphs from the parsed files.\n3. Test with different routine types (BLAS Level 1, 2, 3, LAPACK solvers).\n4. Verify cross-file dependency resolution by ensuring that dependencies between files are correctly identified and represented in the graph.",
+        "testStrategy": "Create integration tests that parse multiple LAPACK files and build dependency graphs. Verify that all dependencies are correctly resolved, including cross-file dependencies. Test with different routine types to ensure comprehensive coverage. Use a Neo4j database to visualize and validate the generated graphs.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create integration test for multiple files",
+            "description": "Test parsing multiple related LAPACK files and building complete dependency graphs",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 5
+          },
+          {
+            "id": 2,
+            "title": "Test cross-file dependency resolution",
+            "description": "Verify that calls between routines in different files are properly tracked",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 5
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Create Documentation and Examples",
+        "description": "Create documentation and examples for common use cases, document the graph schema structure, provide Neo4j query examples, and write a usage guide for the command-line tool.",
+        "details": "1. Create example scripts for common use cases, such as parsing a single file, building a dependency graph, and exporting to different formats.\n2. Document the graph schema structure, including node and relationship types, properties, and constraints.\n3. Provide Neo4j query examples for common tasks, such as finding all routines that call a specific function or identifying all files that define a specific routine.\n4. Write a usage guide for the command-line tool, including installation instructions, command-line options, and examples.",
+        "testStrategy": "Review the documentation for completeness and clarity. Ensure that the examples are easy to understand and follow. Verify that the Neo4j query examples are correct and efficient. Test the command-line tool with different options and inputs to ensure that it works as expected.",
+        "priority": "low",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create example scripts",
+            "description": "Develop example scripts showing common use cases for the parser and graph builder",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 2,
+            "title": "Document Neo4j query examples",
+            "description": "Provide example Cypher queries for common analysis tasks on the LAPACK graph",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 6
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-25T14:06:48.573Z",
+      "updated": "2025-07-25T16:31:52.638Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
