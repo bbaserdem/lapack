@@ -3,8 +3,12 @@
   pkgs,
   inputs,
   system,
+  uvBoilerplate,
+  projectName,
   ...
 }: let
+  # UV stuff
+  inherit (uvBoilerplate) uvShellSet;
   # Input packages
   quaestor = inputs.quaestor.packages.${system}.default;
 
@@ -23,22 +27,24 @@
     # Make our local node packages available to our shell; for mcp's
     export PATH="./node_modules/.bin:$PATH"
   '';
+  defaultEnv = {};
 
   # Devops branch
   devopsPackages = with pkgs; [
     podman
   ];
   devopsHooks = "";
+  devopsEnv = {};
 
   # Organize branch
   organizePackages = with pkgs; [
     haskellPackages.fortran-src
     uv # For fortdepend
-    fortran-fpm # For fpm-modules
     neo4j
   ];
   organizeHooks = ''
   '';
+  organizeEnv = {};
 in {
   # Main dev shell
   default = pkgs.mkShell {
@@ -56,8 +62,8 @@ in {
 
   # Organize dev shell; generate code reports as well
   organize = pkgs.mkShell {
-    packages = defaultPackages ++ organizePackages;
-    # Shell hooks
-    shellHook = defaultHooks + "\n" + organizeHooks;
+    packages = defaultPackages ++ organizePackages ++ uvShellSet.packages;
+    env = defaultEnv // organizeEnv // uvShellSet.env;
+    shellHook = defaultHooks + "\n" organizeHooks + "\n" + uvShellSet.shellHook;
   };
 }

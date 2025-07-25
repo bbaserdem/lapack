@@ -8,6 +8,23 @@
       url = "github:jeanluciano/quaestor";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Python project setup
+    pyproject-nix = {
+      url = "github:pyproject-nix/pyproject.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    uv2nix = {
+      url = "github:pyproject-nix/uv2nix";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pyproject-build-systems = {
+      url = "github:pyproject-nix/build-system-pkgs";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.uv2nix.follows = "uv2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -15,8 +32,13 @@
     nixpkgs,
     flake-utils,
     ...
-  } @ inputs:
+  } @ inputs: let
+    outputs = self;
+    projectName = "lapack-util";
+  in
     flake-utils.lib.eachDefaultSystem (system: let
+      # Grab UV stuff
+      uvBoilerplate = import nix/uv.nix {inherit inputs system projectName;};
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfreePredicate = pkg:
@@ -25,8 +47,17 @@
           ];
       };
     in {
-      apps = import ./nix/apps.nix {inherit pkgs;};
-      packages = import ./nix/packages.nix {inherit pkgs inputs system;};
-      devShells = import ./nix/shells.nix {inherit pkgs inputs system;};
+      checks = import ./nix/checks.nix {
+        inherit uvBoilerplate projectName;
+      };
+      apps = import ./nix/apps.nix {
+        inherit outputs pkgs uvBoilerplate projectName;
+      };
+      packages = import ./nix/packages.nix {
+        inherit pkgs inputs system uvBoilerplate projectName;
+      };
+      devShells = import ./nix/shells.nix {
+        inherit pkgs inputs system uvBoilerplate projectName;
+      };
     });
 }
