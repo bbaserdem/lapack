@@ -10,9 +10,9 @@ in {
       echo "Access the browser at: http://localhost:7474"
     else
       echo "Starting Neo4j server..."
-      ${neo4j}/bin/neo4j start
+      ${neo4j} start
       sleep 3
-      if ${neo4j}/bin/neo4j status > /dev/null 2>&1; then
+      if ${neo4j} status > /dev/null 2>&1; then
         echo "Neo4j started successfully!"
         echo "Access the browser at: http://localhost:7474"
       else
@@ -24,7 +24,7 @@ in {
   neo4j-stop = mkScript "neo4j-stop" ''
     if ${pgrep} -f "neo4j.*''${PWD}/neo4j-data" > /dev/null; then
       echo "Stopping Neo4j server..."
-      ${neo4j}/bin/neo4j stop
+      ${neo4j} stop
     else
       echo "Neo4j is not running for this project"
     fi
@@ -35,7 +35,7 @@ in {
       if ${pgrep} -f "neo4j.*''${PWD}/neo4j-data" > /dev/null; then
         echo "Neo4j is running for this project"
         echo "Access the browser at: http://localhost:7474"
-        ${neo4j}/bin/neo4j status
+        ${neo4j} status
       else
         echo "Neo4j is not running for this project"
         echo "Start it with: neo4j-start"
@@ -49,7 +49,7 @@ in {
   neo4j-console = mkScript "neo4j-console" ''
     echo "Starting Neo4j in console mode (foreground)..."
     echo "Press Ctrl+C to stop"
-    ${neo4j}/bin/neo4j console
+    ${neo4j} console
   '';
 }
 

@@ -1,20 +1,9 @@
-"""lapack_util - Python utilities for LAPACK code analysis and graph generation"""
+"""LAPACK Utilities - Tools for analyzing LAPACK computational graphs."""
 
-from .fortran_parser import FortranParser, Routine, ParseResult
-from .graph_schema import (
-    GraphSchema, GraphNode, GraphRelationship,
-    NodeType, RelationType, create_schema_from_routines
-)
-from .lapack_to_neo4j import LAPACKGraphBuilder
+__version__ = "0.1.0"
+__author__ = "LAPACK Analysis Team"
 
-__all__ = [
-    'FortranParser', 'Routine', 'ParseResult',
-    'GraphSchema', 'GraphNode', 'GraphRelationship',
-    'NodeType', 'RelationType', 'create_schema_from_routines',
-    'LAPACKGraphBuilder'
-]
+from .parser import LapackParser
+from .neo4j_client import Neo4jClient
 
-def main() -> None:
-    """Entry point for the lapack-util command"""
-    from .lapack_to_neo4j import main as lapack_main
-    lapack_main()
+__all__ = ['LapackParser', 'Neo4jClient']
