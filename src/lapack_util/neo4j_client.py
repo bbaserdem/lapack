@@ -59,8 +59,8 @@ class Neo4jClient:
                 
                 # Write constraints
                 f.write("// Create constraints\n")
-                f.write("CREATE CONSTRAINT routine_name IF NOT EXISTS ON (r:Routine) ASSERT r.name IS UNIQUE;\n")
-                f.write("CREATE CONSTRAINT file_path IF NOT EXISTS ON (f:File) ASSERT f.path IS UNIQUE;\n\n")
+                f.write("CREATE CONSTRAINT routine_name IF NOT EXISTS FOR (r:Routine) REQUIRE r.name IS UNIQUE;\n")
+                f.write("CREATE CONSTRAINT file_path IF NOT EXISTS FOR (f:File) REQUIRE f.path IS UNIQUE;\n\n")
                 
                 # Write nodes
                 f.write("// Create nodes\n")
@@ -262,8 +262,8 @@ class Neo4jClient:
             
             # Create constraints
             print("Creating constraints...")
-            session.run("CREATE CONSTRAINT routine_name IF NOT EXISTS ON (r:Routine) ASSERT r.name IS UNIQUE")
-            session.run("CREATE CONSTRAINT file_path IF NOT EXISTS ON (f:File) ASSERT f.path IS UNIQUE")
+            session.run("CREATE CONSTRAINT routine_name IF NOT EXISTS FOR (r:Routine) REQUIRE r.name IS UNIQUE")
+            session.run("CREATE CONSTRAINT file_path IF NOT EXISTS FOR (f:File) REQUIRE f.path IS UNIQUE")
             
             # Import nodes
             print(f"Importing {len(data['nodes'])} nodes...")
