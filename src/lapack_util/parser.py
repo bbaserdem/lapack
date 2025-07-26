@@ -188,6 +188,98 @@ class LapackParser:
         
         print(f"Exported to {output_path}")
     
+    def _extract_precision(self, name: str) -> Optional[str]:
+        """Extract precision from routine name."""
+        if not name:
+            return None
+        
+        first_char = name[0].upper()
+        precision_map = {
+            'S': 'single',
+            'D': 'double',
+            'C': 'complex',
+            'Z': 'double_complex'
+        }
+        return precision_map.get(first_char)
+    
+    def _extract_category(self, name: str) -> Optional[str]:
+        """Extract category from routine name based on LAPACK/BLAS patterns."""
+        if not name or len(name) < 2:
+            return None
+        
+        # Check for BLAS/LAPACK patterns
+        for category, pattern in self.lapack_patterns.items():
+            if pattern.match(name):
+                return category
+        
+        # Check for common patterns in the name
+        name_upper = name.upper()
+        
+        # Matrix types (2nd and 3rd characters)
+        if len(name_upper) >= 3:
+            matrix_type = name_upper[1:3]
+            matrix_categories = {
+                'GE': 'general',
+                'GB': 'general_band',
+                'GT': 'general_tridiagonal',
+                'PO': 'positive_definite',
+                'PP': 'positive_definite_packed',
+                'PB': 'positive_definite_band',
+                'PT': 'positive_definite_tridiagonal',
+                'SY': 'symmetric',
+                'SP': 'symmetric_packed',
+                'SB': 'symmetric_band',
+                'ST': 'symmetric_tridiagonal',
+                'HE': 'hermitian',
+                'HP': 'hermitian_packed',
+                'HB': 'hermitian_band',
+                'TR': 'triangular',
+                'TP': 'triangular_packed',
+                'TB': 'triangular_band',
+                'OR': 'orthogonal',
+                'UN': 'unitary',
+                'OP': 'orthogonal_packed',
+                'UP': 'unitary_packed'
+            }
+            
+            if matrix_type in matrix_categories:
+                # Check for common operations
+                if 'TRF' in name_upper:
+                    return f"{matrix_categories[matrix_type]}_factorization"
+                elif 'TRS' in name_upper:
+                    return f"{matrix_categories[matrix_type]}_solve"
+                elif 'TRI' in name_upper:
+                    return f"{matrix_categories[matrix_type]}_inverse"
+                elif 'EQR' in name_upper:
+                    return f"{matrix_categories[matrix_type]}_qr"
+                elif 'SVD' in name_upper:
+                    return f"{matrix_categories[matrix_type]}_svd"
+                elif 'EIG' in name_upper or 'EV' in name_upper:
+                    return f"{matrix_categories[matrix_type]}_eigenvalue"
+                else:
+                    return matrix_categories[matrix_type]
+        
+        # Special routines
+        if name_upper in ['XERBLA', 'LSAME', 'XERBLA_ARRAY']:
+            return 'utility'
+        
+        # If starts with precision but no clear category
+        if self._extract_precision(name):
+            if 'COPY' in name_upper or 'SWAP' in name_upper or 'SCAL' in name_upper:
+                return 'vector_operation'
+            elif 'GEMM' in name_upper or 'GEMV' in name_upper:
+                return 'matrix_multiplication'
+            elif 'DOT' in name_upper:
+                return 'inner_product'
+            elif 'NRM' in name_upper or 'NORM' in name_upper:
+                return 'norm'
+            elif 'SUM' in name_upper or 'ASUM' in name_upper:
+                return 'sum'
+            elif 'MAX' in name_upper or 'MIN' in name_upper:
+                return 'extrema'
+        
+        return 'other'
+    
     def export_to_neo4j(self, driver) -> None:
         """Export the parsed data to Neo4j."""
         with driver.session() as session:
@@ -197,8 +289,8 @@ class LapackParser:
             
             # Create constraints
             print("Creating constraints...")
-            session.run("CREATE CONSTRAINT routine_name IF NOT EXISTS ON (r:Routine) ASSERT r.name IS UNIQUE")
-            session.run("CREATE CONSTRAINT file_path IF NOT EXISTS ON (f:File) ASSERT f.path IS UNIQUE")
+            session.run("CREATE CONSTRAINT routine_name IF NOT EXISTS FOR (r:Routine) REQUIRE r.name IS UNIQUE")
+            session.run("CREATE CONSTRAINT file_path IF NOT EXISTS FOR (f:File) REQUIRE f.path IS UNIQUE")
             
             # Create file nodes
             print("Creating file nodes...")
@@ -220,14 +312,21 @@ class LapackParser:
                         routine_type = category
                         break
                 
+                # Extract precision and category
+                precision = self._extract_precision(name)
+                category = self._extract_category(name)
+                
                 session.run("""
                     CREATE (r:Routine {
                         name: $name,
                         type: $type,
+                        precision: $precision,
+                        category: $category,
                         line_number: $line,
                         argument_count: $arg_count
                     })
-                """, name=name, type=routine_type, line=sub.line_number,
+                """, name=name, type=routine_type, precision=precision,
+                    category=category, line=sub.line_number,
                     arg_count=len(sub.arguments))
             
             # Create DEFINED_IN relationships
