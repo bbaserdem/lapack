@@ -142,8 +142,8 @@ class DataManager:
 // This represents a small subset of LAPACK routines
 
 // Create constraints
-CREATE CONSTRAINT routine_name IF NOT EXISTS ON (r:Routine) ASSERT r.name IS UNIQUE;
-CREATE CONSTRAINT file_path IF NOT EXISTS ON (f:File) ASSERT f.path IS UNIQUE;
+CREATE CONSTRAINT routine_name IF NOT EXISTS FOR (r:Routine) REQUIRE r.name IS UNIQUE;
+CREATE CONSTRAINT file_path IF NOT EXISTS FOR (f:File) REQUIRE f.path IS UNIQUE;
 
 // Core BLAS Level 1 routines
 CREATE (ddot:Routine {name: 'DDOT', type: 'blas1', description: 'Dot product of vectors'});
