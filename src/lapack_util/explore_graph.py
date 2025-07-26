@@ -49,12 +49,15 @@ def print_top_hubs(visualizer: GraphVisualizer, limit: int = 20):
     
     hubs = visualizer.get_top_hubs(limit)
     
-    print(f"{'Routine':<20} {'Precision':<10} {'Category':<20} {'In':<8} {'Out':<8} {'Total':<8}")
-    print("-" * 80)
+    print(f"{'Routine':<20} {'Precision':<10} {'Category':<25} {'In':<8} {'Out':<8} {'Total':<8}")
+    print("-" * 90)
     
     for hub in hubs:
+        category = hub['category'] or 'N/A'
+        if len(category) > 23:
+            category = category[:20] + '...'
         print(f"{hub['routine_name']:<20} {hub['precision'] or 'N/A':<10} "
-              f"{hub['category'] or 'N/A':<20} {hub['in_calls']:<8} "
+              f"{category:<25} {hub['in_calls']:<8} "
               f"{hub['out_calls']:<8} {hub['total_calls']:<8}")
 
 
