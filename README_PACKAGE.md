@@ -152,3 +152,62 @@ lapack-util query "MATCH (r:Routine) WITH r, size((r)-[:CALLS]->()) as out RETUR
 # Export subgraph
 lapack-util query "MATCH path=(r:Routine {name: 'DGETRF'})-[:CALLS*..2]->() RETURN path" -o dgetrf_deps.json
 ```
+
+## MCP (Model Context Protocol) Integration
+
+This project includes MCP server configurations for enhanced AI-assisted development with Claude Desktop.
+
+### Available MCP Servers
+
+1. **Neo4j MCP Server** - Direct database queries from Claude
+   - Configuration: `neo4j-lapack` in `.mcp.json`
+   - Requires: Neo4j connection details in environment
+
+2. **Task Master AI** - Project task management
+   - Configuration: `taskmaster-ai` in `.mcp.json`
+   - Requires: API keys for AI models
+
+3. **Claude Flow** - Swarm orchestration for complex tasks
+   - Configuration: `claude-flow` in `.mcp.json`
+
+4. **GitHub MCP Server** - GitHub integration
+   - Configuration: `github` in `.mcp.json`
+   - Requires: GitHub Personal Access Token
+
+### Setting up GitHub MCP Server
+
+1. **Generate GitHub Token**:
+   ```bash
+   # Run the setup script
+   ./scripts/setup_github_mcp.sh
+   ```
+
+2. **Configure Token**:
+   - Add `GITHUB_TOKEN` to your `.env` file
+   - Token needs `repo` and `workflow` scopes
+
+3. **Usage Examples**:
+   ```
+   # In Claude Desktop:
+   "Create a GitHub issue about the parsing errors we found"
+   "List recent pull requests in this repository"
+   "Create a PR for the error tracking feature"
+   ```
+
+See `docs/GITHUB_MCP_SETUP.md` for detailed setup instructions.
+
+### MCP Benefits
+
+- **Direct Database Access**: Query Neo4j without leaving Claude
+- **Task Management**: Track development tasks with AI assistance
+- **GitHub Integration**: Manage issues and PRs directly
+- **Automated Workflows**: Coordinate complex multi-step operations
+
+### Configuration
+
+All MCP servers are configured in `.mcp.json`. After making changes:
+1. Update environment variables in `.env`
+2. Restart Claude Desktop
+3. Test with simple commands
+
+For more details on each MCP server, see their respective documentation.
