@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+import logging
 from . import commands
 
 def main():
@@ -18,6 +19,10 @@ def main():
                        help='Neo4j username')
     parser.add_argument('--password', default='',
                        help='Neo4j password')
+    parser.add_argument('--debug', action='store_true',
+                       help='Enable debug logging')
+    parser.add_argument('--log-file',
+                       help='Log to file instead of stderr')
     
     subparsers = parser.add_subparsers(dest='command', help='Available commands')
     
@@ -93,7 +98,67 @@ def main():
     stats_parser = subparsers.add_parser('stats',
                                         help='Show database statistics')
     
+    # Explore command
+    explore_parser = subparsers.add_parser('explore',
+                                          help='Interactive graph exploration')
+    explore_subparsers = explore_parser.add_subparsers(dest='explore_command', 
+                                                       help='Exploration commands')
+    
+    # Explore subcommands
+    explore_subparsers.add_parser('summary', help='Show graph summary')
+    
+    hubs_parser = explore_subparsers.add_parser('hubs', help='Show most connected routines')
+    hubs_parser.add_argument('--limit', type=int, default=20, help='Number of hubs to show')
+    
+    routine_parser = explore_subparsers.add_parser('routine', help='Analyze specific routine')
+    routine_parser.add_argument('name', help='Routine name')
+    routine_parser.add_argument('--depth', type=int, default=3, help='Call chain depth')
+    
+    explore_subparsers.add_parser('precision', help='Analyze precision patterns')
+    explore_subparsers.add_parser('categories', help='Analyze routine categories')
+    
+    coupling_parser = explore_subparsers.add_parser('coupling', help='Analyze file coupling')
+    coupling_parser.add_argument('--limit', type=int, default=20, help='Number of couplings')
+    
+    viz_parser = explore_subparsers.add_parser('visualize', help='Export for visualization')
+    viz_parser.add_argument('output', help='Output file path')
+    viz_parser.add_argument('--max-nodes', type=int, default=500, help='Maximum nodes')
+    viz_parser.add_argument('--filter', help='Filter routines by name')
+    
+    explore_subparsers.add_parser('queries', help='Show useful Cypher queries')
+    
+    # Neo4j server management commands
+    neo4j_parser = subparsers.add_parser('neo4j',
+                                        help='Manage Neo4j server')
+    neo4j_parser.add_argument('action',
+                             choices=['start', 'stop', 'status', 'console'],
+                             help='Neo4j server action')
+    neo4j_parser.add_argument('--data-dir',
+                             help='Neo4j data directory (default: ./neo4j-data)')
+    
     args = parser.parse_args()
+    
+    # Configure logging
+    log_level = logging.DEBUG if args.debug else logging.INFO
+    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    
+    # Suppress Neo4j notification warnings for cleaner output
+    neo4j_logger = logging.getLogger('neo4j.notifications')
+    neo4j_logger.setLevel(logging.ERROR)
+    
+    if args.log_file:
+        logging.basicConfig(
+            level=log_level,
+            format=log_format,
+            filename=args.log_file,
+            filemode='a'
+        )
+    else:
+        logging.basicConfig(
+            level=log_level,
+            format=log_format,
+            stream=sys.stderr
+        )
     
     if not args.command:
         parser.print_help()
@@ -160,6 +225,50 @@ def main():
         
         elif args.command == 'stats':
             commands.stats_command(**neo4j_args)
+        
+        elif args.command == 'explore':
+            from .graph_visualizer import GraphVisualizer
+            from .neo4j_client import Neo4jClient
+            
+            with Neo4jClient(args.neo4j_uri, args.username, args.password) as client:
+                visualizer = GraphVisualizer(client)
+                
+                if args.explore_command == 'summary' or args.explore_command is None:
+                    from .explore_graph import print_summary
+                    print_summary(visualizer)
+                
+                elif args.explore_command == 'hubs':
+                    from .explore_graph import print_top_hubs
+                    print_top_hubs(visualizer, args.limit)
+                
+                elif args.explore_command == 'routine':
+                    from .explore_graph import analyze_routine
+                    analyze_routine(visualizer, args.name, args.depth)
+                
+                elif args.explore_command == 'precision':
+                    from .explore_graph import analyze_precision_patterns
+                    analyze_precision_patterns(visualizer)
+                
+                elif args.explore_command == 'categories':
+                    from .explore_graph import analyze_categories
+                    analyze_categories(visualizer)
+                
+                elif args.explore_command == 'coupling':
+                    from .explore_graph import find_file_coupling
+                    find_file_coupling(visualizer, args.limit)
+                
+                elif args.explore_command == 'visualize':
+                    from .explore_graph import export_visualization_data
+                    export_visualization_data(visualizer, args.output, 
+                                            args.max_nodes, args.filter)
+                
+                elif args.explore_command == 'queries':
+                    from .explore_graph import print_cypher_queries
+                    print_cypher_queries(visualizer)
+        
+        elif args.command == 'neo4j':
+            from .neo4j_server import neo4j_server_command
+            return neo4j_server_command(args.action, args.data_dir, verbose=args.debug)
         
     except KeyboardInterrupt:
         print("\nOperation cancelled.")
