@@ -12,9 +12,6 @@
   # Input packages
   quaestor = inputs.quaestor.packages.${system}.default;
 
-  # Import Neo4j scripts
-  neo4jScripts = import ./neo4j-scripts.nix {inherit pkgs;};
-
   # Shell aliases
   # Function to create script
   mkScript = name: text: let
@@ -41,11 +38,6 @@
     scripts
     # Visualizing computational graph
     neo4j
-    # Neo4j management scripts
-    neo4jScripts.neo4j-start
-    neo4jScripts.neo4j-stop
-    neo4jScripts.neo4j-status
-    neo4jScripts.neo4j-console
   ];
   defaultHooks = ''
     # Make our local node packages available to our shell; for mcp's
@@ -72,7 +64,7 @@
   organizeHooks = ''
     # Check Neo4j status when entering the shell
     if [ -f "$PWD/neo4j-data/neo4j.conf" ]; then
-      if pgrep -f "neo4j.*''${PWD}/neo4j-data" > /dev/null; then
+      if pgrep -f "neo4j.*$PWD/neo4j-data" > /dev/null 2>&1; then
         echo "Neo4j is already running for this project"
         echo "Access the browser at: http://localhost:7474"
       else
@@ -85,10 +77,10 @@
 
     echo ""
     echo "Neo4j commands available:"
-    echo "  neo4j-start   - Start Neo4j server in background"
-    echo "  neo4j-stop    - Stop Neo4j server"
-    echo "  neo4j-status  - Check Neo4j status"
-    echo "  neo4j-console - Run Neo4j in foreground (Ctrl+C to stop)"
+    echo "  ${projectName} neo4j start   - Start Neo4j server in background"
+    echo "  ${projectName} neo4j stop    - Stop Neo4j server"
+    echo "  ${projectName} neo4j status  - Check Neo4j status"
+    echo "  ${projectName} neo4j console - Run Neo4j in foreground (Ctrl+C to stop)"
   '';
   organizeEnv = {
   };

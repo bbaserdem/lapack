@@ -1,0 +1,5677 @@
+{
+  "nodes": [
+    {
+      "id": "XERBLA",
+      "label": "XERBLA",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLACPY",
+      "label": "DLACPY",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLACPY",
+      "label": "SLACPY",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLACPY",
+      "label": "ZLACPY",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLACPY",
+      "label": "CLACPY",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLASCL",
+      "label": "DLASCL",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLASCL",
+      "label": "SLASCL",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLASET",
+      "label": "SLASET",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLASET",
+      "label": "DLASET",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLASET",
+      "label": "ZLASET",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLASET",
+      "label": "CLASET",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSTERF",
+      "label": "DSTERF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSTERF",
+      "label": "SSTERF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLACGV",
+      "label": "CLACGV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLACGV",
+      "label": "ZLACGV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLASCL",
+      "label": "ZLASCL",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLASCL",
+      "label": "CLASCL",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLACN2",
+      "label": "CLACN2",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLACN2",
+      "label": "ZLACN2",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLARFG",
+      "label": "SLARFG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLARFG",
+      "label": "DLARFG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLARFG",
+      "label": "ZLARFG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SORMQR",
+      "label": "SORMQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CUNMQR",
+      "label": "CUNMQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZUNMQR",
+      "label": "ZUNMQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DORMQR",
+      "label": "DORMQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLARFG",
+      "label": "CLARFG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLACN2",
+      "label": "SLACN2",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLACN2",
+      "label": "DLACN2",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSTEQR",
+      "label": "SSTEQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSTEQR",
+      "label": "DSTEQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEQRF",
+      "label": "CGEQRF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGEQRF",
+      "label": "ZGEQRF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEQRF",
+      "label": "DGEQRF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEQRF",
+      "label": "SGEQRF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLARTG",
+      "label": "SLARTG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLARTG",
+      "label": "DLARTG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZSTEQR",
+      "label": "ZSTEQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CSTEQR",
+      "label": "CSTEQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSTEBZ",
+      "label": "DSTEBZ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DORGQR",
+      "label": "DORGQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SORGQR",
+      "label": "SORGQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CUNGQR",
+      "label": "CUNGQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSTEBZ",
+      "label": "SSTEBZ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZUNGQR",
+      "label": "ZUNGQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLARF1F",
+      "label": "ZLARF1F",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLARFB",
+      "label": "ZLARFB",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEJSV",
+      "label": "CGEJSV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLARF1F",
+      "label": "CLARF1F",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLARF1F",
+      "label": "SLARF1F",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGEJSV",
+      "label": "ZGEJSV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLARFB",
+      "label": "CLARFB",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLARFB",
+      "label": "DLARFB",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLARF1F",
+      "label": "DLARF1F",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLARFB",
+      "label": "SLARFB",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGESDD",
+      "label": "ZGESDD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGESDD",
+      "label": "CGESDD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGESVDQ",
+      "label": "CGESVDQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZSTEDC",
+      "label": "ZSTEDC",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSTEDC",
+      "label": "SSTEDC",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CSTEDC",
+      "label": "CSTEDC",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSTEDC",
+      "label": "DSTEDC",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGESVDQ",
+      "label": "ZGESVDQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGELSS",
+      "label": "CGELSS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEJSV",
+      "label": "DGEJSV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGESVD",
+      "label": "ZGESVD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGELSS",
+      "label": "ZGELSS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGESVD",
+      "label": "CGESVD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEJSV",
+      "label": "SGEJSV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CROT",
+      "label": "CROT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZROT",
+      "label": "ZROT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CHBTRD",
+      "label": "CHBTRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLARFT",
+      "label": "SLARFT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSTEIN",
+      "label": "DSTEIN",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGESVDQ",
+      "label": "DGESVDQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGEVX",
+      "label": "CGGEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGEVX",
+      "label": "ZGGEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGESVD",
+      "label": "DGESVD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLARFT",
+      "label": "ZLARFT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLARFT",
+      "label": "DLARFT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLARFT",
+      "label": "CLARFT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSTEIN",
+      "label": "SSTEIN",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGESVDQ",
+      "label": "SGESVDQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGESVD",
+      "label": "SGESVD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZHBTRD",
+      "label": "ZHBTRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGELQF",
+      "label": "CGELQF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSTEMR",
+      "label": "SSTEMR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGELQF",
+      "label": "ZGELQF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DTGEX2",
+      "label": "DTGEX2",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSTEMR",
+      "label": "DSTEMR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGESDD",
+      "label": "DGESDD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGELSS",
+      "label": "DGELSS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGEVX",
+      "label": "SGGEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGELQF",
+      "label": "DGELQF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGELSD",
+      "label": "ZGELSD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "STGEX2",
+      "label": "STGEX2",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGESDD",
+      "label": "SGESDD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGELSD",
+      "label": "CGELSD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGEVX",
+      "label": "DGGEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGELSS",
+      "label": "SGELSS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGELQF",
+      "label": "SGELQF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGES",
+      "label": "DGGES",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGESVDX",
+      "label": "CGESVDX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZSTEMR",
+      "label": "ZSTEMR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZUNMLQ",
+      "label": "ZUNMLQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DORMLQ",
+      "label": "DORMLQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGESX",
+      "label": "DGGESX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZSTEIN",
+      "label": "ZSTEIN",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLALSD",
+      "label": "ZLALSD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CSTEIN",
+      "label": "CSTEIN",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SORMLQ",
+      "label": "SORMLQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGEV",
+      "label": "DGGEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLASSQ",
+      "label": "ZLASSQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSBTRD",
+      "label": "DSBTRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGESVDX",
+      "label": "ZGESVDX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGES",
+      "label": "ZGGES",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGEGV",
+      "label": "ZGEGV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SSBTRD",
+      "label": "SSBTRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLASSQ",
+      "label": "CLASSQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGEV",
+      "label": "CGGEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGESX",
+      "label": "CGGESX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLALSD",
+      "label": "CLALSD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEGV",
+      "label": "SGEGV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGES",
+      "label": "CGGES",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGESX",
+      "label": "SGGESX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGEV",
+      "label": "ZGGEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGEV",
+      "label": "SGGEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CSTEMR",
+      "label": "CSTEMR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEGV",
+      "label": "DGEGV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGESX",
+      "label": "ZGGESX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLASSQ",
+      "label": "DLASSQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DHGEQZ",
+      "label": "DHGEQZ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SHGEQZ",
+      "label": "SHGEQZ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGES",
+      "label": "SGGES",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEGV",
+      "label": "CGEGV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLASSQ",
+      "label": "SLASSQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CUNMLQ",
+      "label": "CUNMLQ",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEEV",
+      "label": "SGEEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGES3",
+      "label": "DGGES3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZUNCSD2BY1",
+      "label": "ZUNCSD2BY1",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CUNCSD2BY1",
+      "label": "CUNCSD2BY1",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEEVX",
+      "label": "SGEEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLASWP",
+      "label": "ZLASWP",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CHBGST",
+      "label": "CHBGST",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLASRT",
+      "label": "DLASRT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEEVX",
+      "label": "CGEEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SORCSD2BY1",
+      "label": "SORCSD2BY1",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DORCSD2BY1",
+      "label": "DORCSD2BY1",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLASRT",
+      "label": "SLASRT",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLARTG",
+      "label": "ZLARTG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGSVP3",
+      "label": "ZGGSVP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGHRD",
+      "label": "ZGGHRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZHBGST",
+      "label": "ZHBGST",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEQP3",
+      "label": "DGEQP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGES3",
+      "label": "ZGGES3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGEV3",
+      "label": "ZGGEV3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGESVDX",
+      "label": "DGESVDX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SLAQR3",
+      "label": "SLAQR3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGSVP3",
+      "label": "CGGSVP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEQP3",
+      "label": "CGEQP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGELSD",
+      "label": "DGELSD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLASWP",
+      "label": "CLASWP",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEEVX",
+      "label": "DGEEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CLARTG",
+      "label": "CLARTG",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGHRD",
+      "label": "CGGHRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGEQP3",
+      "label": "ZGEQP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGGSVP",
+      "label": "ZGGSVP",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEEV",
+      "label": "DGEEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DLAQR3",
+      "label": "DLAQR3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGEV3",
+      "label": "CGGEV3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGEV3",
+      "label": "SGGEV3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGSVP",
+      "label": "DGGSVP",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEGS",
+      "label": "SGEGS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGES3",
+      "label": "CGGES3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGES3",
+      "label": "SGGES3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CSRSCL",
+      "label": "CSRSCL",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGEGS",
+      "label": "DGEGS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGSVP3",
+      "label": "SGGSVP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGEEVX",
+      "label": "ZGEEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGGSVP",
+      "label": "CGGSVP",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGGSVP",
+      "label": "SGGSVP",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGSVP3",
+      "label": "DGGSVP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGESVDX",
+      "label": "SGESVDX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZDRSCL",
+      "label": "ZDRSCL",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEGS",
+      "label": "CGEGS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DGGEV3",
+      "label": "DGGEV3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEQP3",
+      "label": "SGEQP3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGELSD",
+      "label": "SGELSD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZGEGS",
+      "label": "ZGEGS",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CHEEVX",
+      "label": "CHEEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CPOTRF",
+      "label": "CPOTRF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEHRD",
+      "label": "CGEHRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DTGSEN",
+      "label": "DTGSEN",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SPOTRF",
+      "label": "SPOTRF",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SBDSDC",
+      "label": "SBDSDC",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "DSYEVX",
+      "label": "DSYEVX",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "CGEEV",
+      "label": "CGEEV",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SBDSQR",
+      "label": "SBDSQR",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "SGEHRD",
+      "label": "SGEHRD",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    },
+    {
+      "id": "ZLAQR3",
+      "label": "ZLAQR3",
+      "precision": null,
+      "category": null,
+      "node_type": "Routine"
+    }
+  ],
+  "edges": [
+    {
+      "source": "CGELSS",
+      "target": "CSRSCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSS",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDX",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "SSTERF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "CSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "SSTEDC",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "SSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEDC",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESDD",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGHRD",
+      "target": "ZROT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGHRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGHRD",
+      "target": "ZLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGHRD",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZGESVD",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVDQ",
+      "target": "ZLASWP",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNMLQ",
+      "target": "CLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNMLQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNMLQ",
+      "target": "CLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBGST",
+      "target": "ZROT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBGST",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBGST",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBGST",
+      "target": "ZLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBGST",
+      "target": "ZLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEQP3",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEQP3",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEQP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP3",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP3",
+      "target": "SGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP3",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEQRF",
+      "target": "SLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEQRF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEQRF",
+      "target": "SLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSD",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEV",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEV",
+      "target": "SGEHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEV",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEV",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES3",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SBDSQR",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SBDSQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEQR",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEQR",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEQR",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEQR",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLARFB",
+      "target": "CLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEVX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGESX",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEBZ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGV",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELQF",
+      "target": "SLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELQF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELQF",
+      "target": "SLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DLASCL",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SPOTRF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHEEVX",
+      "target": "SSTERF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHEEVX",
+      "target": "CSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHEEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHEEVX",
+      "target": "CSTEIN",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHEEVX",
+      "target": "SSTEBZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHEEVX",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES",
+      "target": "DTGSEN",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVD",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNMQR",
+      "target": "CLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNMQR",
+      "target": "CLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNMQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBGST",
+      "target": "CLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBGST",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBGST",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBGST",
+      "target": "CROT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBGST",
+      "target": "CLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLARFB",
+      "target": "ZLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEVX",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEVX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEVX",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGHRD",
+      "target": "CROT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGHRD",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGHRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGHRD",
+      "target": "CLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBTRD",
+      "target": "ZROT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBTRD",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBTRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBTRD",
+      "target": "ZLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZHBTRD",
+      "target": "ZLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGESX",
+      "target": "ZGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CLASWP",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "SLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEJSV",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELQF",
+      "target": "ZLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELQF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELQF",
+      "target": "ZLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES3",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELQF",
+      "target": "DLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELQF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELQF",
+      "target": "DLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDQ",
+      "target": "DGESVD",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESDD",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLAQR3",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLAQR3",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLAQR3",
+      "target": "ZLARF1F",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLAQR3",
+      "target": "ZLARFG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSYEVX",
+      "target": "DSTEBZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSYEVX",
+      "target": "DSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSYEVX",
+      "target": "DSTEIN",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSYEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSYEVX",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSYEVX",
+      "target": "DSTERF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLASCL",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELQF",
+      "target": "CLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELQF",
+      "target": "CLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELQF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "SBDSDC",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESDD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEMR",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEMR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGESVDX",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBTRD",
+      "target": "CLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBTRD",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBTRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBTRD",
+      "target": "CROT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CHBTRD",
+      "target": "CLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP3",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP3",
+      "target": "ZGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP3",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLASCL",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "STGEX2",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "STGEX2",
+      "target": "SLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "STGEX2",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "STGEX2",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV3",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSBTRD",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSBTRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSBTRD",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEGS",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGV",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEJSV",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGES",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGESVD",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEQP3",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEQP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEQP3",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGS",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNMQR",
+      "target": "ZLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNMQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNMQR",
+      "target": "ZLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLAQR3",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLAQR3",
+      "target": "SLARF1F",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLAQR3",
+      "target": "SGEHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLAQR3",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLAQR3",
+      "target": "SLARFG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "DSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEDC",
+      "target": "DSTERF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEGS",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNCSD2BY1",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNCSD2BY1",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNCSD2BY1",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEMR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEMR",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTERF",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTERF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTERF",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGES3",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEIN",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DLAQR3",
+      "target": "DLARFG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DLAQR3",
+      "target": "DLARF1F",
+      "type": "CALLS"
+    },
+    {
+      "source": "DLAQR3",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DLAQR3",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORGQR",
+      "target": "DLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORGQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORGQR",
+      "target": "DLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DLASRT",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNCSD2BY1",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNCSD2BY1",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNCSD2BY1",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEQR",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEQR",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEQR",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEQR",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNGQR",
+      "target": "ZLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNGQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNGQR",
+      "target": "ZLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEIN",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV",
+      "target": "ZGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZLALSD",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSD",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEGV",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEVX",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEVX",
+      "target": "SGEHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEVX",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEEVX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CPOTRF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEV3",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEIN",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEMR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CSTEMR",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGES",
+      "target": "ZGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEQR",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEQR",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEQR",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEQR",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEV3",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEQRF",
+      "target": "DLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEQRF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEQRF",
+      "target": "DLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CLALSD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEQP3",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEQP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEQP3",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORCSD2BY1",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORCSD2BY1",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORCSD2BY1",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNMLQ",
+      "target": "ZLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNMLQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZUNMLQ",
+      "target": "ZLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "SBDSDC",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SBDSDC",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SBDSDC",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SBDSDC",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGEVX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SBDSQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSS",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEMR",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEMR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZLALSD",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEVX",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEVX",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEVX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEVX",
+      "target": "CGEHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEEVX",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEEVX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEEVX",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORMLQ",
+      "target": "SLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORMLQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORMLQ",
+      "target": "SLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGELSS",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGS",
+      "target": "ZGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGELSD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGES3",
+      "target": "DTGSEN",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGEX2",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGEX2",
+      "target": "DLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGEX2",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGEX2",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DSTEBZ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEIN",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSBTRD",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSBTRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSBTRD",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEVX",
+      "target": "ZGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SBDSDC",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESDD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORMLQ",
+      "target": "DLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORMLQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORMLQ",
+      "target": "DLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CGESVD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CLASWP",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGESVDQ",
+      "target": "CGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SBDSQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CLALSD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGELSD",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEGV",
+      "target": "ZGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGESX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "SSTERF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "SSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTEDC",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "DSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "DSTERF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "ZSTEQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEDC",
+      "target": "DSTEDC",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEV",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEV",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEEV",
+      "target": "CGEHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGESX",
+      "target": "DTGSEN",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORCSD2BY1",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORCSD2BY1",
+      "target": "SORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORCSD2BY1",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEHRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEHRD",
+      "target": "CLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEQR",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEQR",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEQR",
+      "target": "DLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZSTEQR",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEV",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEV",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEEV",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DHGEQZ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGEVX",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGGSVP",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORMQR",
+      "target": "SLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORMQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORMQR",
+      "target": "SLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORGQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORGQR",
+      "target": "SLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "SORGQR",
+      "target": "SLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZLACGV",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "DLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZLASWP",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEJSV",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "ZUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGEV3",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTERF",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTERF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SSTERF",
+      "target": "SLASRT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZUNMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZDRSCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGELSS",
+      "target": "ZGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGSEN",
+      "target": "DLACN2",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGSEN",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGSEN",
+      "target": "DLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DTGSEN",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLASRT",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CUNMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CGGHRD",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CUNGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGEV",
+      "target": "CLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "SHGEQZ",
+      "target": "SLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "SHGEQZ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SHGEQZ",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SHGEQZ",
+      "target": "SLARFG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORMQR",
+      "target": "DLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORMQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DORMQR",
+      "target": "DLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP3",
+      "target": "CLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP3",
+      "target": "CLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGGSVP3",
+      "target": "CGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNGQR",
+      "target": "CLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNGQR",
+      "target": "CLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CUNGQR",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SLASCL",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP3",
+      "target": "DGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP3",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGGSVP3",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDX",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEQP3",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEQP3",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEQP3",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP",
+      "target": "ZLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP",
+      "target": "ZLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGGSVP",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DLASSQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DORGQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "DGEJSV",
+      "target": "DORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEHRD",
+      "target": "SLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGEHRD",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEQRF",
+      "target": "CLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEQRF",
+      "target": "CLARFB",
+      "type": "CALLS"
+    },
+    {
+      "source": "CGEQRF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DHGEQZ",
+      "target": "DLARFG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DHGEQZ",
+      "target": "DLARTG",
+      "type": "CALLS"
+    },
+    {
+      "source": "DHGEQZ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "DHGEQZ",
+      "target": "DLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SGELQF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SLACPY",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SORMLQ",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SORMQR",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SGEQP3",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SLASET",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SGESVD",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SGEQRF",
+      "type": "CALLS"
+    },
+    {
+      "source": "SGESVDQ",
+      "target": "SLASCL",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEQRF",
+      "target": "ZLARFT",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEQRF",
+      "target": "XERBLA",
+      "type": "CALLS"
+    },
+    {
+      "source": "ZGEQRF",
+      "target": "ZLARFB",
+      "type": "CALLS"
+    }
+  ],
+  "metadata": {
+    "total_nodes": 200,
+    "total_edges": 853,
+    "filter": "top_connected",
+    "max_nodes": 200
+  }
+}

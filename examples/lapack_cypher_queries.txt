@@ -1,0 +1,146 @@
+# LAPACK Graph Analysis - Example Cypher Queries
+# Execute these using: mcp__neo4j-lapack__read_neo4j_cypher
+
+## Node Counts
+MATCH (n)
+        RETURN labels(n)[0] as label, count(n) as count
+        ORDER BY count DESC
+
+## Relationship Counts
+MATCH ()-[r]->()
+        RETURN type(r) as type, count(r) as count
+        ORDER BY count DESC
+
+## Routine By Precision
+MATCH (r:Routine)
+        WHERE r.precision IS NOT NULL
+        RETURN r.precision as precision, count(r) as count
+        ORDER BY count DESC
+
+## Routine By Category
+MATCH (r:Routine)
+        WHERE r.category IS NOT NULL
+        RETURN r.category as category, count(r) as count
+        ORDER BY count DESC
+        LIMIT 25
+
+## Most Called Routines
+MATCH (caller)-[:CALLS]->(r:Routine)
+        RETURN r.name as routine, r.precision as precision, r.category as category,
+               count(caller) as call_count
+        ORDER BY call_count DESC
+        LIMIT 20
+
+## Routines With Most Dependencies
+MATCH (r:Routine)-[:CALLS]->(dependency)
+        RETURN r.name as routine, r.precision as precision, 
+               count(DISTINCT dependency) as dependency_count
+        ORDER BY dependency_count DESC
+        LIMIT 20
+
+## Precision Call Matrix
+MATCH (r1:Routine)-[:CALLS]->(r2:Routine)
+        WHERE r1.precision IS NOT NULL AND r2.precision IS NOT NULL
+        RETURN r1.precision as from_precision, r2.precision as to_precision, 
+               count(*) as call_count
+        ORDER BY call_count DESC
+
+## Category Interaction Matrix
+MATCH (r1:Routine)-[:CALLS]->(r2:Routine)
+        WHERE r1.category IS NOT NULL AND r2.category IS NOT NULL
+        RETURN r1.category as from_category, r2.category as to_category, 
+               count(*) as call_count
+        ORDER BY call_count DESC
+        LIMIT 50
+
+## Files With Most Routines
+MATCH (f:File)<-[:DEFINED_IN]-(r:Routine)
+        RETURN f.path as file, count(r) as routine_count
+        ORDER BY routine_count DESC
+        LIMIT 20
+
+## File Dependency Graph
+MATCH (f1:File)<-[:DEFINED_IN]-(r1:Routine)-[:CALLS]->(r2:Routine)-[:DEFINED_IN]->(f2:File)
+        WHERE f1 <> f2
+        RETURN f1.path as source_file, f2.path as target_file, count(*) as dependency_count
+        ORDER BY dependency_count DESC
+        LIMIT 30
+
+## Isolated Routines
+MATCH (r:Routine)
+        WHERE NOT (r)-[:CALLS]->() AND NOT (r)<-[:CALLS]-()
+        RETURN r.name as routine, r.precision as precision, r.category as category
+        ORDER BY r.name
+
+## Leaf Routines
+MATCH (r:Routine)
+        WHERE NOT (r)-[:CALLS]->() AND (r)<-[:CALLS]-()
+        RETURN r.name as routine, r.precision as precision, r.category as category,
+               count{(r)<-[:CALLS]-()} as incoming_calls
+        ORDER BY incoming_calls DESC
+        LIMIT 20
+
+## Root Routines
+MATCH (r:Routine)
+        WHERE (r)-[:CALLS]->() AND NOT (r)<-[:CALLS]-()
+        RETURN r.name as routine, r.precision as precision, r.category as category,
+               count{(r)-[:CALLS]->()} as outgoing_calls
+        ORDER BY outgoing_calls DESC
+        LIMIT 20
+
+## Shortest Path Between
+MATCH path = shortestPath((r1:Routine {name: $routine1})-[:CALLS*]-(r2:Routine {name: $routine2}))
+        RETURN [n IN nodes(path) | n.name] as path, length(path) as path_length
+
+## All Paths From Routine
+MATCH path = (r:Routine {name: $routine})-[:CALLS*..3]->()
+        RETURN [n IN nodes(path) | n.name] as path, length(path) as path_length
+        ORDER BY path_length
+        LIMIT 20
+
+## Detect Cycles
+MATCH path = (r:Routine)-[:CALLS*]->(r)
+        RETURN [n IN nodes(path) | n.name] as cycle, length(path) as cycle_length
+        ORDER BY cycle_length
+        LIMIT 10
+
+## Routine Clustering Data
+MATCH (r1:Routine)-[:CALLS]-(r2:Routine)
+        RETURN r1.name as routine1, r2.name as routine2, 
+               r1.category as category1, r2.category as category2
+
+
+## Specific Routine Analysis Examples
+
+### DGEMM Dependencies
+
+        MATCH path = (r:Routine {name: 'DGEMM'})-[:CALLS*..2]->(dep:Routine)
+        RETURN DISTINCT dep.name as dependency, dep.precision as precision, 
+               dep.category as category, length(path) as distance
+        ORDER BY distance, dependency
+    
+
+### DGETRF Dependencies
+
+        MATCH path = (r:Routine {name: 'DGETRF'})-[:CALLS*..2]->(dep:Routine)
+        RETURN DISTINCT dep.name as dependency, dep.precision as precision, 
+               dep.category as category, length(path) as distance
+        ORDER BY distance, dependency
+    
+
+### DSYEV Dependencies
+
+        MATCH path = (r:Routine {name: 'DSYEV'})-[:CALLS*..2]->(dep:Routine)
+        RETURN DISTINCT dep.name as dependency, dep.precision as precision, 
+               dep.category as category, length(path) as distance
+        ORDER BY distance, dependency
+    
+
+### DGESVD Dependencies
+
+        MATCH path = (r:Routine {name: 'DGESVD'})-[:CALLS*..2]->(dep:Routine)
+        RETURN DISTINCT dep.name as dependency, dep.precision as precision, 
+               dep.category as category, length(path) as distance
+        ORDER BY distance, dependency
+    
+

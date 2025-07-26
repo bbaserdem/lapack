@@ -188,3 +188,9 @@ exports/
 
 # Duplicated neo4j data directory
 neo4j-data/neo4j-data/
+
+# Neo4j embedded database files
+data/databases/
+data/transactions/
+data/server_id
+run/
