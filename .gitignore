@@ -182,3 +182,9 @@ neo4j-data/licenses/
 # Neo4j backups (too large for git)
 backups/
 exports/
+
+# Claude Flow swarm data
+.swarm/
+
+# Duplicated neo4j data directory
+neo4j-data/neo4j-data/
