@@ -242,12 +242,15 @@ mod tests {
         assert_eq!(matrix.cols(), vector.len());
         let mut result = Vector::<f64>::zeros(matrix.rows());
         
-        for i in 0..matrix.rows() {
-            let mut sum = 0.0;
-            for j in 0..matrix.cols() {
-                sum += matrix.get(i, j).unwrap() * vector.get(j).unwrap();
+        // Use unsafe accesses for better performance in tests
+        unsafe {
+            for i in 0..matrix.rows() {
+                let mut sum = 0.0;
+                for j in 0..matrix.cols() {
+                    sum += matrix.get_unchecked(i, j) * vector.get_unchecked(j);
+                }
+                *result.get_unchecked_mut(i) = sum;
             }
-            result.set(i, sum).unwrap();
         }
         result
     }

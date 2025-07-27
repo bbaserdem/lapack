@@ -1,4 +1,42 @@
 //! Matrix and Vector types for safe LAPACK operations
+//!
+//! This module provides high-performance matrix and vector types optimized
+//! for LAPACK operations. Key features include:
+//! 
+//! - **Layout flexibility**: Support for both row-major and column-major layouts
+//! - **Zero-copy layout conversion**: In-place transposition for large matrices
+//! - **Safe and unsafe APIs**: Bounds-checked methods with unchecked variants for performance
+//! - **LAPACK compatibility**: Direct use with LAPACK FFI bindings
+//!
+//! # Performance Considerations
+//!
+//! For optimal performance:
+//! - Use `get_unchecked` / `get_unchecked_mut` in tight loops after validating bounds
+//! - Prefer column-major layout for LAPACK operations (avoids conversion)
+//! - Use `convert_layout` for in-place layout changes on large matrices
+//!
+//! # Examples
+//!
+//! ```rust
+//! use lapack::{Matrix, Layout};
+//! 
+//! // Create a 3x3 matrix in row-major layout
+//! let mut mat = Matrix::from_slice(&[1.0, 2.0, 3.0,
+//!                                    4.0, 5.0, 6.0,
+//!                                    7.0, 8.0, 9.0], 3, 3, Layout::RowMajor)?;
+//!
+//! // Convert to column-major for LAPACK (in-place for large matrices)
+//! mat.convert_layout(Layout::ColumnMajor);
+//!
+//! // Safe element access
+//! let val = mat.get(1, 2)?;
+//! 
+//! // Unsafe element access for performance
+//! unsafe {
+//!     let fast_val = mat.get_unchecked(1, 2);
+//! }
+//! # Ok::<(), lapack::Error>(())
+//! ```
 
 use crate::{Error, Layout, Result};
 use std::fmt;
@@ -107,6 +145,19 @@ impl<T: Clone + Default> Matrix<T> {
 
         Ok(&self.data[index])
     }
+    
+    /// Get matrix element at (row, col) without bounds checking
+    /// 
+    /// # Safety
+    /// Caller must ensure that row < self.rows and col < self.cols
+    #[inline]
+    pub unsafe fn get_unchecked(&self, row: usize, col: usize) -> &T {
+        let index = match self.layout {
+            Layout::RowMajor => row * self.cols + col,
+            Layout::ColumnMajor => col * self.rows + row,
+        };
+        self.data.get_unchecked(index)
+    }
 
     /// Set matrix element at (row, col)
     pub fn set(&mut self, row: usize, col: usize, value: T) -> Result<()> {
@@ -141,6 +192,19 @@ impl<T: Clone + Default> Matrix<T> {
         };
 
         Ok(&mut self.data[index])
+    }
+    
+    /// Get a mutable reference to element at (row, col) without bounds checking
+    /// 
+    /// # Safety
+    /// Caller must ensure that row < self.rows and col < self.cols
+    #[inline]
+    pub unsafe fn get_unchecked_mut(&mut self, row: usize, col: usize) -> &mut T {
+        let index = match self.layout {
+            Layout::RowMajor => row * self.cols + col,
+            Layout::ColumnMajor => col * self.rows + row,
+        };
+        self.data.get_unchecked_mut(index)
     }
 
     /// Check if the matrix has the same dimensions as another matrix
@@ -204,15 +268,110 @@ impl<T: Clone> Matrix<T> {
     }
 
     /// Convert matrix layout in place (mutating version)
+    ///
+    /// This method efficiently converts between row-major and column-major layouts.
+    /// For small matrices (< 64 elements), it uses a simple allocation-based approach.
+    /// For larger matrices, it performs in-place transposition to avoid memory allocation.
+    ///
+    /// # Performance
+    /// 
+    /// - Small matrices: O(n) time, O(n) space
+    /// - Large matrices: O(n) time, O(1) space (plus temporary cycle tracking)
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use lapack::{Matrix, Layout};
+    /// 
+    /// let mut mat = Matrix::from_slice(&[1.0, 2.0, 3.0, 4.0], 2, 2, Layout::RowMajor)?;
+    /// mat.convert_layout(Layout::ColumnMajor);
+    /// assert_eq!(mat.layout(), Layout::ColumnMajor);
+    /// # Ok::<(), lapack::Error>(())
+    /// ```
     pub fn convert_layout(&mut self, target_layout: Layout) {
         if self.layout == target_layout {
             return;
         }
 
-        *self = match target_layout {
-            Layout::RowMajor => self.to_row_major(),
-            Layout::ColumnMajor => self.to_column_major(),
+        // For small matrices, use the simple allocation-based approach
+        if self.data.len() < 64 {
+            *self = match target_layout {
+                Layout::RowMajor => self.to_row_major(),
+                Layout::ColumnMajor => self.to_column_major(),
+            };
+            return;
+        }
+
+        // For larger matrices, use in-place transposition
+        self.transpose_in_place();
+        self.layout = target_layout;
+    }
+
+    /// In-place matrix transposition using cycle-following algorithm
+    /// This avoids allocating a new vector for the transposed data
+    fn transpose_in_place(&mut self) {
+        if self.rows == self.cols {
+            // Square matrix - use simple swapping
+            for i in 0..self.rows {
+                for j in i+1..self.cols {
+                    let idx1 = self.index_for(i, j);
+                    let idx2 = self.index_for(j, i);
+                    self.data.swap(idx1, idx2);
+                }
+            }
+        } else {
+            // Non-square matrix - use cycle-following algorithm
+            let size = self.data.len();
+            let mut visited = vec![false; size];
+            
+            for start in 1..size-1 {
+                if visited[start] {
+                    continue;
+                }
+                
+                let mut current = start;
+                let temp = self.data[start].clone();
+                
+                loop {
+                    let next = self.transpose_index(current);
+                    visited[current] = true;
+                    
+                    if next == start {
+                        self.data[current] = temp.clone();
+                        break;
+                    } else {
+                        self.data[current] = self.data[next].clone();
+                        current = next;
+                    }
+                }
+            }
+            
+            // Swap dimensions for the transpose
+            std::mem::swap(&mut self.rows, &mut self.cols);
+        }
+    }
+
+    /// Calculate the linear index for element at (row, col)
+    #[inline]
+    fn index_for(&self, row: usize, col: usize) -> usize {
+        match self.layout {
+            Layout::RowMajor => row * self.cols + col,
+            Layout::ColumnMajor => col * self.rows + row,
+        }
+    }
+
+    /// Calculate the transposed index for in-place transposition
+    #[inline]
+    fn transpose_index(&self, idx: usize) -> usize {
+        let (row, col) = match self.layout {
+            Layout::RowMajor => (idx / self.cols, idx % self.cols),
+            Layout::ColumnMajor => (idx % self.rows, idx / self.rows),
         };
+        
+        match self.layout {
+            Layout::RowMajor => col * self.rows + row,
+            Layout::ColumnMajor => row * self.cols + col,
+        }
     }
 }
 
@@ -280,6 +439,15 @@ impl<T: Clone + Default> Vector<T> {
             actual: index + 1,
         })
     }
+    
+    /// Get vector element at index without bounds checking
+    /// 
+    /// # Safety
+    /// Caller must ensure that index < self.len()
+    #[inline]
+    pub unsafe fn get_unchecked(&self, index: usize) -> &T {
+        self.data.get_unchecked(index)
+    }
 
     /// Set vector element at index
     pub fn set(&mut self, index: usize, value: T) -> Result<()> {
@@ -300,6 +468,15 @@ impl<T: Clone + Default> Vector<T> {
             expected: len,
             actual: index + 1,
         })
+    }
+    
+    /// Get a mutable reference to element at index without bounds checking
+    /// 
+    /// # Safety
+    /// Caller must ensure that index < self.len()
+    #[inline]
+    pub unsafe fn get_unchecked_mut(&mut self, index: usize) -> &mut T {
+        self.data.get_unchecked_mut(index)
     }
 }
 

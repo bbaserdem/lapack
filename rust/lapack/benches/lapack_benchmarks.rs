@@ -214,6 +214,23 @@ fn bench_matrix_operations(c: &mut Criterion) {
             });
         });
         
+        // Element access (sequential, unsafe)
+        group.bench_with_input(BenchmarkId::new("sequential_access_unsafe", n), &n, |b, &n| {
+            let data: Vec<f64> = (0..n*n).map(|i| i as f64).collect();
+            let matrix = Matrix::from_vec(data, n, n, Layout::ColumnMajor).unwrap();
+            b.iter(|| {
+                let mut sum = 0.0;
+                unsafe {
+                    for i in 0..n {
+                        for j in 0..n {
+                            sum += matrix.get_unchecked(i, j);
+                        }
+                    }
+                }
+                black_box(sum);
+            });
+        });
+        
         // Element access (random)
         group.bench_with_input(BenchmarkId::new("random_access", n), &n, |b, &n| {
             let data: Vec<f64> = (0..n*n).map(|i| i as f64).collect();
