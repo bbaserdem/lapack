@@ -701,7 +701,7 @@
         "description": "Analyze the existing LAPACK codebase to understand its structure, build system, and how language bindings are currently implemented. Focus on LAPACKE (C interface) as the foundation for Rust FFI.",
         "details": "",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "subtasks": [
@@ -711,7 +711,7 @@
             "description": "Map out the LAPACK directory structure to identify key directories for source code (e.g., src, blas), testing, and documentation. Document the purpose of each major directory.",
             "dependencies": [],
             "details": "Use `tree` command or a file explorer to visualize the directory structure. Create a markdown document outlining the purpose of each directory. Focus on directories containing Fortran source code, CMake files, and LAPACKE headers.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Manually verify the accuracy of the directory structure documentation."
           },
           {
@@ -720,7 +720,7 @@
             "description": "Examine the top-level CMakeLists.txt and other relevant CMake files to understand how LAPACK is built. Identify key build options, dependencies, and target definitions. Focus on how LAPACKE is built.",
             "dependencies": [],
             "details": "Read through the CMakeLists.txt files, paying attention to `add_library`, `target_link_libraries`, and `option` commands. Identify the CMake targets related to LAPACKE. Document the build process and key CMake variables.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run `cmake -LA` in the LAPACK build directory to list all CMake variables and their values. Verify that the build options are correctly configured."
           },
           {
@@ -729,7 +729,7 @@
             "description": "Study the LAPACKE header files (e.g., lapacke.h) to understand the C interface to LAPACK routines. Identify the naming conventions, data types, and function signatures used in LAPACKE.",
             "dependencies": [],
             "details": "Open the LAPACKE header files and examine the function declarations. Pay attention to the use of `lapack_int`, `lapack_complex_float`, and other LAPACK-specific data types. Document the naming conventions and function signature patterns.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Write a small C program that includes the LAPACKE header and calls a simple LAPACKE routine (e.g., `LAPACKE_dgesv`). Compile and run the program to verify that the header is correctly included and the routine can be called."
           },
           {
@@ -738,7 +738,7 @@
             "description": "Based on the project goals (FFI bindings for common linear algebra operations), identify a subset of core LAPACK routines to prioritize for initial Rust FFI bindings. Consider routines for solving linear systems, eigenvalue problems, and singular value decomposition.",
             "dependencies": [],
             "details": "Consult with domain experts or refer to common linear algebra textbooks to identify frequently used LAPACK routines. Create a list of routines with their corresponding LAPACKE function names and a brief description of their purpose. Prioritize routines with simple data types (e.g., `double`, `lapack_int`).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Review existing Rust linear algebra libraries to identify commonly used LAPACK routines. Compare the list of prioritized routines with the routines used in these libraries."
           },
           {
@@ -752,7 +752,7 @@
               "14.4"
             ],
             "details": "Compile the information gathered in the previous subtasks into a single document. Use Markdown or a similar format for easy readability. Include diagrams or tables to illustrate the directory structure and CMake build process. Clearly document the naming conventions and data types used in LAPACKE.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Have another team member review the document for accuracy and completeness. Ensure that the document is well-organized and easy to understand."
           }
         ]
@@ -763,7 +763,7 @@
         "description": "Set up the initial Rust project structure within LAPACK. Create workspace with lapack-sys (raw FFI) and lapack (safe wrapper) crates.",
         "details": "",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "subtasks": [
@@ -773,7 +773,7 @@
             "description": "Create the `rust/` directory at the project root and initialize a Cargo workspace within it. This workspace will contain the `lapack-sys` and `lapack` crates.",
             "dependencies": [],
             "details": "1. Create a directory named `rust` at the root of the project.\n2. Navigate into the `rust` directory.\n3. Run `cargo new --vcs none --name lapack-rust` to create a workspace Cargo.toml file. This will create a directory called `lapack-rust` which we will rename to `rust` and then delete the original `rust` directory.\n4. Edit the `Cargo.toml` file to define the workspace. Add `members = [\"lapack-sys\", \"lapack\"]` to the `[workspace]` section.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that the `rust/Cargo.toml` file exists and contains the correct workspace configuration."
           },
           {
@@ -784,7 +784,7 @@
               "15.1"
             ],
             "details": "1. Navigate to the `rust` directory.\n2. Run `cargo new --lib lapack-sys` to create the `lapack-sys` crate.\n3. Add `cbindgen` as a build dependency in `lapack-sys/Cargo.toml`.\n4. Create a `build.rs` file in the `lapack-sys` crate root.\n5. Implement the `build.rs` script to use `cbindgen` to generate the C header file from the LAPACK C source code. The header file should be placed in the crate's root directory. The `build.rs` script should also link against the native LAPACK library. Add `println!(\"cargo:rustc-link-lib=dylib=lapacke\")` to the `build.rs` file.\n6. Add `include = [\"src/*.rs\", \"*.h\"]` to the `Cargo.toml` file.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that the `lapack-sys` crate is created and that the `build.rs` script generates the C header file correctly. Check that the crate links against the native LAPACK library."
           },
           {
@@ -796,7 +796,7 @@
               "15.2"
             ],
             "details": "1. Navigate to the `rust` directory.\n2. Run `cargo new --lib lapack` to create the `lapack` crate.\n3. Add `lapack-sys` as a dependency in `lapack/Cargo.toml`.\n4. Create a basic module structure within `lapack/src/lib.rs` to start defining the safe wrappers. This can initially be empty, but should include a `mod dgesv;` declaration to indicate the intention to wrap the DGESV routine.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that the `lapack` crate is created and that it depends on `lapack-sys`. Check that the basic module structure is in place."
           },
           {
@@ -808,7 +808,7 @@
               "15.3"
             ],
             "details": "1. In `lapack-sys/Cargo.toml`, ensure the `[build-dependencies]` section includes `cbindgen` and that the `[lib]` section specifies the crate type as `cdylib`.\n2. In `lapack/Cargo.toml`, ensure the `[dependencies]` section includes `lapack-sys` with the correct path. Add metadata such as authors, description, and license to both `Cargo.toml` files.\n3. Add `build = \"build.rs\"` to `lapack-sys/Cargo.toml`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that both `Cargo.toml` files are correctly configured with the necessary dependencies, build configurations, and metadata. Run `cargo check` in both crates to ensure that the dependencies are resolved correctly and that the code compiles without errors."
           }
         ]
@@ -1217,7 +1217,7 @@
     ],
     "metadata": {
       "created": "2025-07-25T14:06:48.573Z",
-      "updated": "2025-07-27T04:12:08.294Z",
+      "updated": "2025-07-27T16:14:39.899Z",
       "description": "Tasks for master context"
     }
   }
