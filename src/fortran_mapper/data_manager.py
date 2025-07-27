@@ -42,9 +42,9 @@ class DataManager:
             f.write("## Restore\n\n")
             f.write("```bash\n")
             f.write("# Using Cypher file\n")
-            f.write(f"lapack-util import {backup_path}/lapack_graph_*.cypher\n\n")
+            f.write(f"fortran-mapper import {backup_path}/lapack_graph_*.cypher\n\n")
             f.write("# Using JSON file\n")
-            f.write(f"lapack-util import {backup_path}/lapack_graph_*.json\n")
+            f.write(f"fortran-mapper import {backup_path}/lapack_graph_*.json\n")
             f.write("```\n")
         
         print(f"\nBackup created successfully: {backup_path}")
@@ -220,4 +220,4 @@ SET r.analyzed = true,
         
         print(f"Sample data created: {output_path}")
         print(f"\nTo import this sample data:")
-        print(f"  lapack-util import {output_path}")
+        print(f"  fortran-mapper import {output_path}")

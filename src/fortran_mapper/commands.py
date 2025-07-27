@@ -1,4 +1,4 @@
-"""Command implementations for lapack-util CLI."""
+"""Command implementations for fortran-mapper CLI."""
 
 import os
 from pathlib import Path
@@ -61,8 +61,8 @@ def analyze_command(routine_name: str, depth: int = 2,
         
         result = results[0]
         print(f"\nAnalysis for {routine_name}:")
-        print(f"  Calls: {', '.join(result['calls']) if result['calls'][0] else 'None'}")
-        print(f"  Called by: {', '.join(result['called_by']) if result['called_by'][0] else 'None'}")
+        print(f"  Calls: {', '.join(result['calls']) if result['calls'] and result['calls'][0] else 'None'}")
+        print(f"  Called by: {', '.join(result['called_by']) if result['called_by'] and result['called_by'][0] else 'None'}")
         
         # Get recursive dependencies if depth > 1
         if depth > 1:

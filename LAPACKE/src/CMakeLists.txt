@@ -621,6 +621,7 @@ lapacke_cupmtr.c
 lapacke_cupmtr_work.c
 )
 set(SOURCES_DOUBLE
+${SOURCES_SPARSE}
 lapacke_dbbcsd.c
 lapacke_dbbcsd_work.c
 lapacke_dbdsdc.c

@@ -1,4 +1,4 @@
-"""Command-line interface for LAPACK utilities."""
+"""Command-line interface for Fortran Mapper."""
 
 import argparse
 import sys
@@ -6,10 +6,10 @@ import logging
 from . import commands
 
 def main():
-    """Main entry point for lapack-util CLI."""
+    """Main entry point for fortran-mapper CLI."""
     parser = argparse.ArgumentParser(
-        prog='lapack-util',
-        description='LAPACK computational graph analysis utilities'
+        prog='fortran-mapper',
+        description='A flexible, extensible Fortran code mapper with hook-based customization'
     )
     
     # Global options
