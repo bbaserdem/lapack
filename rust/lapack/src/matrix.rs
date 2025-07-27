@@ -30,6 +30,11 @@ impl<T: Clone + Default> Matrix<T> {
         Self { data, rows, cols, layout }
     }
 
+    /// Create a matrix filled with zeros
+    pub fn zeros(rows: usize, cols: usize, layout: Layout) -> Result<Self> {
+        Ok(Self::new(rows, cols, layout))
+    }
+
     /// Create a matrix from existing data with specified layout
     pub fn from_vec(data: Vec<T>, rows: usize, cols: usize, layout: Layout) -> Result<Self> {
         if data.len() != rows * cols {
@@ -216,6 +221,11 @@ impl<T: Clone + Default> Vector<T> {
     pub fn new(len: usize) -> Self {
         let data = vec![T::default(); len];
         Self { data }
+    }
+
+    /// Create a vector filled with zeros
+    pub fn zeros(len: usize) -> Self {
+        Self::new(len)
     }
 
     /// Create a vector from existing data
