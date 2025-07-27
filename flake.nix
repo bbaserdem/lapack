@@ -34,7 +34,7 @@
     ...
   } @ inputs: let
     outputs = self;
-    projectName = "lapack-util";
+    projectName = "fortran-mapper";
   in
     flake-utils.lib.eachDefaultSystem (system: let
       # Grab UV stuff

@@ -59,3 +59,9 @@ Create test matrices (identity, tridiagonal, random sparse patterns). Test all c
 ### Details:
 
 
+## 9. Write initial tests for sparse matrix initialization [done]
+### Dependencies: None
+### Description: Create test_sparse_init.f90 with tests for COO, CSR, CSC initialization and DCOO2CSR conversion
+### Details:
+
+

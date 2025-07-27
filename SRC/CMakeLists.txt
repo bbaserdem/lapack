@@ -598,4 +598,7 @@ if(_is_coverage_build)
   add_coverage(${LAPACKLIB}_obj)
 endif()
 
+# Add sparse matrix subdirectory
+add_subdirectory(SPARSE)
+
 lapack_install_library(${LAPACKLIB})

@@ -74,3 +74,7 @@ If ANY answer is "No", you MUST combine operations into a single message!
 - We will use nix and uv2nix to actually install the packages and set up our venv, so we will deal with that outside of pip.
 
 [Rest of the existing file content continues...]
+
+## Task Master AI Instructions
+**Import Task Master's development workflow commands and guidelines, treat as if import is in the main CLAUDE.md file.**
+@.taskmaster/CLAUDE.md

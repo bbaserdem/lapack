@@ -1,0 +1,99 @@
+{
+	"meta": {
+		"generatedAt": "2025-07-27T02:36:11.577Z",
+		"tasksAnalyzed": 7,
+		"totalTasks": 20,
+		"analysisCount": 7,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 10,
+			"taskTitle": "Phase 3: Basic Operations - SpMV and Element Access",
+			"complexityScore": 7,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Decompose each SpMV and element access routine into smaller, testable units, such as data structure manipulation, index calculations, and error handling. For DSPSET, detail the reallocation strategy.",
+			"reasoning": "Implementing SpMV for different formats and element access requires careful attention to data structures and algorithms. Reallocation in DSPSET adds complexity. While subtasks exist, further decomposition will improve testability and manageability."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Phase 4: Testing and Integration - Validation and Build System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 12,
+			"expansionPrompt": "Break down the testing tasks into specific test cases for each conversion routine and SpMV verification. Detail the steps for integrating the sparse module into the LAPACK build system, including dependency management and installation rules.",
+			"reasoning": "Testing and integration are complex due to the need for thorough validation and compatibility with the existing LAPACK build system. The existing subtasks are high-level; more granular subtasks are needed for effective tracking and execution."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Phase 5: Advanced Features - Matrix Operations and Optimization",
+			"complexityScore": 9,
+			"recommendedSubtasks": 12,
+			"expansionPrompt": "Decompose each advanced matrix operation and optimization utility into smaller, manageable units, focusing on algorithm implementation, memory management, and performance tuning. Detail the steps for handling different sparsity patterns and edge cases.",
+			"reasoning": "Implementing advanced sparse matrix operations and optimization utilities is highly complex, requiring deep understanding of sparse matrix algorithms and performance considerations. The existing subtasks are too broad and need further refinement."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Phase 6: Extended Precision - Multi-precision Support",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Break down the porting process for each precision (single, complex, double complex) into smaller, testable units, focusing on data type conversions, numerical stability considerations, and testing. Detail the documentation requirements for each precision.",
+			"reasoning": "Porting to multiple precisions requires careful attention to data type conversions, numerical stability, and testing. While the existing subtasks cover the main precisions, further decomposition is needed to manage the complexity of each porting effort."
+			"taskId": 14,
+			"taskTitle": "Phase 1: Analysis - Understand LAPACK structure, CMake build, and LAPACKE interface",
+			"complexityScore": 6,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Expand each existing subtask to include specific actions, tools, and expected outputs. For example, detail the specific CMake commands to analyze, the exact header files to review, and the format of the documentation to be created.",
+			"reasoning": "The task involves understanding a large codebase and build system. While the existing subtasks are a good start, they lack granular detail. More subtasks will ensure a thorough analysis."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Phase 2: Setup - Create Rust crate structure with Cargo.toml and build.rs",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the `build.rs` creation and configuration into smaller steps, detailing the specific commands and configurations needed for cbindgen and linking. Add subtasks for testing the build process at each stage.",
+			"reasoning": "Setting up the Rust crate structure with FFI requires careful configuration. More subtasks focused on the build process and testing will reduce potential errors."
+		},
+		{
+			"taskId": 16,
+			"taskTitle": "Phase 3: FFI Generation - Configure bindgen to generate bindings from lapacke.h",
+			"complexityScore": 8,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Detail the specific bindgen configurations needed (e.g., include paths, blocklists, wrapper generation). Add subtasks for handling different data types and function signatures in LAPACKE. Include steps for verifying the generated bindings with simple test cases.",
+			"reasoning": "Generating FFI bindings with bindgen can be complex, especially with a large library like LAPACK. More subtasks will ensure proper configuration and validation of the bindings."
+		},
+		{
+			"taskId": 17,
+			"taskTitle": "Phase 4: Safe API - Design and implement safe Rust wrapper types and functions",
+			"complexityScore": 9,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Expand the subtasks to include specific design decisions for the `Matrix` and `Vector` types (e.g., memory layout, ownership). Add subtasks for handling different data types (e.g., `f32`, `f64`, `Complex<f64>`). Include steps for testing the safe API with property-based testing.",
+			"reasoning": "Designing a safe and efficient Rust API around raw FFI bindings is challenging. More subtasks will ensure proper memory management, error handling, and type safety."
+		},
+		{
+			"taskId": 18,
+			"taskTitle": "Phase 5: Integration - Integrate Rust build into LAPACK's CMake system",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Detail the specific CMake commands and configurations needed to integrate the Rust build. Add subtasks for handling different build environments and dependencies. Include steps for testing the integration with different CMake options.",
+			"reasoning": "Integrating the Rust build into LAPACK's CMake system requires careful configuration. More subtasks will ensure proper integration and compatibility with different build environments."
+		},
+		{
+			"taskId": 19,
+			"taskTitle": "Phase 6: Testing - Port key LAPACK tests to Rust and ensure correctness",
+			"complexityScore": 8,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Expand the subtasks to include specific test cases for different LAPACK routines. Add subtasks for handling different data types and matrix properties. Include steps for analyzing the performance of the Rust implementation and identifying potential bottlenecks.",
+			"reasoning": "Thorough testing is crucial for ensuring the correctness and performance of the Rust bindings. More subtasks will ensure comprehensive test coverage and performance analysis."
+		},
+		{
+			"taskId": 20,
+			"taskTitle": "Phase 7: Documentation - Write Rust API docs and integration guide",
+			"complexityScore": 6,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the documentation tasks into smaller steps, detailing the specific information to be included in each document. Add subtasks for reviewing and editing the documentation to ensure clarity and accuracy. Include steps for generating and publishing the documentation.",
+			"reasoning": "Comprehensive documentation is essential for the usability and maintainability of the Rust bindings. More subtasks will ensure that the documentation is complete, accurate, and easy to understand."
+		}
+	]
+}

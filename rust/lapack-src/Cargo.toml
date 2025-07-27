@@ -1,0 +1,55 @@
+[package]
+name = "lapack-src"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation = "https://docs.rs/lapack-src"
+categories.workspace = true
+keywords.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "LAPACK source provider for selecting backend implementations"
+readme = "README.md"
+
+[dependencies]
+
+[features]
+default = []
+
+# Backend selection (mutually exclusive)
+netlib = ["netlib-src"]
+openblas = ["openblas-src"]
+intel-mkl = ["intel-mkl-src"]
+
+# Linking options (can be combined with backend selection)
+static = []
+system = []
+
+# Convenience features for common configurations
+netlib-static = ["netlib", "static", "netlib-src/static"]
+netlib-system = ["netlib", "system", "netlib-src/system"]
+
+openblas-static = ["openblas", "static", "openblas-src/static"]
+openblas-system = ["openblas", "system", "openblas-src/system"]
+
+intel-mkl-static = ["intel-mkl", "static", "intel-mkl-src/static"]
+intel-mkl-dynamic = ["intel-mkl", "intel-mkl-src/dynamic"]
+
+# Cache feature for build performance
+cache = ["openblas-src?/cache"]
+
+# Backend dependencies
+[dependencies.netlib-src]
+version = "0.8"
+optional = true
+
+[dependencies.openblas-src]
+version = "0.10"
+optional = true
+features = []
+
+[dependencies.intel-mkl-src]
+version = "0.8"
+optional = true

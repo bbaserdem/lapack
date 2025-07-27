@@ -11,7 +11,7 @@ Implement DCOO2CSR (COO to CSR conversion with row sorting), DCOO2CSC (COO to CS
 
 
 # Subtasks:
-## 1. Implement DCOO2CSR conversion [pending]
+## 1. Implement DCOO2CSR conversion [done]
 ### Dependencies: None
 ### Description: Convert COO to CSR format with row sorting and row pointer construction
 ### Details:

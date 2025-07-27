@@ -1,0 +1,44 @@
+[package]
+name = "lapack-sys"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation = "https://docs.rs/lapack-sys"
+categories.workspace = true
+keywords.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Low-level FFI bindings to LAPACK (Linear Algebra PACKage)"
+readme = "README.md"
+
+[dependencies]
+libc.workspace = true
+lapack-src = { version = "0.1", path = "../lapack-src" }
+
+[build-dependencies]
+# Dependencies for code generation will be added here
+
+[features]
+default = ["std"]
+
+# Standard library support
+std = []
+
+# Pass-through features from lapack crate
+# These control which FFI bindings are generated/included
+linear-systems = []
+least-squares = []
+eigenvalues = []
+svd = []
+factorization = []
+orthogonal = []
+reduction = []
+blas1 = []
+blas2 = []
+blas3 = []
+utility = []
+single = []
+double = []
+complex = []

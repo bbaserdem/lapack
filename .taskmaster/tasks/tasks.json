@@ -216,7 +216,7 @@
         "description": "Set up and configure a Neo4j server to store and manage the LAPACK subroutine dependency graph. This includes installing Neo4j, configuring it for local access, and optimizing settings for graph storage and querying.",
         "details": "1.  **Install Neo4j:** Download and install the Neo4j Community Edition from the official Neo4j website. Follow the installation instructions for the target operating system (Linux, macOS, or Windows).\n2.  **Configure Neo4j:**\n    *   Modify the `neo4j.conf` file (located in the Neo4j configuration directory) to allow remote access (if needed) by setting `dbms.default_listen_address=0.0.0.0`.\n    *   Set the heap size in `neo4j.conf` based on available system memory. A reasonable starting point is `dbms.memory.heap.initial_size=4g` and `dbms.memory.heap.max_size=8g`. Adjust these values based on the size of the LAPACK dependency graph.\n    *   Configure the location of the database files by setting `dbms.directories.data` and `dbms.directories.logs`.\n    *   Enable Cypher shell access by uncommenting `dbms.shell.enabled=true`.\n3.  **Start Neo4j Server:** Start the Neo4j server using the appropriate command for the operating system (e.g., `neo4j start` on Linux/macOS).\n4.  **Verify Installation:** Access the Neo4j browser interface by navigating to `http://localhost:7474` in a web browser. Use the default credentials (neo4j/neo4j) to log in and change the password.\n5.  **Create a Database:** Create a new Neo4j database specifically for the LAPACK dependency graph. This can be done through the Neo4j browser interface or using Cypher commands.\n6.  **Optimize Configuration:**\n    *   Tune Neo4j's memory settings based on the size of the graph. Monitor performance and adjust `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` accordingly.\n    *   Consider using Neo4j Bloom for graph visualization and exploration.\n7.  **Security Considerations:** If the Neo4j server is exposed to a network, configure appropriate authentication and authorization mechanisms to protect the database.",
         "testStrategy": "1.  **Installation Verification:** Ensure that Neo4j is installed correctly and the server starts without errors.\n2.  **Browser Access:** Verify that the Neo4j browser interface is accessible via `http://localhost:7474`.\n3.  **Database Creation:** Confirm that a new database can be created successfully.\n4.  **Configuration Validation:** Check that the configured settings in `neo4j.conf` are applied correctly by examining the Neo4j logs.\n5.  **Performance Testing:** Import a sample LAPACK dependency graph (generated from Task 4) into the Neo4j database. Run several Cypher queries to test query performance. Monitor CPU and memory usage during query execution. Adjust memory settings as needed.\n6.  **Security Audit:** If the Neo4j server is exposed to a network, perform a security audit to ensure that appropriate authentication and authorization mechanisms are in place.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           3,
           4
@@ -276,7 +276,7 @@
         "description": "Set up the foundation for sparse matrix implementation in LAPACK. Create the directory structure under /SRC/SPARSE/ and implement core type definitions.",
         "details": "Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR/, CSC/, IO/. Implement sparse_types.f90 module with derived types for COO, CSR, and CSC formats. Implement sparse_constants.f90 for error codes and format identifiers. Create basic COO operations: DCOOALLOC (memory allocation), DCOOINIT (initialization from arrays), DCOOCHECK (validation), and DCOOFREE (deallocation).",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "subtasks": [
@@ -285,7 +285,7 @@
             "title": "Create /SRC/SPARSE/ directory hierarchy",
             "description": "Create the main SPARSE directory under /SRC/ with subdirectories: MODULES/, COO/, CSR/, CSC/, IO/",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -294,7 +294,7 @@
             "title": "Implement sparse_types.f90 module",
             "description": "Create module with derived type definitions for sparse_coo_d, sparse_csr_d, and sparse_csc_d structures",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -303,7 +303,7 @@
             "title": "Implement sparse_constants.f90 module",
             "description": "Define sparse-specific constants, error codes, and format identifiers",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -312,7 +312,7 @@
             "title": "Implement DCOOALLOC routine",
             "description": "Create routine for COO matrix memory allocation",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -321,7 +321,7 @@
             "title": "Implement DCOOINIT routine",
             "description": "Create routine to initialize COO matrix from row, column, and value arrays",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -330,7 +330,7 @@
             "title": "Implement DCOOCHECK routine",
             "description": "Create routine to validate COO matrix structure (bounds checking, duplicate detection)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -339,7 +339,25 @@
             "title": "Implement DCOOFREE routine",
             "description": "Create routine to deallocate COO matrix memory",
             "details": "",
-            "status": "pending",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 8,
+            "title": "Implement DCSRALLOC and DCSRINIT routines",
+            "description": "Create CSR matrix allocation and initialization routines",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 9,
+            "title": "Implement DCSCALLOC and DCSCINIT routines",
+            "description": "Create CSC matrix allocation and initialization routines",
+            "details": "",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           }
@@ -351,7 +369,7 @@
         "description": "Implement conversion routines between different sparse matrix formats (COO, CSR, CSC) and between sparse and dense formats.",
         "details": "Implement DCOO2CSR (COO to CSR conversion with row sorting), DCOO2CSC (COO to CSC conversion with column sorting), DCSR2COO and DCSC2COO (reverse conversions). Implement dense matrix interface: DDEN2COO (dense to COO, skipping zeros) and DCOO2DEN (COO to dense, filling zeros). These conversions are critical for interoperability with existing LAPACK routines.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8
         ],
@@ -362,7 +380,7 @@
             "title": "Implement DCOO2CSR conversion",
             "description": "Convert COO to CSR format with row sorting and row pointer construction",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -371,7 +389,7 @@
             "title": "Implement DCOO2CSC conversion",
             "description": "Convert COO to CSC format with column sorting and column pointer construction",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -380,7 +398,7 @@
             "title": "Implement DCSR2COO conversion",
             "description": "Convert CSR format back to COO",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -389,7 +407,7 @@
             "title": "Implement DCSC2COO conversion",
             "description": "Convert CSC format back to COO",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -398,7 +416,7 @@
             "title": "Implement DDEN2COO conversion",
             "description": "Convert dense matrix to COO format, skipping zero elements",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -407,7 +425,7 @@
             "title": "Implement DCOO2DEN conversion",
             "description": "Convert COO to dense matrix, filling in zeros",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           }
@@ -419,7 +437,7 @@
         "description": "Implement sparse matrix-vector multiplication (SpMV) for all formats and basic element operations.",
         "details": "Implement DCSRMV (CSR matrix-vector multiply, optimized for row access), DCSCMV (CSC matrix-vector multiply for column operations), and DCOOMV (COO reference implementation). Add element operations: DSPGET (get element value), DSPSET (set element value with potential reallocation), and DCOOTRANS (in-place COO transpose). These operations form the core computational kernel for sparse linear algebra.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9
@@ -431,7 +449,7 @@
             "title": "Implement DCSRMV routine",
             "description": "CSR matrix-vector multiplication optimized for row access",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -440,7 +458,7 @@
             "title": "Implement DCSCMV routine",
             "description": "CSC matrix-vector multiplication for column operations",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -449,7 +467,7 @@
             "title": "Implement DCOOMV routine",
             "description": "COO matrix-vector multiplication as reference implementation",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -458,7 +476,7 @@
             "title": "Implement DSPGET function",
             "description": "Get element value from sparse matrix with search",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -467,7 +485,7 @@
             "title": "Implement DSPSET subroutine",
             "description": "Set element value in sparse matrix, handle reallocation if needed",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -476,7 +494,7 @@
             "title": "Implement DCOOTRANS subroutine",
             "description": "In-place transpose of COO matrix",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           }
@@ -488,7 +506,7 @@
         "description": "Create comprehensive test suite and integrate sparse matrix module with LAPACK build system.",
         "details": "Create test matrices (identity, tridiagonal, random sparse patterns). Test all conversion routines for round-trip accuracy. Verify SpMV results against dense DGEMV. Create performance benchmark suite. Implement I/O routines: DSPREAD and DSPWRITE for Matrix Market format. Update CMakeLists.txt and Makefile to include sparse module. Ensure proper installation rules and dependencies.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9,
@@ -501,7 +519,7 @@
             "title": "Create test matrices",
             "description": "Generate identity, tridiagonal, and random sparse test matrices",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -510,7 +528,7 @@
             "title": "Test conversion round-trips",
             "description": "Verify accuracy of all format conversions (COO->CSR->COO, etc.)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -519,7 +537,7 @@
             "title": "Verify SpMV correctness",
             "description": "Compare sparse matrix-vector multiply results against dense DGEMV",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -528,7 +546,7 @@
             "title": "Create performance benchmarks",
             "description": "Develop benchmark suite for sparse operations",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -537,7 +555,7 @@
             "title": "Implement DSPREAD routine",
             "description": "Read sparse matrices in Matrix Market format",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -546,7 +564,7 @@
             "title": "Implement DSPWRITE routine",
             "description": "Write sparse matrices in Matrix Market format",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -555,7 +573,7 @@
             "title": "Update CMakeLists.txt",
             "description": "Add sparse module to CMake build configuration",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -564,7 +582,16 @@
             "title": "Add Makefile targets",
             "description": "Create Makefile targets for sparse routine compilation",
             "details": "",
-            "status": "pending",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 9,
+            "title": "Write initial tests for sparse matrix initialization",
+            "description": "Create test_sparse_init.f90 with tests for COO, CSR, CSC initialization and DCOO2CSR conversion",
+            "details": "",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           }
@@ -576,7 +603,7 @@
         "description": "Implement advanced sparse matrix operations including matrix-matrix multiplication and optimization utilities.",
         "details": "Implement DCSRCSC (sparse-sparse multiplication), DGECSR (dense-sparse multiplication), and DSPADD2 (sparse matrix addition). Add optimization utilities: DSPSORT (sort indices for better cache performance), DSPCOMP (remove duplicates and explicit zeros), and DSPSIZE (dynamic reallocation for changing sparsity patterns). These features enable complex sparse linear algebra operations.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9,
@@ -590,7 +617,7 @@
             "title": "Implement DCSRCSC routine",
             "description": "Sparse-sparse multiplication (CSR × CSC)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -599,7 +626,7 @@
             "title": "Implement DGECSR routine",
             "description": "Dense-sparse multiplication",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -608,7 +635,7 @@
             "title": "Implement DSPADD2 routine",
             "description": "Addition of same-format sparse matrices",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -617,7 +644,7 @@
             "title": "Implement DSPSORT routine",
             "description": "Sort indices for better cache performance",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -626,7 +653,7 @@
             "title": "Implement DSPCOMP routine",
             "description": "Remove duplicates and explicit zeros",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -635,7 +662,7 @@
             "title": "Implement DSPSIZE routine",
             "description": "Dynamic reallocation for changing sparsity patterns",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           }
@@ -647,7 +674,7 @@
         "description": "Port all sparse matrix routines to support LAPACK's full range of data types: single, double, complex, and double complex.",
         "details": "Port all double precision (D) routines to single precision (S prefix), complex (C prefix), and double complex (Z prefix). Maintain consistent naming and interface across all precisions. Create comprehensive documentation with examples for each precision. Ensure numerical stability considerations are addressed for each data type. This completes full LAPACK integration.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9,
@@ -662,7 +689,7 @@
             "title": "Port to single precision",
             "description": "Convert all double precision (D) routines to single precision (S prefix)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -671,7 +698,7 @@
             "title": "Port to complex type",
             "description": "Convert all routines to complex type (C prefix)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -680,7 +707,7 @@
             "title": "Port to double complex",
             "description": "Convert all routines to double complex (Z prefix)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -689,16 +716,722 @@
             "title": "Create documentation",
             "description": "Write comprehensive documentation with examples for all precisions",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Phase 1: Analysis - Understand LAPACK structure, CMake build, and LAPACKE interface",
+        "description": "Analyze the existing LAPACK codebase to understand its structure, build system, and how language bindings are currently implemented. Focus on LAPACKE (C interface) as the foundation for Rust FFI.",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Explore LAPACK Directory Structure",
+            "description": "Map out the LAPACK directory structure to identify key directories for source code (e.g., src, blas), testing, and documentation. Document the purpose of each major directory.",
+            "dependencies": [],
+            "details": "Use `tree` command or a file explorer to visualize the directory structure. Create a markdown document outlining the purpose of each directory. Focus on directories containing Fortran source code, CMake files, and LAPACKE headers.",
+            "status": "done",
+            "testStrategy": "Manually verify the accuracy of the directory structure documentation."
+          },
+          {
+            "id": 2,
+            "title": "Analyze CMake Build System",
+            "description": "Examine the top-level CMakeLists.txt and other relevant CMake files to understand how LAPACK is built. Identify key build options, dependencies, and target definitions. Focus on how LAPACKE is built.",
+            "dependencies": [],
+            "details": "Read through the CMakeLists.txt files, paying attention to `add_library`, `target_link_libraries`, and `option` commands. Identify the CMake targets related to LAPACKE. Document the build process and key CMake variables.",
+            "status": "done",
+            "testStrategy": "Run `cmake -LA` in the LAPACK build directory to list all CMake variables and their values. Verify that the build options are correctly configured."
+          },
+          {
+            "id": 3,
+            "title": "Review LAPACKE Headers",
+            "description": "Study the LAPACKE header files (e.g., lapacke.h) to understand the C interface to LAPACK routines. Identify the naming conventions, data types, and function signatures used in LAPACKE.",
+            "dependencies": [],
+            "details": "Open the LAPACKE header files and examine the function declarations. Pay attention to the use of `lapack_int`, `lapack_complex_float`, and other LAPACK-specific data types. Document the naming conventions and function signature patterns.",
+            "status": "done",
+            "testStrategy": "Write a small C program that includes the LAPACKE header and calls a simple LAPACKE routine (e.g., `LAPACKE_dgesv`). Compile and run the program to verify that the header is correctly included and the routine can be called."
+          },
+          {
+            "id": 4,
+            "title": "Identify Core Routines for Prioritization",
+            "description": "Based on the project goals (FFI bindings for common linear algebra operations), identify a subset of core LAPACK routines to prioritize for initial Rust FFI bindings. Consider routines for solving linear systems, eigenvalue problems, and singular value decomposition.",
+            "dependencies": [],
+            "details": "Consult with domain experts or refer to common linear algebra textbooks to identify frequently used LAPACK routines. Create a list of routines with their corresponding LAPACKE function names and a brief description of their purpose. Prioritize routines with simple data types (e.g., `double`, `lapack_int`).",
+            "status": "done",
+            "testStrategy": "Review existing Rust linear algebra libraries to identify commonly used LAPACK routines. Compare the list of prioritized routines with the routines used in these libraries."
+          },
+          {
+            "id": 5,
+            "title": "Document LAPACKE and Build Process",
+            "description": "Create a comprehensive document summarizing the findings from the previous subtasks. Include information about the LAPACK directory structure, CMake build system, LAPACKE interface, and prioritized routines. This document will serve as a reference for subsequent tasks.",
+            "dependencies": [
+              "14.1",
+              "14.2",
+              "14.3",
+              "14.4"
+            ],
+            "details": "Compile the information gathered in the previous subtasks into a single document. Use Markdown or a similar format for easy readability. Include diagrams or tables to illustrate the directory structure and CMake build process. Clearly document the naming conventions and data types used in LAPACKE.",
+            "status": "done",
+            "testStrategy": "Have another team member review the document for accuracy and completeness. Ensure that the document is well-organized and easy to understand."
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Phase 2: Setup - Create Rust crate structure with Cargo.toml and build.rs",
+        "description": "Set up the initial Rust project structure within LAPACK. Create workspace with lapack-sys (raw FFI) and lapack (safe wrapper) crates.",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create `rust/` directory and Cargo workspace",
+            "description": "Create the `rust/` directory at the project root and initialize a Cargo workspace within it. This workspace will contain the `lapack-sys` and `lapack` crates.",
+            "dependencies": [],
+            "details": "1. Create a directory named `rust` at the root of the project.\n2. Navigate into the `rust` directory.\n3. Run `cargo new --vcs none --name lapack-rust` to create a workspace Cargo.toml file. This will create a directory called `lapack-rust` which we will rename to `rust` and then delete the original `rust` directory.\n4. Edit the `Cargo.toml` file to define the workspace. Add `members = [\"lapack-sys\", \"lapack\"]` to the `[workspace]` section.",
+            "status": "done",
+            "testStrategy": "Verify that the `rust/Cargo.toml` file exists and contains the correct workspace configuration."
+          },
+          {
+            "id": 2,
+            "title": "Create `lapack-sys` crate",
+            "description": "Create the `lapack-sys` crate, which will contain the raw FFI bindings to the LAPACK library. This crate will use `build.rs` to generate the bindings.",
+            "dependencies": [
+              "15.1"
+            ],
+            "details": "1. Navigate to the `rust` directory.\n2. Run `cargo new --lib lapack-sys` to create the `lapack-sys` crate.\n3. Add `cbindgen` as a build dependency in `lapack-sys/Cargo.toml`.\n4. Create a `build.rs` file in the `lapack-sys` crate root.\n5. Implement the `build.rs` script to use `cbindgen` to generate the C header file from the LAPACK C source code. The header file should be placed in the crate's root directory. The `build.rs` script should also link against the native LAPACK library. Add `println!(\"cargo:rustc-link-lib=dylib=lapacke\")` to the `build.rs` file.\n6. Add `include = [\"src/*.rs\", \"*.h\"]` to the `Cargo.toml` file.",
+            "status": "done",
+            "testStrategy": "Verify that the `lapack-sys` crate is created and that the `build.rs` script generates the C header file correctly. Check that the crate links against the native LAPACK library."
+          },
+          {
+            "id": 3,
+            "title": "Create `lapack` crate",
+            "description": "Create the `lapack` crate, which will provide a safe Rust wrapper around the raw FFI bindings in `lapack-sys`. This crate will depend on `lapack-sys`.",
+            "dependencies": [
+              "15.1",
+              "15.2"
+            ],
+            "details": "1. Navigate to the `rust` directory.\n2. Run `cargo new --lib lapack` to create the `lapack` crate.\n3. Add `lapack-sys` as a dependency in `lapack/Cargo.toml`.\n4. Create a basic module structure within `lapack/src/lib.rs` to start defining the safe wrappers. This can initially be empty, but should include a `mod dgesv;` declaration to indicate the intention to wrap the DGESV routine.",
+            "status": "done",
+            "testStrategy": "Verify that the `lapack` crate is created and that it depends on `lapack-sys`. Check that the basic module structure is in place."
+          },
+          {
+            "id": 4,
+            "title": "Configure `Cargo.toml` files",
+            "description": "Finalize the `Cargo.toml` files for both `lapack-sys` and `lapack` crates, ensuring correct dependencies, build configurations, and metadata.",
+            "dependencies": [
+              "15.2",
+              "15.3"
+            ],
+            "details": "1. In `lapack-sys/Cargo.toml`, ensure the `[build-dependencies]` section includes `cbindgen` and that the `[lib]` section specifies the crate type as `cdylib`.\n2. In `lapack/Cargo.toml`, ensure the `[dependencies]` section includes `lapack-sys` with the correct path. Add metadata such as authors, description, and license to both `Cargo.toml` files.\n3. Add `build = \"build.rs\"` to `lapack-sys/Cargo.toml`.",
+            "status": "done",
+            "testStrategy": "Verify that both `Cargo.toml` files are correctly configured with the necessary dependencies, build configurations, and metadata. Run `cargo check` in both crates to ensure that the dependencies are resolved correctly and that the code compiles without errors."
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Phase 3: FFI Generation - Configure bindgen to generate bindings from lapacke.h",
+        "description": "Set up bindgen to automatically generate Rust FFI bindings from LAPACKE headers. Handle platform-specific configurations and ensure correct linking.",
+        "status": "pending",
+        "dependencies": [
+          15
+        ],
+        "priority": "high",
+        "details": "This task involves configuring bindgen to generate Rust FFI bindings from the LAPACKE headers. It includes handling platform-specific configurations to ensure the bindings are generated correctly for different operating systems and architectures. The generated bindings will be used in the `lapack-sys` crate. Correct linking to the native LAPACK library is crucial for the generated bindings to function correctly.",
+        "testStrategy": "The generated bindings should be tested to ensure they correctly map the LAPACKE C API. This includes compiling a simple Rust program that uses the generated bindings to call a LAPACKE function and verifying that the function returns the expected result. Platform-specific tests may be required to ensure the bindings work correctly on different operating systems and architectures. Also, verify that the generated code compiles and links correctly with the native LAPACK library.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Add bindgen as a dependency to lapack-sys crate",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create build.rs to generate bindings",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure bindgen to find lapacke.h",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Generate bindings for LAPACKE functions",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Handle platform-specific configurations in build.rs",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Ensure correct linking to the native LAPACK library",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Test the generated bindings",
+            "description": "",
+            "status": "pending",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "title": "Phase 4: Safe API - Design and implement safe Rust wrapper types and functions",
+        "description": "Create type-safe Rust wrappers around the raw FFI. Implement Matrix/Vector types, automatic layout conversion (row/column major), and proper error handling.",
+        "status": "pending",
+        "dependencies": [
+          16
+        ],
+        "priority": "high",
+        "details": "",
+        "testStrategy": "",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Rust Matrix and Vector Types",
+            "description": "Define the `Matrix` and `Vector` types in Rust, including their data layout (row-major, column-major), dimensions, and element type. Implement basic constructors and accessors.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create `Matrix` and `Vector` structs with fields for data (as `Vec<f64>` or similar), number of rows, number of columns, and layout (enum: RowMajor, ColumnMajor). Implement `new()` functions for creating matrices and vectors, and methods for accessing elements (e.g., `get()`, `set()`). Consider using generics for element type.",
+            "testStrategy": "Create unit tests to verify the correct creation and access of matrix and vector elements. Test different data layouts and dimensions."
+          },
+          {
+            "id": 2,
+            "title": "Implement Automatic Layout Conversion",
+            "description": "Implement functions to automatically convert between row-major and column-major layouts for `Matrix` types. This will be necessary for interfacing with BLAS routines that may expect a specific layout.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement a `to_row_major()` and `to_column_major()` method for the `Matrix` struct. These methods should create a new `Matrix` with the desired layout, copying and reordering the data as necessary. Optimize for the case where the matrix already has the desired layout (no copy needed).",
+            "testStrategy": "Create unit tests to verify that the layout conversion functions correctly reorder the matrix elements. Test with different matrix sizes and layouts."
+          },
+          {
+            "id": 3,
+            "title": "Design Error Types",
+            "description": "Define a custom `Error` enum to represent potential errors that can occur in the safe API, such as invalid dimensions, memory allocation failures, or BLAS errors.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Create an `enum Error` with variants for different error conditions (e.g., `InvalidDimensions`, `MemoryAllocationError`, `BlasError`). Implement the `std::error::Error` trait for the `Error` enum to allow for easy error handling.",
+            "testStrategy": "Create unit tests to verify that the correct error types are returned for different error conditions. Use `Result<T, Error>` in the API."
+          },
+          {
+            "id": 4,
+            "title": "Wrap Core BLAS Routines",
+            "description": "Create safe Rust wrappers around the core BLAS routines (e.g., `dgemm`, `dgemv`). These wrappers should handle memory management, layout conversion, and error checking.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Create Rust functions that call the raw FFI BLAS routines. These functions should take `Matrix` and `Vector` types as input, perform necessary layout conversions, and handle potential errors by returning a `Result<T, Error>`. Use `unsafe` blocks to call the FFI functions.",
+            "testStrategy": "Create unit tests to verify that the BLAS wrappers correctly call the underlying BLAS routines and return the expected results. Compare the results with known values or with results from other linear algebra libraries."
+          },
+          {
+            "id": 5,
+            "title": "Wrap Common Decompositions",
+            "description": "Create safe Rust wrappers around common matrix decompositions (e.g., LU, QR, Cholesky). These wrappers should handle memory management, layout conversion, and error checking.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Similar to wrapping BLAS routines, create Rust functions that call the raw FFI LAPACK routines for matrix decompositions. Handle memory allocation for output matrices, layout conversions, and error checking. Return the decomposition results as `Matrix` types or other appropriate data structures.",
+            "testStrategy": "Create unit tests to verify that the decomposition wrappers correctly call the underlying LAPACK routines and return the expected results. Compare the results with known values or with results from other linear algebra libraries."
+          },
+          {
+            "id": 6,
+            "title": "Ensure Memory Safety",
+            "description": "Ensure that all memory allocated for matrices and vectors is properly managed and deallocated to prevent memory leaks. Use Rust's ownership and borrowing system to prevent dangling pointers and data races.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              4,
+              5
+            ],
+            "details": "Use `Vec` for storing matrix and vector data. Ensure that the `Matrix` and `Vector` types own their data. Implement the `Drop` trait to deallocate memory when the `Matrix` and `Vector` types are no longer in use. Use Rust's borrow checker to prevent data races and dangling pointers.",
+            "testStrategy": "Use memory profiling tools (e.g., valgrind) to check for memory leaks. Run the code with different inputs and check for memory errors. Write unit tests that specifically test memory management."
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "title": "Phase 5: Integration - Integrate Rust build into LAPACK's CMake system",
+        "description": "Modify LAPACK's CMake configuration to build Rust bindings alongside other language bindings. Support both static and dynamic linking options.",
+        "status": "pending",
+        "dependencies": [
+          17
+        ],
+        "priority": "high",
+        "details": "",
+        "testStrategy": "",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Detect Rust and Configure Build Options in CMake",
+            "description": "Modify LAPACK's CMakeLists.txt to detect the Rust compiler and set up build options for the Rust bindings. This includes finding the Rust compiler, setting up include directories, and defining options for static and dynamic linking.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1. Use `find_package(Rust REQUIRED)` to locate the Rust compiler.\n2. Add an option to control static vs. dynamic linking of the Rust library (e.g., `option(BUILD_SHARED_LIBS_RUST \"Build Rust bindings as shared library\" ON)`).\n3. Set up include directories for Rust headers using `include_directories()`.\n4. Define CMake variables to store the Rust compiler path and other relevant information.\n5. Add a check to ensure a compatible Rust version is used.",
+            "testStrategy": "Verify that the Rust compiler is correctly detected by CMake. Check that the build options for static and dynamic linking are correctly set. Ensure that the include directories are properly configured."
+          },
+          {
+            "id": 2,
+            "title": "Create Rust Library Target and Link with LAPACK",
+            "description": "Define a CMake target for the Rust library and link it with the LAPACK library. This involves creating a `rust_library` target and specifying the necessary dependencies and link libraries.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Use `add_library(<rust_library_name> <library_type> src/lib.rs)` to create the Rust library target.  `<library_type>` should be `SHARED` or `STATIC` based on the `BUILD_SHARED_LIBS_RUST` option.\n2. Link the Rust library with the LAPACK library using `target_link_libraries(<rust_library_name> lapack)`.\n3. Add any necessary compile definitions or flags using `target_compile_definitions` and `target_compile_options`.\n4. Ensure that the Rust library is built as part of the overall LAPACK build process.",
+            "testStrategy": "Verify that the Rust library target is correctly created and linked with LAPACK. Check that the library is built as part of the overall LAPACK build process. Ensure that the correct compile definitions and flags are applied."
+          },
+          {
+            "id": 3,
+            "title": "Install Rust Bindings",
+            "description": "Configure the installation process to include the Rust bindings. This involves specifying the installation directory and adding the Rust library to the installation list.",
+            "status": "pending",
+            "dependencies": [
+              2
+            ],
+            "details": "1. Use `install(TARGETS <rust_library_name> DESTINATION lib)` to install the Rust library to the appropriate installation directory.\n2. If necessary, install any Rust header files or other related files using `install(FILES ... DESTINATION include)`.\n3. Ensure that the installation process correctly handles both static and dynamic libraries.\n4. Add versioning information to the installed library, if applicable.",
+            "testStrategy": "Verify that the Rust library is correctly installed to the specified installation directory. Check that all necessary files are installed. Ensure that the installation process handles both static and dynamic libraries correctly."
+          },
+          {
+            "id": 4,
+            "title": "Add Conditional Compilation for Rust Bindings",
+            "description": "Implement conditional compilation in CMake to enable or disable the Rust bindings based on a CMake option. This allows users to choose whether or not to build the Rust bindings.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "1. Add a CMake option (e.g., `BUILD_RUST_BINDINGS`) to control whether or not to build the Rust bindings.\n2. Use `if(BUILD_RUST_BINDINGS)` to conditionally include the Rust-related CMake code.\n3. Ensure that all Rust-related targets and installation steps are only executed if the `BUILD_RUST_BINDINGS` option is enabled.\n4. Provide a default value for the `BUILD_RUST_BINDINGS` option (e.g., `option(BUILD_RUST_BINDINGS \"Build Rust bindings\" OFF)`).",
+            "testStrategy": "Verify that the Rust bindings are only built when the `BUILD_RUST_BINDINGS` option is enabled. Check that the Rust-related CMake code is only executed when the option is enabled. Ensure that the build process works correctly with and without the Rust bindings."
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "title": "Phase 6: Testing - Port key LAPACK tests to Rust and ensure correctness",
+        "description": "Port critical LAPACK test cases to Rust. Add property-based tests and benchmark against existing bindings to ensure correctness and performance.",
+        "status": "pending",
+        "dependencies": [
+          17
+        ],
+        "priority": "high",
+        "details": "",
+        "testStrategy": "",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Port Selected LAPACK Test Cases to Rust",
+            "description": "Identify and port a representative subset of LAPACK test cases (e.g., from the dgetrf, dgetrs, dgeqrf routines) to Rust. Focus on covering a range of input sizes and matrix properties. Create Rust functions that mirror the functionality of the original Fortran tests.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1.  Analyze existing LAPACK test suites (e.g., in the LAPACK repository) to identify critical test cases for routines like dgetrf, dgetrs, and dgeqrf.\n2.  Translate the Fortran test code into equivalent Rust code, ensuring that the input data and expected outputs are accurately represented.\n3.  Use Rust's `ndarray` crate for matrix operations and linear algebra.\n4.  Implement assertions to compare the results of the Rust implementation with the expected outputs from the original LAPACK tests.",
+            "testStrategy": "Compare the outputs of the ported Rust tests with the outputs of the original Fortran tests. Use a tolerance value (epsilon) to account for potential differences in floating-point arithmetic. Ensure that the Rust tests pass for all selected test cases."
+          },
+          {
+            "id": 2,
+            "title": "Implement Property-Based Testing for Key Routines",
+            "description": "Implement property-based tests using a library like `quickcheck` or `proptest` for selected LAPACK routines. Define properties that should always hold true for these routines, regardless of the input data. Generate random input data and verify that the properties are satisfied.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1.  Choose a property-based testing library (e.g., `quickcheck` or `proptest`).\n2.  Define properties for selected LAPACK routines (e.g., for matrix inversion, A * A^-1 should be close to the identity matrix).\n3.  Use the testing library to generate random matrices and vectors as input to the LAPACK routines.\n4.  Implement assertions to verify that the defined properties hold true for the generated inputs.",
+            "testStrategy": "Run the property-based tests with a large number of randomly generated inputs. Monitor the tests for any failures, which may indicate bugs in the Rust implementation or incorrect property definitions. Analyze any failing test cases to identify the root cause of the failure."
+          },
+          {
+            "id": 3,
+            "title": "Benchmark Rust Implementation Against Existing Bindings",
+            "description": "Benchmark the performance of the Rust implementation against existing LAPACK bindings (e.g., using the `lapacke` crate). Compare the execution time of key LAPACK routines for different input sizes and matrix properties. Identify any performance bottlenecks in the Rust implementation.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1.  Use a benchmarking library (e.g., `criterion`) to measure the execution time of key LAPACK routines in both the Rust implementation and the existing bindings.\n2.  Run the benchmarks for a range of input sizes (e.g., small, medium, and large matrices) and matrix properties (e.g., dense, sparse, symmetric).\n3.  Compare the benchmark results to identify any performance differences between the two implementations.\n4.  Use profiling tools (e.g., `perf`) to identify any performance bottlenecks in the Rust implementation.",
+            "testStrategy": "Compare the benchmark results statistically to determine if there are significant performance differences between the Rust implementation and the existing bindings. Investigate any significant performance regressions in the Rust implementation."
+          },
+          {
+            "id": 4,
+            "title": "Test Edge Cases and Numerical Accuracy",
+            "description": "Create specific test cases to cover edge cases and potential numerical accuracy issues. This includes testing with singular matrices, ill-conditioned matrices, and matrices with very large or very small elements. Verify that the Rust implementation handles these cases correctly and produces accurate results.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1.  Create test cases with singular matrices (matrices with a determinant of zero).\n2.  Create test cases with ill-conditioned matrices (matrices that are close to being singular).\n3.  Create test cases with matrices containing very large or very small elements.\n4.  Use a numerical analysis library (if available) to assess the accuracy of the results produced by the Rust implementation.\n5.  Compare the results with those obtained from a trusted LAPACK implementation (e.g., the reference LAPACK implementation).",
+            "testStrategy": "Compare the results of the edge case tests with the expected results or with the results obtained from a trusted LAPACK implementation. Use a smaller tolerance value (epsilon) for these tests to ensure high numerical accuracy."
+          },
+          {
+            "id": 5,
+            "title": "Refactor and Optimize Rust Code Based on Testing Results",
+            "description": "Based on the results of the previous testing subtasks, refactor and optimize the Rust code to improve its correctness, performance, and readability. Address any bugs or performance bottlenecks that were identified during testing. Ensure that the code is well-documented and easy to maintain.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1.  Review the results of the property-based tests, benchmarks, and edge case tests.\n2.  Identify any bugs or performance bottlenecks in the Rust code.\n3.  Refactor the code to address these issues, focusing on improving correctness, performance, and readability.\n4.  Add comments and documentation to explain the code and its functionality.\n5.  Run the tests again to ensure that the changes have fixed the identified issues and have not introduced any new problems.",
+            "testStrategy": "Rerun all tests (unit tests, property-based tests, benchmarks, and edge case tests) after refactoring the code. Ensure that all tests pass and that the performance of the Rust implementation has improved or remained the same."
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "title": "Phase 7: Documentation - Write Rust API docs and integration guide",
+        "description": "Generate comprehensive rustdoc API documentation. Write integration guide for LAPACK maintainers and create usage examples for end users.",
+        "status": "pending",
+        "dependencies": [
+          18,
+          19
+        ],
+        "priority": "medium",
+        "details": "",
+        "testStrategy": "",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Generate Rust API Documentation using rustdoc",
+            "description": "Configure the Rust project to generate comprehensive API documentation using rustdoc. This includes adding necessary documentation comments to the code and configuring the build process to output the documentation in a suitable format (e.g., HTML).",
+            "status": "pending",
+            "dependencies": [],
+            "details": "1. Add documentation comments to all public functions, structs, enums, and modules in the Rust code.\n2. Ensure that the documentation comments include clear explanations of the purpose, parameters, return values, and potential errors for each item.\n3. Configure the `Cargo.toml` file to enable rustdoc generation.\n4. Run `cargo doc --open` to generate and view the documentation locally.",
+            "testStrategy": "Review the generated documentation in a web browser to ensure that all API elements are documented and that the documentation is clear, accurate, and complete. Verify that all links and cross-references work correctly."
+          },
+          {
+            "id": 2,
+            "title": "Write Integration Guide for LAPACK Maintainers",
+            "description": "Create a detailed guide for LAPACK maintainers on how to integrate the Rust bindings into the LAPACK build system. This guide should cover the necessary steps for building the Rust code, linking it with the existing LAPACK libraries, and testing the integration.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Document the process of building the Rust code using `cargo build`.\n2. Explain how to link the resulting Rust library with the LAPACK libraries using CMake.\n3. Provide instructions on how to configure the LAPACK build system to automatically build the Rust bindings.\n4. Include information on how to run the integration tests to verify that the Rust bindings are working correctly.\n5. Cover both static and dynamic linking options, referencing subtask 18 from Phase 5.",
+            "testStrategy": "Have a LAPACK maintainer (or someone familiar with the LAPACK build system) follow the integration guide to integrate the Rust bindings. Verify that the integration process is smooth and that the resulting build works correctly. Gather feedback from the maintainer and revise the guide as needed."
+          },
+          {
+            "id": 3,
+            "title": "Create Usage Examples for End Users",
+            "description": "Develop a set of usage examples that demonstrate how to use the Rust API to perform common LAPACK operations. These examples should be clear, concise, and easy to understand, and should cover a range of use cases.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "1. Identify common LAPACK operations that are relevant to end users.\n2. Write Rust code examples that demonstrate how to perform these operations using the Rust API.\n3. Include clear explanations of the code and the underlying LAPACK operations.\n4. Provide examples for different data types and matrix sizes.\n5. Ensure that the examples are well-formatted and easy to read.",
+            "testStrategy": "Run all usage examples to ensure that they compile and execute correctly. Verify that the results of the examples match the expected results. Ask other developers to review the examples and provide feedback on their clarity and usefulness."
+          },
+          {
+            "id": 4,
+            "title": "Document the Build Process",
+            "description": "Create a document describing the complete build process for the Rust API, including dependencies, build commands, and configuration options. This will help users and maintainers to build the API correctly and efficiently.",
+            "status": "pending",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "1. List all dependencies required to build the Rust API, including Rust version, LAPACK libraries, and any other relevant tools.\n2. Provide step-by-step instructions on how to build the API using `cargo build`.\n3. Document any configuration options that can be used to customize the build process, such as enabling or disabling certain features.\n4. Explain how to build the API for different target platforms.\n5. Include instructions on how to run the tests to verify that the build is working correctly.",
+            "testStrategy": "Follow the documented build process on a clean machine to ensure that it works correctly. Verify that all dependencies are correctly installed and that the build completes successfully. Ask other developers to follow the build process and provide feedback on its clarity and completeness."
+          }
+        ]
+      },
+      {
+        "id": 21,
+        "title": "Phase 0: Initial Decisions - Crate structure and Rust configuration",
+        "description": "Make initial architectural decisions including crate structure (monolithic vs modular), minimum Rust version, and error handling strategy.",
+        "details": "",
+        "testStrategy": "",
+        "status": "in-progress",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Decide on Crate Structure: Monolithic vs. Modular",
+            "description": "Evaluate the trade-offs between a monolithic crate structure and a modular structure (lapack-sys/lapack). Document the chosen structure and the reasoning behind it.",
+            "dependencies": [],
+            "details": "Research existing Rust LAPACK crates (e.g., `openblas-sys`, `intel-mkl-sys`) to understand their structure. Consider the complexity of LAPACK and the potential for code reuse. A modular approach with `lapack-sys` (raw FFI bindings) and `lapack` (safe wrappers) is recommended for better maintainability and separation of concerns. Document the decision in a `README.md` file in the root directory.\n<info added on 2025-07-27T03:36:24.028Z>\nCompleted crate structure decision and implementation:\n\n1. Analyzed trade-offs between monolithic and modular structures\n2. Created comprehensive analysis document (crate_structure_analysis.md)\n3. Decision: Adopted modular structure with three crates:\n   - lapack-sys: Raw FFI bindings\n   - lapack: Safe Rust wrappers  \n   - lapack-src: Backend provider selection\n\n4. Created initial crate structure:\n   - rust/ workspace with Cargo.toml\n   - Individual crate directories with Cargo.toml files\n   - Basic lib.rs files with documentation\n   - README.md files for each crate\n   - Error handling module for safe wrapper\n\nRationale: Modular structure chosen for separation of concerns, flexibility, maintainability, following Rust conventions, and alignment with existing ecosystem patterns.\n</info added on 2025-07-27T03:36:24.028Z>",
+            "status": "done",
+            "testStrategy": "N/A - This is a design decision."
+          },
+          {
+            "id": 2,
+            "title": "Determine Minimum Rust Version and Edition",
+            "description": "Select a minimum supported Rust version (MSRV) and Rust edition. Consider compatibility with commonly used tools and libraries, as well as access to modern Rust features.",
+            "dependencies": [],
+            "details": "Choose a recent stable Rust version (e.g., 1.65 or later) that balances access to modern features with compatibility. Specify the Rust edition (e.g., 2021) in the `Cargo.toml` file. Document the MSRV in the `README.md` file. Use `rustup show` to check the current stable version.\n<info added on 2025-07-27T03:51:42.518Z>\n- Set rust-version = \"1.72\" (up from 1.56)\n- Kept edition = \"2021\" (rather than 2024 for broader compatibility)\n- Documented rationale in rust/README.md\n- Based decision on: scientific computing ecosystem requirements (ndarray 1.64+, BLAS backends 1.71+), stability (1.72 is from Aug 2023), and modern feature access\n</info added on 2025-07-27T03:51:42.518Z>",
+            "status": "done",
+            "testStrategy": "N/A - This is a configuration decision."
+          },
+          {
+            "id": 3,
+            "title": "Plan Error Handling Strategy",
+            "description": "Define the error handling strategy for the crate. Decide whether to use `Result` for recoverable errors and `panic!` for unrecoverable errors. Consider using a custom error type.",
+            "dependencies": [],
+            "details": "Favor `Result` for recoverable errors such as invalid input or memory allocation failures. Use `panic!` only for truly unrecoverable errors, such as memory corruption. Define a custom error type (e.g., `LapackError`) using an `enum` to represent different error conditions. Implement `From` traits for converting errors from underlying libraries (e.g., C libraries) to `LapackError`. Document the error handling strategy in the `README.md` file.\n<info added on 2025-07-27T03:55:49.908Z>\n- Found existing error.rs with well-designed LapackError enum using thiserror\n- Enhanced error conversion with routine-specific handling (e.g., SingularMatrix for dgesv)\n- Added check_lapack_info utility method for FFI boundary\n- Documented comprehensive error handling strategy in README\n- Strategy: Result<T, Error> for all fallible ops, no panics in library code, meaningful error types from INFO codes\n- FFI boundary: unsafe raw functions in lapack-sys, safe wrappers with error checking in lapack crate\n</info added on 2025-07-27T03:55:49.908Z>",
+            "status": "done",
+            "testStrategy": "N/A - This is a design decision."
+          },
+          {
+            "id": 4,
+            "title": "Choose Static/Dynamic Linking Defaults",
+            "description": "Decide on the default linking behavior (static or dynamic) for the underlying LAPACK library. Consider portability, performance, and ease of distribution.",
+            "dependencies": [],
+            "details": "Dynamic linking is generally preferred for ease of distribution and reduced binary size. However, static linking may be necessary in some cases for portability or performance reasons. Provide feature flags to allow users to choose between static and dynamic linking. The default should be dynamic linking. Document the linking strategy and feature flags in the `README.md` file.\n<info added on 2025-07-27T03:59:51.910Z>\n- Designed comprehensive feature flag system following ecosystem patterns\n- Backend selection: netlib, openblas, intel-mkl (mutually exclusive)\n- Linking modes: default (dynamic), -static, -system variants\n- Added cache feature for build performance (OpenBLAS)\n- Created build.rs for lapack-sys to handle platform-specific linking\n- Documented complete strategy with platform notes and recommendations\n- Default: no backend selected (libraries shouldn't force backends)\n- Applications choose backend + linking mode via lapack-src features\n</info added on 2025-07-27T03:59:51.910Z>",
+            "status": "done",
+            "testStrategy": "N/A - This is a configuration decision."
+          },
+          {
+            "id": 5,
+            "title": "Design Feature Flags Structure",
+            "description": "Design the structure of feature flags to enable/disable optional functionality, such as different LAPACK implementations (e.g., OpenBLAS, Intel MKL), or specific routines.",
+            "dependencies": [],
+            "details": "Use feature flags to allow users to select their preferred LAPACK implementation (e.g., `openblas`, `intel-mkl`). Provide feature flags for enabling/disabling specific routines or groups of routines. Consider using hierarchical feature flags (e.g., `level1`, `level2`, `level3` for BLAS routines). Document the feature flags in the `Cargo.toml` file and the `README.md` file.\n<info added on 2025-07-27T04:12:03.502Z>\n- Created hierarchical system following LAPACK's organization (driver/computational/auxiliary)\n- Driver subcategories: linear-systems, least-squares, eigenvalues, svd\n- Computational subcategories: factorization, orthogonal, reduction\n- Auxiliary subcategories: blas1, blas2, blas3, utility\n- Precision control: single, double, complex, all-precisions\n- Advanced features: parallel, serialization, std/no_std support\n- Documented all features in README with usage examples\n- Added conditional compilation in lib.rs for feature-gated modules\n- Pass-through features in lapack-sys for controlling FFI bindings\n</info added on 2025-07-27T04:12:03.502Z>",
+            "status": "done",
+            "testStrategy": "N/A - This is a design decision."
+          },
+          {
+            "id": 6,
+            "title": "Research Existing Rust LAPACK Crates for Best Practices",
+            "description": "Analyze existing Rust LAPACK crates (e.g., `openblas-sys`, `intel-mkl-sys`, `lapacke`) to identify best practices for FFI bindings, memory management, and error handling.",
+            "dependencies": [],
+            "details": "Examine the source code of existing Rust LAPACK crates to understand how they handle FFI bindings, memory management, and error handling. Pay attention to the use of `unsafe` code and the implementation of safe wrappers. Identify any potential pitfalls or common mistakes. Document the findings in a separate document (e.g., `research.md`).\n<info added on 2025-07-27T03:23:22.400Z>\nCompleted research on existing Rust LAPACK crates. Created comprehensive research.md document with findings on:\n\n1. lapack-sys: Code generation approach, follows -sys conventions, raw FFI bindings\n2. ndarray-linalg: Trait-based API with ownership variants, modular design, zero-copy views\n3. openblas-sys: Environment-based configuration, cross-compilation support, cache features\n4. lapacke-sys/lapacke: Two-tier architecture pattern (unsafe sys + safe wrapper)\n\nKey best practices identified:\n- Two-tier architecture (-sys crate + safe wrapper)\n- Code generation for maintainability\n- Feature-based backend selection\n- Trait-based APIs with ownership variants\n- Result-based error handling\n- Column-major layout awareness\n- Zero-cost abstractions\n\nRecommendations documented for:\n- Project structure\n- API design patterns\n- Build configuration\n- Error handling\n- Testing strategy\n\nFull details in research.md file.\n</info added on 2025-07-27T03:23:22.400Z>",
+            "status": "done",
+            "testStrategy": "N/A - This is a research task."
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Implement Fortran Parser and Call Graph Generator",
+        "description": "Develop a Fortran code analysis tool capable of parsing Fortran source files and constructing call graphs. The tool should be generic and not include any LAPACK-specific logic.",
+        "details": "1. Implement a Fortran parser using a suitable parsing library or framework. The parser should be able to handle various Fortran syntax elements, including declarations, expressions, control flow statements, and subroutine/function definitions.\n2. Design and implement a call graph data structure to represent the relationships between subroutines and functions in the Fortran code. The call graph should store information about which routines call which other routines.\n3. Implement an algorithm to traverse the parsed Fortran code and build the call graph. This involves identifying subroutine/function calls and adding corresponding edges to the call graph.\n4. Provide functionality to export the call graph in a standard format, such as GraphML or DOT, for visualization and further analysis.\n5. Ensure the tool is generic and does not include any LAPACK-specific logic or dependencies. Focus on parsing and call graph construction for general Fortran code.",
+        "testStrategy": "1. Create a set of Fortran test files with varying complexity and structure, including different types of subroutines, functions, and control flow statements.\n2. Run the Fortran code analysis tool on the test files and verify that the parser correctly parses the code and builds the call graph.\n3. Manually inspect the generated call graphs to ensure that the relationships between routines are accurately represented.\n4. Compare the generated call graphs with expected call graphs (created manually or using other tools) to identify any discrepancies.\n5. Test the export functionality by exporting the call graphs in different formats and verifying that the exported files are valid and contain the correct information.\n6. Ensure that the tool does not produce any errors or warnings related to LAPACK-specific syntax or features.",
+        "status": "done",
+        "dependencies": [
+          1,
+          14
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Extract Generic Fortran Parsing Logic",
+            "description": "Refactor the existing Fortran parser (Task 2) to isolate the generic Fortran parsing logic, removing any LAPACK-specific code. This will involve creating a base parser class that handles standard Fortran syntax and semantics.",
+            "dependencies": [],
+            "details": "1. Identify and separate the generic Fortran parsing components from the existing `FortranParser` class.\n2. Create a new `GenericFortranParser` class that encapsulates this generic parsing logic.\n3. Ensure the `GenericFortranParser` can handle declarations, expressions, control flow statements, and subroutine/function definitions.\n4. Remove any LAPACK-specific naming convention or operation categorization logic from this base class.",
+            "status": "done",
+            "testStrategy": "Create unit tests to verify that the `GenericFortranParser` correctly parses standard Fortran code without any LAPACK-specific elements. Test with various Fortran files that do not contain LAPACK routines."
+          },
+          {
+            "id": 2,
+            "title": "Define Base Node Types for Call Graph",
+            "description": "Define the base node types for the call graph data structure. These node types should represent generic Fortran constructs such as subroutines, functions, and modules. This will involve creating abstract classes or interfaces for these node types.",
+            "dependencies": [
+              "22.1"
+            ],
+            "details": "1. Define abstract base classes or interfaces for `SubroutineNode`, `FunctionNode`, and `ModuleNode`.\n2. These base node types should include common attributes such as name, file path, and line number.\n3. Ensure the node types are generic and do not contain any LAPACK-specific information.\n4. Design the node types to be extensible for future features.",
+            "status": "done",
+            "testStrategy": "Create unit tests to verify that the base node types can be instantiated and that they contain the expected attributes. Test the extensibility of the node types by creating derived classes."
+          },
+          {
+            "id": 3,
+            "title": "Implement Hook System with Interfaces and Registry",
+            "description": "Implement a hook system that allows for extending the Fortran parser with custom logic. This will involve defining interfaces for different types of hooks (e.g., name parsing, operation categorization) and creating a registry to manage the available hooks.",
+            "dependencies": [
+              "22.1",
+              "22.2"
+            ],
+            "details": "1. Define interfaces for different types of hooks, such as `NameParsingHook`, `OperationCategorizationHook`, and `NodeCreationHook`.\n2. Create a `HookRegistry` class to manage the available hooks.\n3. Implement a mechanism to register and unregister hooks.\n4. Ensure the hook system is flexible and allows for adding new types of hooks in the future.",
+            "status": "done",
+            "testStrategy": "Create unit tests to verify that the hook system can register and unregister hooks correctly. Test the functionality of different types of hooks by creating mock implementations and verifying that they are called at the appropriate times during parsing."
+          },
+          {
+            "id": 4,
+            "title": "Port Exporters to Work with Generic Nodes",
+            "description": "Modify the existing call graph exporters (Task 4) to work with the generic node types defined in subtask 22.2. This will involve updating the exporters to extract the necessary information from the generic nodes and format it correctly for the target export format.",
+            "dependencies": [
+              "22.2",
+              "22.3"
+            ],
+            "details": "1. Update the JSON, CSV, and Cypher exporters to work with the `SubroutineNode`, `FunctionNode`, and `ModuleNode` base types.\n2. Ensure the exporters can extract the name, file path, and line number from the generic nodes.\n3. Maintain the data integrity of the exported call graph.\n4. Refactor the exporter code to be more modular and extensible.",
+            "status": "done",
+            "testStrategy": "Create integration tests to verify that the exporters correctly export the call graph in JSON, CSV, and Cypher formats. Test with various Fortran files and verify that the exported data matches the expected format and content. Validate Cypher statements by importing them into a Neo4j database."
+          },
+          {
+            "id": 5,
+            "title": "Create Comprehensive Test Suite",
+            "description": "Create a comprehensive test suite for the generic Fortran parser and call graph generator. This test suite should include unit tests, integration tests, and end-to-end tests to ensure the tool is working correctly and that it can handle various Fortran code structures.",
+            "dependencies": [
+              "22.1",
+              "22.2",
+              "22.3",
+              "22.4"
+            ],
+            "details": "1. Create unit tests for the `GenericFortranParser`, base node types, and hook system.\n2. Create integration tests for the parser and call graph generator.\n3. Create end-to-end tests that parse Fortran files and export the call graph in different formats.\n4. Ensure the test suite covers various Fortran code structures, including different types of subroutines, functions, and control flow statements.\n5. Implement regression tests to prevent future bugs.",
+            "status": "done",
+            "testStrategy": "Run the test suite on a continuous integration server to ensure that the tool is always working correctly. Monitor the test results and fix any failing tests promptly. Add new tests as new features are added to the tool."
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Implement LAPACK-Specific Hooks and Adapters",
+        "description": "Create LAPACK-specific hooks and adapters that implement the fortran-mapper hook interfaces to provide LAPACK naming convention parsing, precision extraction, operation categorization, and custom node creation.",
+        "details": "1. Implement a hook for parsing LAPACK naming conventions. This hook should be able to identify the specific LAPACK routine being called based on its name (e.g., `dgemm`, `zgesv`).\n2. Implement a hook for extracting precision information from LAPACK routine names. This hook should determine whether a routine operates on single-precision, double-precision, complex single-precision, or complex double-precision data.\n3. Implement a hook for categorizing LAPACK operations. This hook should classify routines based on their functionality (e.g., linear equation solvers, eigenvalue solvers, singular value decomposition).\n4. Implement a hook for creating custom nodes in the call graph. This hook should allow the creation of nodes that represent LAPACK routines and their specific attributes (e.g., precision, operation category).\n5. Ensure that the hooks and adapters are designed to be modular and extensible, allowing for the addition of new LAPACK routines and features in the future.\n6. Integrate the LAPACK-specific hooks and adapters with the Fortran parser and call graph generator from Task 22.",
+        "testStrategy": "1. Create a set of Fortran test files that contain calls to various LAPACK routines with different naming conventions, precision levels, and operation categories.\n2. Run the Fortran code analysis tool with the LAPACK-specific hooks and adapters enabled on the test files.\n3. Verify that the parser correctly identifies the LAPACK routines, extracts the precision information, and categorizes the operations.\n4. Inspect the generated call graph to ensure that the LAPACK routines are represented as custom nodes with the correct attributes.\n5. Add unit tests to verify the functionality of each hook and adapter individually.",
+        "status": "done",
+        "dependencies": [
+          22
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement LAPACK NodeEnricher for Naming Conventions",
+            "description": "Create a NodeEnricher hook that parses LAPACK routine names to identify the specific LAPACK routine being called (e.g., `dgemm`, `zgesv`). This hook should extract the base routine name and any relevant flags or options encoded in the name.",
+            "dependencies": [],
+            "details": "Implement a class `LAPACKNodeEnricher` that implements the `NodeEnricher` interface. This class should take a node representing a Fortran subroutine/function call as input. It should then use regular expressions or string manipulation to parse the name of the routine and extract the LAPACK routine name. Store the extracted LAPACK routine name as a property on the node (e.g., `node['lapack_routine'] = 'gemm'`). Handle cases where the routine name does not conform to LAPACK conventions gracefully.",
+            "status": "done",
+            "testStrategy": "Create a set of test cases with various LAPACK routine names (e.g., `dgemm`, `zgesv`, `sgemv`, `cgeqrf`). Verify that the `LAPACKNodeEnricher` correctly identifies the LAPACK routine name for each test case. Also, test with non-LAPACK routine names to ensure they are handled correctly."
+          },
+          {
+            "id": 2,
+            "title": "Implement NodeCreator for PRECISION and OPERATION Nodes",
+            "description": "Create a NodeCreator hook that creates PRECISION and OPERATION nodes based on the parsed LAPACK routine name. This hook should determine the precision (single, double, complex single, complex double) and operation category (linear equation solver, eigenvalue solver, etc.) of the routine.",
+            "dependencies": [
+              "23.1"
+            ],
+            "details": "Implement a class `LAPACKNodeCreator` that implements the `NodeCreator` interface. This class should take a node representing a LAPACK routine call (enriched by `LAPACKNodeEnricher`) as input. Based on the routine name, create PRECISION and OPERATION nodes and link them to the original routine node using appropriate relationship types (e.g., `HAS_PRECISION`, `IMPLEMENTS`). Use a dictionary or other data structure to map LAPACK routine names to their corresponding precision and operation categories. For example, 'dgemm' would map to PRECISION='double' and OPERATION='matrix multiplication'.",
+            "status": "done",
+            "testStrategy": "Create a set of test cases with various LAPACK routine names. Verify that the `LAPACKNodeCreator` correctly creates PRECISION and OPERATION nodes for each test case and links them to the original routine node. Ensure that the correct precision and operation category are assigned based on the routine name."
+          },
+          {
+            "id": 3,
+            "title": "Port LAPACK-Specific Logic from parser.py",
+            "description": "Move any existing LAPACK-specific logic from the old `parser.py` (Task 22) into the new hook implementations (`LAPACKNodeEnricher` and `LAPACKNodeCreator`). This includes logic for parsing routine names, extracting precision information, and categorizing operations.",
+            "dependencies": [
+              "23.2"
+            ],
+            "details": "Review the existing `parser.py` file and identify any code that is specific to LAPACK routines. This may include regular expressions, string manipulation functions, or data structures that are used to parse LAPACK routine names and extract information about their precision and operation category. Move this code into the `LAPACKNodeEnricher` and `LAPACKNodeCreator` classes, ensuring that it is properly integrated with the new hook interfaces. Remove the LAPACK-specific logic from `parser.py` to maintain a generic Fortran parser.",
+            "status": "done",
+            "testStrategy": "After porting the LAPACK-specific logic, run the existing test suite for `parser.py` to ensure that the functionality has not been broken. Also, run the new test suites for `LAPACKNodeEnricher` and `LAPACKNodeCreator` to verify that the ported logic is working correctly in the new hook implementations."
+          },
+          {
+            "id": 4,
+            "title": "Test Compatibility with lapack-util",
+            "description": "Ensure that the new LAPACK-specific hooks and adapters are compatible with the current `lapack-util` library or any other relevant LAPACK utility libraries. Verify that the hooks can correctly parse and process LAPACK routine names and extract the necessary information.",
+            "dependencies": [
+              "23.3"
+            ],
+            "details": "Integrate the new LAPACK-specific hooks with the `lapack-util` library (if applicable) or any other relevant LAPACK utility libraries. Run the hooks on a set of LAPACK source files and verify that they can correctly parse the routine names and extract the necessary information. Compare the output of the hooks with the expected output based on the `lapack-util` library or other LAPACK documentation. Address any compatibility issues that arise.",
+            "status": "done",
+            "testStrategy": "Create a set of test cases that use the `lapack-util` library (if applicable) to generate LAPACK routine names and other relevant information. Run the LAPACK-specific hooks on these test cases and verify that the output matches the expected output based on the `lapack-util` library. Also, test with different versions of the `lapack-util` library to ensure compatibility across versions."
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Update lapack-util to use fortran-mapper with LAPACK adapter",
+        "description": "Update the lapack-util crate to use the fortran-mapper crate with a LAPACK adapter, ensuring backward compatibility. Update documentation and provide migration guides for existing users.",
+        "details": "1.  Integrate the `fortran-mapper` crate into `lapack-util`.\n2.  Develop a LAPACK adapter for `fortran-mapper` to handle LAPACK-specific naming conventions and data types.\n3.  Implement backward compatibility shims to ensure existing code using `lapack-util` continues to function without modification.\n4.  Update the `lapack-util` API to expose new functionality provided by `fortran-mapper`.\n5.  Write migration guides for existing users, detailing the changes and how to update their code to take advantage of the new features.\n6.  Update documentation to reflect the new architecture and API.\n7.  Address any deprecation warnings or errors introduced by the integration.\n8.  Consider providing feature flags to enable/disable certain parts of the new functionality for testing and gradual adoption.",
+        "testStrategy": "1.  Run existing unit and integration tests to ensure backward compatibility.\n2.  Create new unit and integration tests to verify the functionality of the LAPACK adapter and new API.\n3.  Test with a variety of LAPACK routines and data types to ensure comprehensive coverage.\n4.  Manually test the migration process using the provided migration guides.\n5.  Benchmark performance to ensure the integration does not introduce significant performance regressions.\n6.  Verify that the updated documentation is accurate and complete.\n7.  Create example projects that use the updated `lapack-util` crate to demonstrate common use cases.",
+        "status": "pending",
+        "dependencies": [
+          22,
+          23,
+          6
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Replace internal parser with fortran-mapper + LAPACK adapter",
+            "description": "Integrate the `fortran-mapper` crate and the LAPACK adapter into `lapack-util`, replacing the existing internal parser. This involves modifying the code to use the new parsing mechanism for processing Fortran source files.",
+            "dependencies": [],
+            "details": "1. Add `fortran-mapper` and the LAPACK adapter as dependencies in `Cargo.toml`. 2. Modify the existing parsing logic to utilize `fortran-mapper` for parsing Fortran source code. 3. Implement the LAPACK adapter to handle LAPACK-specific naming conventions and data types within the `fortran-mapper` framework. 4. Ensure that the adapter correctly translates LAPACK-specific constructs into a format understandable by `fortran-mapper`. 5. Remove the old internal parser.",
+            "status": "pending",
+            "testStrategy": "Create unit tests to verify that the `fortran-mapper` and LAPACK adapter are correctly parsing LAPACK source files. Compare the output of the new parser with the old parser to ensure consistency."
+          },
+          {
+            "id": 2,
+            "title": "Maintain existing CLI interface for backward compatibility",
+            "description": "Ensure that the existing command-line interface (CLI) of `lapack-util` remains functional and backward compatible after the integration of `fortran-mapper`. This involves adapting the CLI to work with the new parsing mechanism and ensuring that existing commands and options continue to function as expected.",
+            "dependencies": [
+              "24.1"
+            ],
+            "details": "1. Analyze the existing CLI interface and identify the parts that rely on the old parser. 2. Adapt the CLI to use the output of `fortran-mapper` and the LAPACK adapter. 3. Ensure that all existing commands and options continue to function as expected. 4. Add new CLI options if needed to expose new functionality provided by `fortran-mapper`. 5. Implement compatibility shims to handle any differences in the output format between the old and new parsers.",
+            "status": "pending",
+            "testStrategy": "Run existing integration tests to verify that the CLI continues to function as expected. Create new integration tests to verify the functionality of any new CLI options. Manually test the CLI with a variety of LAPACK source files to ensure comprehensive coverage."
+          },
+          {
+            "id": 3,
+            "title": "Create migration documentation and guides",
+            "description": "Develop comprehensive migration documentation and guides for existing users of `lapack-util`. This documentation should detail the changes introduced by the integration of `fortran-mapper`, explain how to update existing code to work with the new version, and provide examples of how to use the new features.",
+            "dependencies": [
+              "24.2"
+            ],
+            "details": "1. Identify the key changes introduced by the integration of `fortran-mapper`. 2. Write a detailed migration guide that explains how to update existing code to work with the new version. 3. Provide examples of how to use the new features provided by `fortran-mapper`. 4. Address any potential compatibility issues and provide solutions for resolving them. 5. Include a FAQ section to answer common questions about the migration process.",
+            "status": "pending",
+            "testStrategy": "Review the migration documentation with existing users of `lapack-util` to ensure that it is clear and easy to understand. Gather feedback and make revisions as needed."
+          },
+          {
+            "id": 4,
+            "title": "Provide examples for other Fortran projects",
+            "description": "Create example projects demonstrating how to use `lapack-util` with `fortran-mapper` in various Fortran projects. These examples should showcase different use cases and demonstrate how to integrate `lapack-util` into existing Fortran codebases.",
+            "dependencies": [
+              "24.3"
+            ],
+            "details": "1. Identify common use cases for `lapack-util` in Fortran projects. 2. Create example projects that demonstrate how to use `lapack-util` with `fortran-mapper` in each of these use cases. 3. Provide clear and concise instructions on how to build and run the example projects. 4. Include comments in the code to explain the key concepts and techniques. 5. Ensure that the example projects are well-documented and easy to understand.",
+            "status": "pending",
+            "testStrategy": "Build and run the example projects on a variety of platforms to ensure that they work correctly. Review the example projects with experienced Fortran developers to ensure that they are accurate and representative of real-world use cases."
           }
         ]
       }
     ],
     "metadata": {
       "created": "2025-07-25T14:06:48.573Z",
-      "updated": "2025-07-27T00:24:07.773Z",
+      "updated": "2025-07-27T17:38:50.975Z",
       "description": "Tasks for master context"
     }
   }
