@@ -1,6 +1,6 @@
 # Task ID: 3
 # Title: Design and Validate Graph Schema
-# Status: pending
+# Status: done
 # Dependencies: 2
 # Priority: medium
 # Description: Design and validate the graph schema for Neo4j import, including node types (Routine, File, Operation, Precision) and relationship types (CALLS, DEFINED_IN, IMPLEMENTS, HAS_PRECISION). Ensure schema consistency and uniqueness constraints.
@@ -24,13 +24,13 @@ class GraphSchema:
 Create unit tests to verify the graph schema. Test node and relationship types. Validate schema consistency by attempting to create invalid graphs. Ensure uniqueness constraints are enforced. Use a mock Neo4j database for testing.
 
 # Subtasks:
-## 1. Run graph schema tests [pending]
+## 1. Run graph schema tests [done]
 ### Dependencies: None
 ### Description: Execute tests/test_graph_schema.py to verify graph creation functionality
 ### Details:
 
 
-## 2. Verify node and relationship creation [pending]
+## 2. Verify node and relationship creation [done]
 ### Dependencies: None
 ### Description: Test that all node types (Routine, File, Operation, Precision) and relationships are created correctly
 ### Details:

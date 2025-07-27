@@ -1,0 +1,49 @@
+# Task ID: 12
+# Title: Phase 5: Advanced Features - Matrix Operations and Optimization
+# Status: pending
+# Dependencies: 8, 9, 10, 11
+# Priority: low
+# Description: Implement advanced sparse matrix operations including matrix-matrix multiplication and optimization utilities.
+# Details:
+Implement DCSRCSC (sparse-sparse multiplication), DGECSR (dense-sparse multiplication), and DSPADD2 (sparse matrix addition). Add optimization utilities: DSPSORT (sort indices for better cache performance), DSPCOMP (remove duplicates and explicit zeros), and DSPSIZE (dynamic reallocation for changing sparsity patterns). These features enable complex sparse linear algebra operations.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. Implement DCSRCSC routine [pending]
+### Dependencies: None
+### Description: Sparse-sparse multiplication (CSR × CSC)
+### Details:
+
+
+## 2. Implement DGECSR routine [pending]
+### Dependencies: None
+### Description: Dense-sparse multiplication
+### Details:
+
+
+## 3. Implement DSPADD2 routine [pending]
+### Dependencies: None
+### Description: Addition of same-format sparse matrices
+### Details:
+
+
+## 4. Implement DSPSORT routine [pending]
+### Dependencies: None
+### Description: Sort indices for better cache performance
+### Details:
+
+
+## 5. Implement DSPCOMP routine [pending]
+### Dependencies: None
+### Description: Remove duplicates and explicit zeros
+### Details:
+
+
+## 6. Implement DSPSIZE routine [pending]
+### Dependencies: None
+### Description: Dynamic reallocation for changing sparsity patterns
+### Details:
+
+

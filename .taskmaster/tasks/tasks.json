@@ -269,11 +269,436 @@
             "testStrategy": "Verify that the schema elements are created correctly by querying the Neo4j system catalog. Attempt to create duplicate nodes to confirm uniqueness constraints are enforced."
           }
         ]
+      },
+      {
+        "id": 8,
+        "title": "Phase 1: Foundation - Directory Structure and Core Types",
+        "description": "Set up the foundation for sparse matrix implementation in LAPACK. Create the directory structure under /SRC/SPARSE/ and implement core type definitions.",
+        "details": "Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR/, CSC/, IO/. Implement sparse_types.f90 module with derived types for COO, CSR, and CSC formats. Implement sparse_constants.f90 for error codes and format identifiers. Create basic COO operations: DCOOALLOC (memory allocation), DCOOINIT (initialization from arrays), DCOOCHECK (validation), and DCOOFREE (deallocation).",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create /SRC/SPARSE/ directory hierarchy",
+            "description": "Create the main SPARSE directory under /SRC/ with subdirectories: MODULES/, COO/, CSR/, CSC/, IO/",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 2,
+            "title": "Implement sparse_types.f90 module",
+            "description": "Create module with derived type definitions for sparse_coo_d, sparse_csr_d, and sparse_csc_d structures",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 3,
+            "title": "Implement sparse_constants.f90 module",
+            "description": "Define sparse-specific constants, error codes, and format identifiers",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 4,
+            "title": "Implement DCOOALLOC routine",
+            "description": "Create routine for COO matrix memory allocation",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 5,
+            "title": "Implement DCOOINIT routine",
+            "description": "Create routine to initialize COO matrix from row, column, and value arrays",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 6,
+            "title": "Implement DCOOCHECK routine",
+            "description": "Create routine to validate COO matrix structure (bounds checking, duplicate detection)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 7,
+            "title": "Implement DCOOFREE routine",
+            "description": "Create routine to deallocate COO matrix memory",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Phase 2: Core Conversions - Format Transformation Routines",
+        "description": "Implement conversion routines between different sparse matrix formats (COO, CSR, CSC) and between sparse and dense formats.",
+        "details": "Implement DCOO2CSR (COO to CSR conversion with row sorting), DCOO2CSC (COO to CSC conversion with column sorting), DCSR2COO and DCSC2COO (reverse conversions). Implement dense matrix interface: DDEN2COO (dense to COO, skipping zeros) and DCOO2DEN (COO to dense, filling zeros). These conversions are critical for interoperability with existing LAPACK routines.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement DCOO2CSR conversion",
+            "description": "Convert COO to CSR format with row sorting and row pointer construction",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 2,
+            "title": "Implement DCOO2CSC conversion",
+            "description": "Convert COO to CSC format with column sorting and column pointer construction",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 3,
+            "title": "Implement DCSR2COO conversion",
+            "description": "Convert CSR format back to COO",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 4,
+            "title": "Implement DCSC2COO conversion",
+            "description": "Convert CSC format back to COO",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 5,
+            "title": "Implement DDEN2COO conversion",
+            "description": "Convert dense matrix to COO format, skipping zero elements",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 6,
+            "title": "Implement DCOO2DEN conversion",
+            "description": "Convert COO to dense matrix, filling in zeros",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Phase 3: Basic Operations - SpMV and Element Access",
+        "description": "Implement sparse matrix-vector multiplication (SpMV) for all formats and basic element operations.",
+        "details": "Implement DCSRMV (CSR matrix-vector multiply, optimized for row access), DCSCMV (CSC matrix-vector multiply for column operations), and DCOOMV (COO reference implementation). Add element operations: DSPGET (get element value), DSPSET (set element value with potential reallocation), and DCOOTRANS (in-place COO transpose). These operations form the core computational kernel for sparse linear algebra.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement DCSRMV routine",
+            "description": "CSR matrix-vector multiplication optimized for row access",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 2,
+            "title": "Implement DCSCMV routine",
+            "description": "CSC matrix-vector multiplication for column operations",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 3,
+            "title": "Implement DCOOMV routine",
+            "description": "COO matrix-vector multiplication as reference implementation",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 4,
+            "title": "Implement DSPGET function",
+            "description": "Get element value from sparse matrix with search",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 5,
+            "title": "Implement DSPSET subroutine",
+            "description": "Set element value in sparse matrix, handle reallocation if needed",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 6,
+            "title": "Implement DCOOTRANS subroutine",
+            "description": "In-place transpose of COO matrix",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Phase 4: Testing and Integration - Validation and Build System",
+        "description": "Create comprehensive test suite and integrate sparse matrix module with LAPACK build system.",
+        "details": "Create test matrices (identity, tridiagonal, random sparse patterns). Test all conversion routines for round-trip accuracy. Verify SpMV results against dense DGEMV. Create performance benchmark suite. Implement I/O routines: DSPREAD and DSPWRITE for Matrix Market format. Update CMakeLists.txt and Makefile to include sparse module. Ensure proper installation rules and dependencies.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9,
+          10
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create test matrices",
+            "description": "Generate identity, tridiagonal, and random sparse test matrices",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 2,
+            "title": "Test conversion round-trips",
+            "description": "Verify accuracy of all format conversions (COO->CSR->COO, etc.)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 3,
+            "title": "Verify SpMV correctness",
+            "description": "Compare sparse matrix-vector multiply results against dense DGEMV",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 4,
+            "title": "Create performance benchmarks",
+            "description": "Develop benchmark suite for sparse operations",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 5,
+            "title": "Implement DSPREAD routine",
+            "description": "Read sparse matrices in Matrix Market format",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 6,
+            "title": "Implement DSPWRITE routine",
+            "description": "Write sparse matrices in Matrix Market format",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 7,
+            "title": "Update CMakeLists.txt",
+            "description": "Add sparse module to CMake build configuration",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 8,
+            "title": "Add Makefile targets",
+            "description": "Create Makefile targets for sparse routine compilation",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Phase 5: Advanced Features - Matrix Operations and Optimization",
+        "description": "Implement advanced sparse matrix operations including matrix-matrix multiplication and optimization utilities.",
+        "details": "Implement DCSRCSC (sparse-sparse multiplication), DGECSR (dense-sparse multiplication), and DSPADD2 (sparse matrix addition). Add optimization utilities: DSPSORT (sort indices for better cache performance), DSPCOMP (remove duplicates and explicit zeros), and DSPSIZE (dynamic reallocation for changing sparsity patterns). These features enable complex sparse linear algebra operations.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "priority": "low",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement DCSRCSC routine",
+            "description": "Sparse-sparse multiplication (CSR × CSC)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 2,
+            "title": "Implement DGECSR routine",
+            "description": "Dense-sparse multiplication",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 3,
+            "title": "Implement DSPADD2 routine",
+            "description": "Addition of same-format sparse matrices",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 4,
+            "title": "Implement DSPSORT routine",
+            "description": "Sort indices for better cache performance",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 5,
+            "title": "Implement DSPCOMP routine",
+            "description": "Remove duplicates and explicit zeros",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 6,
+            "title": "Implement DSPSIZE routine",
+            "description": "Dynamic reallocation for changing sparsity patterns",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Phase 6: Extended Precision - Multi-precision Support",
+        "description": "Port all sparse matrix routines to support LAPACK's full range of data types: single, double, complex, and double complex.",
+        "details": "Port all double precision (D) routines to single precision (S prefix), complex (C prefix), and double complex (Z prefix). Maintain consistent naming and interface across all precisions. Create comprehensive documentation with examples for each precision. Ensure numerical stability considerations are addressed for each data type. This completes full LAPACK integration.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "priority": "low",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Port to single precision",
+            "description": "Convert all double precision (D) routines to single precision (S prefix)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 2,
+            "title": "Port to complex type",
+            "description": "Convert all routines to complex type (C prefix)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 3,
+            "title": "Port to double complex",
+            "description": "Convert all routines to double complex (Z prefix)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 4,
+            "title": "Create documentation",
+            "description": "Write comprehensive documentation with examples for all precisions",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-25T14:06:48.573Z",
-      "updated": "2025-07-25T22:29:11.235Z",
+      "updated": "2025-07-27T00:24:07.773Z",
       "description": "Tasks for master context"
     }
   }
