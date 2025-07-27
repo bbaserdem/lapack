@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Git
+worktrees
+
 # C extensions
 *.so
 
@@ -183,8 +186,16 @@ neo4j-data/licenses/
 backups/
 exports/
 
+# Large files
+*.png
+*.mkv
+*.webm
+
 # Claude Flow swarm data
 .swarm/
+.hive-mind/
+memory/
+claude-flow*
 
 # Duplicated neo4j data directory
 neo4j-data/neo4j-data/
