@@ -1,9 +1,9 @@
-!> \brief \b ZCOOTRANS performs in-place transpose of a COO sparse matrix
+!> \brief \b DCOOTRANS performs in-place transpose of a COO sparse matrix
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCOOTRANS transposes a sparse matrix in COO format in-place by swapping
+!> DCOOTRANS transposes a sparse matrix in COO format in-place by swapping
 !> row and column indices. This operation is very efficient for COO format
 !> as it only requires swapping index arrays.
 !>
@@ -33,11 +33,11 @@ SUBROUTINE ZCOOTRANS(COO)
     COO%ncols = temp_dim
     
     ! Swap row and column indices for each non-zero element
-    ZO k = 1, COO%nnz
+    DO k = 1, COO%nnz
         temp_ind = COO%row_ind(k)
         COO%row_ind(k) = COO%col_ind(k)
         COO%col_ind(k) = temp_ind
-    END ZO
+    END DO
     
     ! Mark as unsorted after transpose
     COO%sorted = .FALSE.

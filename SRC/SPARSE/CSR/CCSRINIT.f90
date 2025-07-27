@@ -1,9 +1,9 @@
-!> \brief \b CCSRALLOC allocates a CSR sparse matrix
+!> \brief \b DCSRALLOC allocates a CSR sparse matrix
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCSRALLOC allocates memory for a CSR format sparse matrix with specified
+!> DCSRALLOC allocates memory for a CSR format sparse matrix with specified
 !> dimensions and estimated number of non-zeros.
 !>
 !> \param[in] NROWS
@@ -88,7 +88,7 @@ SUBROUTINE CCSRALLOC(NROWS, NCOLS, NNZ, CSR, INFO)
     
     IF (ierr /= 0) THEN
         ! Clean up partial allocation
-        IF (ALLOCATED(CSR%row_ptr)) CEALLOCATE(CSR%row_ptr)
+        IF (ALLOCATED(CSR%row_ptr)) DEALLOCATE(CSR%row_ptr)
         INFO = SPARSE_ERR_ALLOC
         CSR%nnz_alloc = 0
         RETURN
@@ -102,12 +102,12 @@ SUBROUTINE CCSRALLOC(NROWS, NCOLS, NNZ, CSR, INFO)
     
 END SUBROUTINE CCSRALLOC
 
-!> \brief \b CCSRINIT initializes a CSR sparse matrix from arrays
+!> \brief \b DCSRINIT initializes a CSR sparse matrix from arrays
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCSRINIT initializes a CSR format sparse matrix from provided arrays
+!> DCSRINIT initializes a CSR format sparse matrix from provided arrays
 !> of row pointers, column indices, and values.
 !>
 !> \param[in] ROWPTR
@@ -121,7 +121,7 @@ END SUBROUTINE CCSRALLOC
 !>          The column indices (1-based) of the non-zero elements.
 !>
 !> \param[in] VAL
-!>          VAL is COUBLE PRECISION array, dimension (NNZ)
+!>          VAL is COMPLEX array, dimension (NNZ)
 !>          The non-zero values.
 !>
 !> \param[in] NROWS
@@ -203,22 +203,22 @@ SUBROUTINE CCSRINIT(ROWPTR, COLIND, VAL, NROWS, NNZ, CSR, INFO)
     END IF
     
     ! Check that row pointers are non-decreasing
-    CO i = 1, NROWS
+    DO i = 1, NROWS
         IF (ROWPTR(i+1) < ROWPTR(i)) THEN
             INFO = SPARSE_ERR_INVALID
             RETURN
         END IF
-    END CO
+    END DO
     
     ! Copy row pointers
     CSR%row_ptr(1:NROWS+1) = ROWPTR(1:NROWS+1)
     
     ! Validate column indices and copy data
-    CO i = 1, NROWS
+    DO i = 1, NROWS
         row_start = ROWPTR(i)
         row_end = ROWPTR(i+1) - 1
         
-        CO j = row_start, row_end
+        DO j = row_start, row_end
             ! Check column index
             IF (COLIND(j) < 1 .OR. COLIND(j) > CSR%ncols) THEN
                 INFO = SPARSE_ERR_DIM
@@ -228,8 +228,8 @@ SUBROUTINE CCSRINIT(ROWPTR, COLIND, VAL, NROWS, NNZ, CSR, INFO)
             ! Copy data
             CSR%col_ind(j) = COLIND(j)
             CSR%values(j) = VAL(j)
-        END CO
-    END CO
+        END DO
+    END DO
     
     ! Set number of rows and non-zeros
     CSR%nrows = NROWS

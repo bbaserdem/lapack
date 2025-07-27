@@ -2,7 +2,7 @@
 !>
 !> Compresses sparse matrices by combining duplicate entries (summing values)
 !> and removing entries with zero values. This is essential after operations
-!> that may create duplicates (like ZSPADD2) or zeros (like cancellation).
+!> that may create duplicates (like DSPADD2) or zeros (like cancellation).
 !>
 !> \param[in] FORMAT Character indicating sparse format:
 !>            'O' or 'o': COO format
@@ -51,8 +51,8 @@ SUBROUTINE ZSPCOMP(FORMAT, SPARSE, TOL, INFO)
         ! COO format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_coo_z)
-            CALL DSPCOMP_COO(SPARSE, tolerance, INFO)
-        CLASS ZEFAULT
+            CALL ZSPCOMP_COO(SPARSE, tolerance, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -60,8 +60,8 @@ SUBROUTINE ZSPCOMP(FORMAT, SPARSE, TOL, INFO)
         ! CSR format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_csr_z)
-            CALL DSPCOMP_CSR(SPARSE, tolerance, INFO)
-        CLASS ZEFAULT
+            CALL ZSPCOMP_CSR(SPARSE, tolerance, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -69,8 +69,8 @@ SUBROUTINE ZSPCOMP(FORMAT, SPARSE, TOL, INFO)
         ! CSC format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_csc_z)
-            CALL DSPCOMP_CSC(SPARSE, tolerance, INFO)
-        CLASS ZEFAULT
+            CALL ZSPCOMP_CSC(SPARSE, tolerance, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
     ELSE
@@ -80,7 +80,7 @@ SUBROUTINE ZSPCOMP(FORMAT, SPARSE, TOL, INFO)
 CONTAINS
 
     !> Compress COO format by removing duplicates and zeros
-    SUBROUTINE DSPCOMP_COO(COO, TOL, INFO)
+    SUBROUTINE ZSPCOMP_COO(COO, TOL, INFO)
         TYPE(sparse_coo_z), INTENT(INOUT) :: COO
         COMPLEX(real64), INTENT(IN) :: TOL
         INTEGER(int32), INTENT(OUT) :: INFO
@@ -107,19 +107,19 @@ CONTAINS
         nnz_new = 0
         i = 1
         
-        ZO WHILE (i <= COO%nnz)
+        DO WHILE (i <= COO%nnz)
             current_row = COO%row_ind(i)
             current_col = COO%col_ind(i)
             sum_val = COO%values(i)
             
             ! Find all duplicates and sum their values
             j = i + 1
-            ZO WHILE (j <= COO%nnz .AND. &
+            DO WHILE (j <= COO%nnz .AND. &
                       COO%row_ind(j) == current_row .AND. &
                       COO%col_ind(j) == current_col)
                 sum_val = sum_val + COO%values(j)
                 j = j + 1
-            END ZO
+            END DO
             
             ! Store if non-zero
             IF (ZABS(sum_val) > TOL) THEN
@@ -130,16 +130,16 @@ CONTAINS
             END IF
             
             i = j
-        END ZO
+        END DO
         
         ! Update nnz count
         COO%nnz = nnz_new
         COO%checked = .TRUE.
         
-    END SUBROUTINE DSPCOMP_COO
+    END SUBROUTINE ZSPCOMP_COO
     
     !> Compress CSR format by removing duplicates and zeros
-    SUBROUTINE DSPCOMP_CSR(CSR, TOL, INFO)
+    SUBROUTINE ZSPCOMP_CSR(CSR, TOL, INFO)
         TYPE(sparse_csr_z), INTENT(INOUT) :: CSR
         COMPLEX(real64), INTENT(IN) :: TOL
         INTEGER(int32), INTENT(OUT) :: INFO
@@ -172,22 +172,22 @@ CONTAINS
         nnz_new = 0
         new_row_ptr(1) = 1
         
-        ZO i = 1, CSR%nrows
+        DO i = 1, CSR%nrows
             row_start = CSR%row_ptr(i)
             row_end = CSR%row_ptr(i+1) - 1
             new_row_start = nnz_new + 1
             
             j = row_start
-            ZO WHILE (j <= row_end)
+            DO WHILE (j <= row_end)
                 current_col = CSR%col_ind(j)
                 sum_val = CSR%values(j)
                 
                 ! Find duplicates in this row
                 k = j + 1
-                ZO WHILE (k <= row_end .AND. CSR%col_ind(k) == current_col)
+                DO WHILE (k <= row_end .AND. CSR%col_ind(k) == current_col)
                     sum_val = sum_val + CSR%values(k)
                     k = k + 1
-                END ZO
+                END DO
                 
                 ! Store if non-zero
                 IF (ZABS(sum_val) > TOL) THEN
@@ -197,10 +197,10 @@ CONTAINS
                 END IF
                 
                 j = k
-            END ZO
+            END DO
             
             new_row_ptr(i+1) = nnz_new + 1
-        END ZO
+        END DO
         
         ! Copy back if there were changes
         IF (nnz_new /= CSR%nnz) THEN
@@ -210,12 +210,12 @@ CONTAINS
             CSR%row_ptr = new_row_ptr
         END IF
         
-        ZEALLOCATE(new_col_ind, new_values, new_row_ptr)
+        DEALLOCATE(new_col_ind, new_values, new_row_ptr)
         
-    END SUBROUTINE DSPCOMP_CSR
+    END SUBROUTINE ZSPCOMP_CSR
     
     !> Compress CSC format by removing duplicates and zeros
-    SUBROUTINE DSPCOMP_CSC(CSC, TOL, INFO)
+    SUBROUTINE ZSPCOMP_CSC(CSC, TOL, INFO)
         TYPE(sparse_csc_z), INTENT(INOUT) :: CSC
         COMPLEX(real64), INTENT(IN) :: TOL
         INTEGER(int32), INTENT(OUT) :: INFO
@@ -248,22 +248,22 @@ CONTAINS
         nnz_new = 0
         new_col_ptr(1) = 1
         
-        ZO j = 1, CSC%ncols
+        DO j = 1, CSC%ncols
             col_start = CSC%col_ptr(j)
             col_end = CSC%col_ptr(j+1) - 1
             new_col_start = nnz_new + 1
             
             i = col_start
-            ZO WHILE (i <= col_end)
+            DO WHILE (i <= col_end)
                 current_row = CSC%row_ind(i)
                 sum_val = CSC%values(i)
                 
                 ! Find duplicates in this column
                 k = i + 1
-                ZO WHILE (k <= col_end .AND. CSC%row_ind(k) == current_row)
+                DO WHILE (k <= col_end .AND. CSC%row_ind(k) == current_row)
                     sum_val = sum_val + CSC%values(k)
                     k = k + 1
-                END ZO
+                END DO
                 
                 ! Store if non-zero
                 IF (ZABS(sum_val) > TOL) THEN
@@ -273,10 +273,10 @@ CONTAINS
                 END IF
                 
                 i = k
-            END ZO
+            END DO
             
             new_col_ptr(j+1) = nnz_new + 1
-        END ZO
+        END DO
         
         ! Copy back if there were changes
         IF (nnz_new /= CSC%nnz) THEN
@@ -286,8 +286,8 @@ CONTAINS
             CSC%col_ptr = new_col_ptr
         END IF
         
-        ZEALLOCATE(new_row_ind, new_values, new_col_ptr)
+        DEALLOCATE(new_row_ind, new_values, new_col_ptr)
         
-    END SUBROUTINE DSPCOMP_CSC
+    END SUBROUTINE ZSPCOMP_CSC
 
 END SUBROUTINE ZSPCOMP

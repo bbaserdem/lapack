@@ -35,8 +35,8 @@ SUBROUTINE ZSPSORT(FORMAT, SPARSE, INFO)
         ! COO format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_coo_z)
-            CALL DSPSORT_COO(SPARSE, INFO)
-        CLASS ZEFAULT
+            CALL ZSPSORT_COO(SPARSE, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -44,8 +44,8 @@ SUBROUTINE ZSPSORT(FORMAT, SPARSE, INFO)
         ! CSR format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_csr_z)
-            CALL DSPSORT_CSR(SPARSE, INFO)
-        CLASS ZEFAULT
+            CALL ZSPSORT_CSR(SPARSE, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -53,8 +53,8 @@ SUBROUTINE ZSPSORT(FORMAT, SPARSE, INFO)
         ! CSC format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_csc_z)
-            CALL DSPSORT_CSC(SPARSE, INFO)
-        CLASS ZEFAULT
+            CALL ZSPSORT_CSC(SPARSE, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
     ELSE
@@ -64,7 +64,7 @@ SUBROUTINE ZSPSORT(FORMAT, SPARSE, INFO)
 CONTAINS
 
     !> Sort COO format by row then column (lexicographic order)
-    SUBROUTINE DSPSORT_COO(COO, INFO)
+    SUBROUTINE ZSPSORT_COO(COO, INFO)
         TYPE(sparse_coo_z), INTENT(INOUT) :: COO
         INTEGER(int32), INTENT(OUT) :: INFO
         
@@ -87,9 +87,9 @@ CONTAINS
         END IF
         
         ! Initialize permutation
-        ZO i = 1, COO%nnz
+        DO i = 1, COO%nnz
             perm(i) = i
-        END ZO
+        END DO
         
         ! Sort permutation array based on (row,col) pairs
         CALL quicksort_coo_indices(COO%row_ind, COO%col_ind, perm, 1, COO%nnz)
@@ -98,27 +98,27 @@ CONTAINS
         ALLOCATE(temp_row(COO%nnz), temp_col(COO%nnz), temp_val(COO%nnz), STAT=INFO)
         IF (INFO /= 0) THEN
             INFO = -2
-            ZEALLOCATE(perm)
+            DEALLOCATE(perm)
             RETURN
         END IF
         
-        ZO i = 1, COO%nnz
+        DO i = 1, COO%nnz
             temp_row(i) = COO%row_ind(perm(i))
             temp_col(i) = COO%col_ind(perm(i))
             temp_val(i) = COO%values(perm(i))
-        END ZO
+        END DO
         
         COO%row_ind = temp_row
         COO%col_ind = temp_col
         COO%values = temp_val
         COO%sorted = .TRUE.
         
-        ZEALLOCATE(perm, temp_row, temp_col, temp_val)
+        DEALLOCATE(perm, temp_row, temp_col, temp_val)
         
-    END SUBROUTINE DSPSORT_COO
+    END SUBROUTINE ZSPSORT_COO
     
     !> Sort CSR format - sort column indices within each row
-    SUBROUTINE DSPSORT_CSR(CSR, INFO)
+    SUBROUTINE ZSPSORT_CSR(CSR, INFO)
         TYPE(sparse_csr_z), INTENT(INOUT) :: CSR
         INTEGER(int32), INTENT(OUT) :: INFO
         
@@ -128,7 +128,7 @@ CONTAINS
         IF (CSR%sorted) RETURN
         
         ! Sort column indices within each row
-        ZO i = 1, CSR%nrows
+        DO i = 1, CSR%nrows
             row_start = CSR%row_ptr(i)
             row_end = CSR%row_ptr(i+1) - 1
             row_nnz = row_end - row_start + 1
@@ -139,14 +139,14 @@ CONTAINS
                                           CSR%values(row_start:row_end), &
                                           1, row_nnz)
             END IF
-        END ZO
+        END DO
         
         CSR%sorted = .TRUE.
         
-    END SUBROUTINE DSPSORT_CSR
+    END SUBROUTINE ZSPSORT_CSR
     
     !> Sort CSC format - sort row indices within each column
-    SUBROUTINE DSPSORT_CSC(CSC, INFO)
+    SUBROUTINE ZSPSORT_CSC(CSC, INFO)
         TYPE(sparse_csc_z), INTENT(INOUT) :: CSC
         INTEGER(int32), INTENT(OUT) :: INFO
         
@@ -156,7 +156,7 @@ CONTAINS
         IF (CSC%sorted) RETURN
         
         ! Sort row indices within each column
-        ZO j = 1, CSC%ncols
+        DO j = 1, CSC%ncols
             col_start = CSC%col_ptr(j)
             col_end = CSC%col_ptr(j+1) - 1
             col_nnz = col_end - col_start + 1
@@ -167,11 +167,11 @@ CONTAINS
                                           CSC%values(col_start:col_end), &
                                           1, col_nnz)
             END IF
-        END ZO
+        END DO
         
         CSC%sorted = .TRUE.
         
-    END SUBROUTINE DSPSORT_CSC
+    END SUBROUTINE ZSPSORT_CSC
     
     !> Quicksort for COO format using lexicographic order
     RECURSIVE SUBROUTINE quicksort_coo_indices(row_ind, col_ind, perm, first, last)
@@ -189,17 +189,17 @@ CONTAINS
             i = first
             j = last
             
-            ZO
+            DO
                 ! Find elements to swap
-                ZO WHILE (row_ind(perm(i)) < pivot_row .OR. &
+                DO WHILE (row_ind(perm(i)) < pivot_row .OR. &
                          (row_ind(perm(i)) == pivot_row .AND. col_ind(perm(i)) < pivot_col))
                     i = i + 1
-                END ZO
+                END DO
                 
-                ZO WHILE (row_ind(perm(j)) > pivot_row .OR. &
+                DO WHILE (row_ind(perm(j)) > pivot_row .OR. &
                          (row_ind(perm(j)) == pivot_row .AND. col_ind(perm(j)) > pivot_col))
                     j = j - 1
-                END ZO
+                END DO
                 
                 IF (i >= j) EXIT
                 
@@ -210,7 +210,7 @@ CONTAINS
                 
                 i = i + 1
                 j = j - 1
-            END ZO
+            END DO
             
             ! Recurse
             CALL quicksort_coo_indices(row_ind, col_ind, perm, first, j)
@@ -232,13 +232,13 @@ CONTAINS
             i = first
             j = last
             
-            ZO
-                ZO WHILE (indices(i) < pivot)
+            DO
+                DO WHILE (indices(i) < pivot)
                     i = i + 1
-                END ZO
-                ZO WHILE (indices(j) > pivot)
+                END DO
+                DO WHILE (indices(j) > pivot)
                     j = j - 1
-                END ZO
+                END DO
                 IF (i >= j) EXIT
                 
                 ! Swap indices
@@ -253,7 +253,7 @@ CONTAINS
                 
                 i = i + 1
                 j = j - 1
-            END ZO
+            END DO
             
             CALL quicksort_with_values(indices, values, first, j)
             CALL quicksort_with_values(indices, values, i, last)

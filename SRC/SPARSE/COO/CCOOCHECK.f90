@@ -1,9 +1,9 @@
-!> \brief \b CCOOCHECK validates COO sparse matrix structure
+!> \brief \b DCOOCHECK validates COO sparse matrix structure
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCOOCHECK validates a COO sparse matrix structure by checking:
+!> DCOOCHECK validates a COO sparse matrix structure by checking:
 !> - Row and column indices are within bounds
 !> - Detection of duplicate entries
 !> - Matrix dimensions are valid
@@ -63,7 +63,7 @@ SUBROUTINE CCOOCHECK(COO, INFO)
     END IF
     
     ! Check bounds for all entries
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         row = COO%row_ind(i)
         col = COO%col_ind(i)
         
@@ -78,7 +78,7 @@ SUBROUTINE CCOOCHECK(COO, INFO)
             INFO = SPARSE_ERR_INVALID
             RETURN
         END IF
-    END CO
+    END DO
     
     ! Check for duplicates using a simple hash table approach
     ! For small matrices, we can afford a direct mapping
@@ -88,7 +88,7 @@ SUBROUTINE CCOOCHECK(COO, INFO)
         entry_map = 0
         
         found_duplicate = .FALSE.
-        CO i = 1, COO%nnz
+        DO i = 1, COO%nnz
             row = COO%row_ind(i)
             col = COO%col_ind(i)
             
@@ -97,9 +97,9 @@ SUBROUTINE CCOOCHECK(COO, INFO)
                 EXIT
             END IF
             entry_map(row, col) = i
-        END CO
+        END DO
         
-        CEALLOCATE(entry_map)
+        DEALLOCATE(entry_map)
         
         IF (found_duplicate) THEN
             INFO = SPARSE_ERR_INVALID
@@ -108,15 +108,15 @@ SUBROUTINE CCOOCHECK(COO, INFO)
     ELSE IF (COO%nnz > 1) THEN
         ! For larger matrices, use sorting to detect duplicates
         ! This is O(n log n) but uses less memory
-        CO i = 1, COO%nnz - 1
-            CO j = i + 1, COO%nnz
+        DO i = 1, COO%nnz - 1
+            DO j = i + 1, COO%nnz
                 IF (COO%row_ind(i) == COO%row_ind(j) .AND. &
                     COO%col_ind(i) == COO%col_ind(j)) THEN
                     INFO = SPARSE_ERR_INVALID
                     RETURN
                 END IF
-            END CO
-        END CO
+            END DO
+        END DO
     END IF
     
 END SUBROUTINE CCOOCHECK

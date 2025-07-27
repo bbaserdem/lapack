@@ -1,9 +1,9 @@
-!> \brief \b ZCSCALLOC allocates a CSC sparse matrix
+!> \brief \b DCSCALLOC allocates a CSC sparse matrix
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCSCALLOC allocates memory for a CSC format sparse matrix with specified
+!> DCSCALLOC allocates memory for a CSC format sparse matrix with specified
 !> dimensions and estimated number of non-zeros.
 !>
 !> \param[in] NROWS
@@ -88,7 +88,7 @@ SUBROUTINE ZCSCALLOC(NROWS, NCOLS, NNZ, CSC, INFO)
     
     IF (ierr /= 0) THEN
         ! Clean up partial allocation
-        IF (ALLOCATED(CSC%col_ptr)) ZEALLOCATE(CSC%col_ptr)
+        IF (ALLOCATED(CSC%col_ptr)) DEALLOCATE(CSC%col_ptr)
         INFO = SPARSE_ERR_ALLOC
         CSC%nnz_alloc = 0
         RETURN
@@ -102,12 +102,12 @@ SUBROUTINE ZCSCALLOC(NROWS, NCOLS, NNZ, CSC, INFO)
     
 END SUBROUTINE ZCSCALLOC
 
-!> \brief \b ZCSCINIT initializes a CSC sparse matrix from arrays
+!> \brief \b DCSCINIT initializes a CSC sparse matrix from arrays
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCSCINIT initializes a CSC format sparse matrix from provided arrays
+!> DCSCINIT initializes a CSC format sparse matrix from provided arrays
 !> of column pointers, row indices, and values.
 !>
 !> \param[in] COLPTR
@@ -121,7 +121,7 @@ END SUBROUTINE ZCSCALLOC
 !>          The row indices (1-based) of the non-zero elements.
 !>
 !> \param[in] VAL
-!>          VAL is ZOUBLE PRECISION array, dimension (NNZ)
+!>          VAL is COMPLEX*16 array, dimension (NNZ)
 !>          The non-zero values.
 !>
 !> \param[in] NCOLS
@@ -203,22 +203,22 @@ SUBROUTINE ZCSCINIT(COLPTR, ROWIND, VAL, NCOLS, NNZ, CSC, INFO)
     END IF
     
     ! Check that column pointers are non-decreasing
-    ZO j = 1, NCOLS
+    DO j = 1, NCOLS
         IF (COLPTR(j+1) < COLPTR(j)) THEN
             INFO = SPARSE_ERR_INVALID
             RETURN
         END IF
-    END ZO
+    END DO
     
     ! Copy column pointers
     CSC%col_ptr(1:NCOLS+1) = COLPTR(1:NCOLS+1)
     
     ! Validate row indices and copy data
-    ZO j = 1, NCOLS
+    DO j = 1, NCOLS
         col_start = COLPTR(j)
         col_end = COLPTR(j+1) - 1
         
-        ZO i = col_start, col_end
+        DO i = col_start, col_end
             ! Check row index
             IF (ROWIND(i) < 1 .OR. ROWIND(i) > CSC%nrows) THEN
                 INFO = SPARSE_ERR_DIM
@@ -228,8 +228,8 @@ SUBROUTINE ZCSCINIT(COLPTR, ROWIND, VAL, NCOLS, NNZ, CSC, INFO)
             ! Copy data
             CSC%row_ind(i) = ROWIND(i)
             CSC%values(i) = VAL(i)
-        END ZO
-    END ZO
+        END DO
+    END DO
     
     ! Set number of columns and non-zeros
     CSC%ncols = NCOLS

@@ -40,8 +40,8 @@ SUBROUTINE DDEN2COO(DENSE, LDA, M, N, COO, INFO)
     IMPLICIT NONE
     
     ! Arguments
-    REAL(real64), INTENT(IN) :: DENSE(LDA,*)
     INTEGER, INTENT(IN) :: LDA, M, N
+    REAL(real64), INTENT(IN) :: DENSE(LDA,*)
     TYPE(sparse_coo_d), INTENT(INOUT) :: COO
     INTEGER, INTENT(OUT) :: INFO
     

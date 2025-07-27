@@ -49,14 +49,14 @@ SUBROUTINE ZSPADD2(FORMAT, M, N, ALPHA, A, BETA, B, C, INFO)
             TYPE IS (sparse_coo_z)
                 SELECT TYPE(C)
                 TYPE IS (sparse_coo_z)
-                    CALL DSPADD2_COO(M, N, ALPHA, A, BETA, B, C, INFO)
-                CLASS ZEFAULT
+                    CALL ZSPADD2_COO(M, N, ALPHA, A, BETA, B, C, INFO)
+                CLASS DEFAULT
                     INFO = -1
                 END SELECT
-            CLASS ZEFAULT
+            CLASS DEFAULT
                 INFO = -1
             END SELECT
-        CLASS ZEFAULT
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -68,14 +68,14 @@ SUBROUTINE ZSPADD2(FORMAT, M, N, ALPHA, A, BETA, B, C, INFO)
             TYPE IS (sparse_csr_z)
                 SELECT TYPE(C)
                 TYPE IS (sparse_csr_z)
-                    CALL DSPADD2_CSR(M, N, ALPHA, A, BETA, B, C, INFO)
-                CLASS ZEFAULT
+                    CALL ZSPADD2_CSR(M, N, ALPHA, A, BETA, B, C, INFO)
+                CLASS DEFAULT
                     INFO = -1
                 END SELECT
-            CLASS ZEFAULT
+            CLASS DEFAULT
                 INFO = -1
             END SELECT
-        CLASS ZEFAULT
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -87,14 +87,14 @@ SUBROUTINE ZSPADD2(FORMAT, M, N, ALPHA, A, BETA, B, C, INFO)
             TYPE IS (sparse_csc_z)
                 SELECT TYPE(C)
                 TYPE IS (sparse_csc_z)
-                    CALL DSPADD2_CSC(M, N, ALPHA, A, BETA, B, C, INFO)
-                CLASS ZEFAULT
+                    CALL ZSPADD2_CSC(M, N, ALPHA, A, BETA, B, C, INFO)
+                CLASS DEFAULT
                     INFO = -1
                 END SELECT
-            CLASS ZEFAULT
+            CLASS DEFAULT
                 INFO = -1
             END SELECT
-        CLASS ZEFAULT
+        CLASS DEFAULT
             INFO = -1
         END SELECT
     ELSE
@@ -104,7 +104,7 @@ SUBROUTINE ZSPADD2(FORMAT, M, N, ALPHA, A, BETA, B, C, INFO)
 CONTAINS
 
     !> COO addition implementation
-    SUBROUTINE DSPADD2_COO(M, N, ALPHA, A, BETA, B, C, INFO)
+    SUBROUTINE ZSPADD2_COO(M, N, ALPHA, A, BETA, B, C, INFO)
         INTEGER(int32), INTENT(IN) :: M, N
         COMPLEX(real64), INTENT(IN) :: ALPHA, BETA
         TYPE(sparse_coo_z), INTENT(IN) :: A, B
@@ -149,22 +149,22 @@ CONTAINS
         
         ! Add all elements from A
         IF (ALPHA /= (0.0_real64, 0.0_real64)) THEN
-            ZO ia = 1, A%nnz
+            DO ia = 1, A%nnz
                 ic = ic + 1
                 C%row_ind(ic) = A%row_ind(ia)
                 C%col_ind(ic) = A%col_ind(ia)
                 C%values(ic) = ALPHA * A%values(ia)
-            END ZO
+            END DO
         END IF
         
         ! Add all elements from B
         IF (BETA /= (0.0_real64, 0.0_real64)) THEN
-            ZO ib = 1, B%nnz
+            DO ib = 1, B%nnz
                 ic = ic + 1
                 C%row_ind(ic) = B%row_ind(ib)
                 C%col_ind(ic) = B%col_ind(ib)
                 C%values(ic) = BETA * B%values(ib)
-            END ZO
+            END DO
         END IF
         
         C%nnz = ic
@@ -172,12 +172,12 @@ CONTAINS
         C%checked = .FALSE.
         
         ! Note: This simple implementation may create duplicates
-        ! Call ZSPCOMP afterwards to combine duplicates
+        ! CALL ZSPCOMP afterwards to combine duplicates
         
-    END SUBROUTINE DSPADD2_COO
+    END SUBROUTINE ZSPADD2_COO
     
     !> CSR addition implementation
-    SUBROUTINE DSPADD2_CSR(M, N, ALPHA, A, BETA, B, C, INFO)
+    SUBROUTINE ZSPADD2_CSR(M, N, ALPHA, A, BETA, B, C, INFO)
         INTEGER(int32), INTENT(IN) :: M, N
         COMPLEX(real64), INTENT(IN) :: ALPHA, BETA
         TYPE(sparse_csr_z), INTENT(IN) :: A, B
@@ -216,7 +216,7 @@ CONTAINS
         ALLOCATE(C%row_ptr(M+1), C%col_ind(nnz_max), C%values(nnz_max), STAT=INFO)
         IF (INFO /= 0) THEN
             INFO = -3
-            ZEALLOCATE(col_marker, work_values, work_ind)
+            DEALLOCATE(col_marker, work_values, work_ind)
             RETURN
         END IF
         
@@ -224,12 +224,12 @@ CONTAINS
         C%row_ptr(1) = 1
         ic = 0
         
-        ZO i = 1, M
+        DO i = 1, M
             nnz_row = 0
             
             ! Process row i of A
             IF (ALPHA /= (0.0_real64, 0.0_real64)) THEN
-                ZO ia = A%row_ptr(i), A%row_ptr(i+1)-1
+                DO ia = A%row_ptr(i), A%row_ptr(i+1)-1
                     ja = A%col_ind(ia)
                     IF (col_marker(ja) < i) THEN
                         col_marker(ja) = i
@@ -238,12 +238,12 @@ CONTAINS
                         work_values(ja) = (0.0_real64, 0.0_real64)
                     END IF
                     work_values(ja) = work_values(ja) + ALPHA * A%values(ia)
-                END ZO
+                END DO
             END IF
             
             ! Process row i of B
             IF (BETA /= (0.0_real64, 0.0_real64)) THEN
-                ZO ib = B%row_ptr(i), B%row_ptr(i+1)-1
+                DO ib = B%row_ptr(i), B%row_ptr(i+1)-1
                     jb = B%col_ind(ib)
                     IF (col_marker(jb) < i) THEN
                         col_marker(jb) = i
@@ -252,32 +252,32 @@ CONTAINS
                         work_values(jb) = (0.0_real64, 0.0_real64)
                     END IF
                     work_values(jb) = work_values(jb) + BETA * B%values(ib)
-                END ZO
+                END DO
             END IF
             
             ! Sort indices for this row
             CALL quicksort_int(work_ind, 1, nnz_row)
             
             ! Copy to result
-            ZO j = 1, nnz_row
+            DO j = 1, nnz_row
                 ic = ic + 1
                 C%col_ind(ic) = work_ind(j)
                 C%values(ic) = work_values(work_ind(j))
-            END ZO
+            END DO
             
             C%row_ptr(i+1) = ic + 1
-        END ZO
+        END DO
         
         C%nnz = ic
         C%sorted = .TRUE.
         
         ! Clean up
-        ZEALLOCATE(col_marker, work_values, work_ind)
+        DEALLOCATE(col_marker, work_values, work_ind)
         
-    END SUBROUTINE DSPADD2_CSR
+    END SUBROUTINE ZSPADD2_CSR
     
     !> CSC addition implementation
-    SUBROUTINE DSPADD2_CSC(M, N, ALPHA, A, BETA, B, C, INFO)
+    SUBROUTINE ZSPADD2_CSC(M, N, ALPHA, A, BETA, B, C, INFO)
         INTEGER(int32), INTENT(IN) :: M, N
         COMPLEX(real64), INTENT(IN) :: ALPHA, BETA
         TYPE(sparse_csc_z), INTENT(IN) :: A, B
@@ -316,7 +316,7 @@ CONTAINS
         ALLOCATE(C%col_ptr(N+1), C%row_ind(nnz_max), C%values(nnz_max), STAT=INFO)
         IF (INFO /= 0) THEN
             INFO = -3
-            ZEALLOCATE(row_marker, work_values, work_ind)
+            DEALLOCATE(row_marker, work_values, work_ind)
             RETURN
         END IF
         
@@ -324,12 +324,12 @@ CONTAINS
         C%col_ptr(1) = 1
         ic = 0
         
-        ZO j = 1, N
+        DO j = 1, N
             nnz_col = 0
             
             ! Process column j of A
             IF (ALPHA /= (0.0_real64, 0.0_real64)) THEN
-                ZO ia = A%col_ptr(j), A%col_ptr(j+1)-1
+                DO ia = A%col_ptr(j), A%col_ptr(j+1)-1
                     ra = A%row_ind(ia)
                     IF (row_marker(ra) < j) THEN
                         row_marker(ra) = j
@@ -338,12 +338,12 @@ CONTAINS
                         work_values(ra) = (0.0_real64, 0.0_real64)
                     END IF
                     work_values(ra) = work_values(ra) + ALPHA * A%values(ia)
-                END ZO
+                END DO
             END IF
             
             ! Process column j of B
             IF (BETA /= (0.0_real64, 0.0_real64)) THEN
-                ZO ib = B%col_ptr(j), B%col_ptr(j+1)-1
+                DO ib = B%col_ptr(j), B%col_ptr(j+1)-1
                     rb = B%row_ind(ib)
                     IF (row_marker(rb) < j) THEN
                         row_marker(rb) = j
@@ -352,29 +352,29 @@ CONTAINS
                         work_values(rb) = (0.0_real64, 0.0_real64)
                     END IF
                     work_values(rb) = work_values(rb) + BETA * B%values(ib)
-                END ZO
+                END DO
             END IF
             
             ! Sort indices for this column
             CALL quicksort_int(work_ind, 1, nnz_col)
             
             ! Copy to result
-            ZO i = 1, nnz_col
+            DO i = 1, nnz_col
                 ic = ic + 1
                 C%row_ind(ic) = work_ind(i)
                 C%values(ic) = work_values(work_ind(i))
-            END ZO
+            END DO
             
             C%col_ptr(j+1) = ic + 1
-        END ZO
+        END DO
         
         C%nnz = ic
         C%sorted = .TRUE.
         
         ! Clean up
-        ZEALLOCATE(row_marker, work_values, work_ind)
+        DEALLOCATE(row_marker, work_values, work_ind)
         
-    END SUBROUTINE DSPADD2_CSC
+    END SUBROUTINE ZSPADD2_CSC
     
     ! Simple quicksort for integer array
     RECURSIVE SUBROUTINE quicksort_int(arr, first, last)
@@ -387,20 +387,20 @@ CONTAINS
             i = first
             j = last
             
-            ZO
-                ZO WHILE (arr(i) < pivot)
+            DO
+                DO WHILE (arr(i) < pivot)
                     i = i + 1
-                END ZO
-                ZO WHILE (arr(j) > pivot)
+                END DO
+                DO WHILE (arr(j) > pivot)
                     j = j - 1
-                END ZO
+                END DO
                 IF (i >= j) EXIT
                 temp = arr(i)
                 arr(i) = arr(j)
                 arr(j) = temp
                 i = i + 1
                 j = j - 1
-            END ZO
+            END DO
             
             CALL quicksort_int(arr, first, j)
             CALL quicksort_int(arr, i, last)

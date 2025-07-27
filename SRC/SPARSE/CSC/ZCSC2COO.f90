@@ -1,9 +1,9 @@
-!> \brief \b ZCSC2COO converts CSC to COO format
+!> \brief \b DCSC2COO converts CSC to COO format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCSC2COO converts a sparse matrix from CSC (Compressed Sparse Column) format
+!> DCSC2COO converts a sparse matrix from CSC (Compressed Sparse Column) format
 !> to COO (Coordinate List) format.
 !>
 !> \param[in] CSC
@@ -68,15 +68,15 @@ SUBROUTINE ZCSC2COO(CSC, COO, INFO)
     
     ! Convert CSC to COO
     nnz_count = 0
-    ZO j = 1, CSC%ncols
+    DO j = 1, CSC%ncols
         ! Process all elements in column j
-        ZO i = CSC%col_ptr(j), CSC%col_ptr(j+1)-1
+        DO i = CSC%col_ptr(j), CSC%col_ptr(j+1)-1
             nnz_count = nnz_count + 1
             COO%row_ind(nnz_count) = CSC%row_ind(i)
             COO%col_ind(nnz_count) = j
             COO%values(nnz_count) = CSC%values(i)
-        END ZO
-    END ZO
+        END DO
+    END DO
     
     ! Verify we processed all elements
     IF (nnz_count /= CSC%nnz) THEN

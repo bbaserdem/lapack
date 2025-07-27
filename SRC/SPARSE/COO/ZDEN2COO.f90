@@ -1,18 +1,18 @@
-!> \brief \b ZDEN2COO converts dense matrix to COO format
+!> \brief \b DDEN2COO converts dense matrix to COO format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZDEN2COO converts a dense matrix to COO (Coordinate List) sparse format,
+!> DDEN2COO converts a dense matrix to COO (Coordinate List) sparse format,
 !> skipping zero elements according to the tolerance SPARSE_ZERO_TOL.
 !>
-!> \param[in] ZENSE
-!>          ZENSE is ZOUBLE PRECISION array, dimension (LDA,N)
+!> \param[in] DENSE
+!>          DENSE is COMPLEX*16 array, dimension (LDA,N)
 !>          The input dense matrix.
 !>
 !> \param[in] LDA
 !>          LDA is INTEGER
-!>          The leading dimension of ZENSE. LDA >= max(1,M).
+!>          The leading dimension of DENSE. LDA >= max(1,M).
 !>
 !> \param[in] M
 !>          M is INTEGER
@@ -24,7 +24,7 @@
 !>
 !> \param[out] COO
 !>          COO is TYPE(sparse_coo_z)
-!>          On exit, the COO sparse matrix containing non-zero elements from ZENSE.
+!>          On exit, the COO sparse matrix containing non-zero elements from DENSE.
 !>          Must be pre-allocated with sufficient space.
 !>
 !> \param[out] INFO
@@ -33,14 +33,14 @@
 !>          < 0: if INFO = -i, the i-th argument had an illegal value
 !>          = SPARSE_ERR_ALLOC: insufficient allocated space in COO
 
-SUBROUTINE ZDEN2COO(ZENSE, LDA, M, N, COO, INFO)
+SUBROUTINE ZDEN2COO(DENSE, LDA, M, N, COO, INFO)
     USE sparse_types_extended
     USE sparse_constants
     USE ISO_FORTRAN_ENV, ONLY: int32, real64
     IMPLICIT NONE
     
     ! Arguments
-    COMPLEX(real64), INTENT(IN) :: ZENSE(LDA,*)
+    COMPLEX(real64), INTENT(IN) :: DENSE(LDA,*)
     INTEGER, INTENT(IN) :: LDA, M, N
     TYPE(sparse_coo_z), INTENT(INOUT) :: COO
     INTEGER, INTENT(OUT) :: INFO
@@ -80,14 +80,14 @@ SUBROUTINE ZDEN2COO(ZENSE, LDA, M, N, COO, INFO)
     
     ! First pass: count non-zeros
     nnz_count = 0
-    ZO j = 1, N
-        ZO i = 1, M
-            val = ZENSE(i,j)
+    DO j = 1, N
+        DO i = 1, M
+            val = DENSE(i,j)
             IF (ZABS(val) > SPARSE_ZERO_TOL) THEN
                 nnz_count = nnz_count + 1
             END IF
-        END ZO
-    END ZO
+        END DO
+    END DO
     
     ! Check if we have enough space
     IF (nnz_count > COO%nnz_alloc) THEN
@@ -105,17 +105,17 @@ SUBROUTINE ZDEN2COO(ZENSE, LDA, M, N, COO, INFO)
     
     ! Second pass: store non-zeros in COO format
     nnz_count = 0
-    ZO j = 1, N
-        ZO i = 1, M
-            val = ZENSE(i,j)
+    DO j = 1, N
+        DO i = 1, M
+            val = DENSE(i,j)
             IF (ZABS(val) > SPARSE_ZERO_TOL) THEN
                 nnz_count = nnz_count + 1
                 COO%row_ind(nnz_count) = i
                 COO%col_ind(nnz_count) = j
                 COO%values(nnz_count) = val
             END IF
-        END ZO
-    END ZO
+        END DO
+    END DO
     
     ! Mark as sorted (we traverse in column-major order)
     COO%sorted = .FALSE.  ! Not sorted by rows

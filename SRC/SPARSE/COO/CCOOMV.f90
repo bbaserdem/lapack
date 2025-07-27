@@ -1,9 +1,9 @@
-!> \brief \b CCOOMV performs matrix-vector multiplication using COO format
+!> \brief \b DCOOMV performs matrix-vector multiplication using COO format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCOOMV performs one of the matrix-vector operations
+!> DCOOMV performs one of the matrix-vector operations
 !>
 !>    y := alpha*A*x + beta*y,   or   y := alpha*A**T*x + beta*y,
 !>
@@ -32,7 +32,7 @@
 !>          N must be at least zero.
 !>
 !> \param[in] ALPHA
-!>          ALPHA is COUBLE PRECISION
+!>          ALPHA is COMPLEX
 !>          On entry, ALPHA specifies the scalar alpha.
 !>
 !> \param[in] COO
@@ -40,7 +40,7 @@
 !>          The sparse matrix A in COO format.
 !>
 !> \param[in] X
-!>          X is COUBLE PRECISION array, dimension at least
+!>          X is COMPLEX array, dimension at least
 !>          ( 1 + ( n - 1 )*abs( INCX ) ) when TRANS = 'N' or 'n'
 !>          and at least
 !>          ( 1 + ( m - 1 )*abs( INCX ) ) otherwise.
@@ -53,12 +53,12 @@
 !>          X. INCX must not be zero.
 !>
 !> \param[in] BETA
-!>          BETA is COUBLE PRECISION
+!>          BETA is COMPLEX
 !>          On entry, BETA specifies the scalar beta. When BETA is
 !>          supplied as zero then Y need not be set on input.
 !>
 !> \param[in,out] Y
-!>          Y is COUBLE PRECISION array, dimension at least
+!>          Y is COMPLEX array, dimension at least
 !>          ( 1 + ( m - 1 )*abs( INCY ) ) when TRANS = 'N' or 'n'
 !>          and at least
 !>          ( 1 + ( n - 1 )*abs( INCY ) ) otherwise.
@@ -138,52 +138,52 @@ SUBROUTINE CCOOMV(TRANS, M, N, ALPHA, COO, X, INCX, BETA, Y, INCY)
             ! No transpose: y has length M
             IF (INCY == 1) THEN
                 IF (BETA == (0.0_real32, 0.0_real32)) THEN
-                    CO i = 1, M
+                    DO i = 1, M
                         Y(i) = (0.0_real32, 0.0_real32)
-                    END CO
+                    END DO
                 ELSE
-                    CO i = 1, M
+                    DO i = 1, M
                         Y(i) = BETA * Y(i)
-                    END CO
+                    END DO
                 END IF
             ELSE
                 iy = ky
                 IF (BETA == (0.0_real32, 0.0_real32)) THEN
-                    CO i = 1, M
+                    DO i = 1, M
                         Y(iy) = (0.0_real32, 0.0_real32)
                         iy = iy + INCY
-                    END CO
+                    END DO
                 ELSE
-                    CO i = 1, M
+                    DO i = 1, M
                         Y(iy) = BETA * Y(iy)
                         iy = iy + INCY
-                    END CO
+                    END DO
                 END IF
             END IF
         ELSE
             ! Transpose: y has length N
             IF (INCY == 1) THEN
                 IF (BETA == (0.0_real32, 0.0_real32)) THEN
-                    CO i = 1, N
+                    DO i = 1, N
                         Y(i) = (0.0_real32, 0.0_real32)
-                    END CO
+                    END DO
                 ELSE
-                    CO i = 1, N
+                    DO i = 1, N
                         Y(i) = BETA * Y(i)
-                    END CO
+                    END DO
                 END IF
             ELSE
                 iy = ky
                 IF (BETA == (0.0_real32, 0.0_real32)) THEN
-                    CO i = 1, N
+                    DO i = 1, N
                         Y(iy) = (0.0_real32, 0.0_real32)
                         iy = iy + INCY
-                    END CO
+                    END DO
                 ELSE
-                    CO i = 1, N
+                    DO i = 1, N
                         Y(iy) = BETA * Y(iy)
                         iy = iy + INCY
-                    END CO
+                    END DO
                 END IF
             END IF
         END IF
@@ -196,39 +196,39 @@ SUBROUTINE CCOOMV(TRANS, M, N, ALPHA, COO, X, INCX, BETA, Y, INCY)
         ! Form y := alpha*A*x + y
         IF ((INCX == 1) .AND. (INCY == 1)) THEN
             ! Both increments equal to 1
-            CO k = 1, COO%nnz
+            DO k = 1, COO%nnz
                 i = COO%row_ind(k)
                 j = COO%col_ind(k)
                 Y(i) = Y(i) + ALPHA * COO%values(k) * X(j)
-            END CO
+            END DO
         ELSE
             ! General increments
-            CO k = 1, COO%nnz
+            DO k = 1, COO%nnz
                 i = COO%row_ind(k)
                 j = COO%col_ind(k)
                 ix = kx + (j - 1) * INCX
                 iy = ky + (i - 1) * INCY
                 Y(iy) = Y(iy) + ALPHA * COO%values(k) * X(ix)
-            END CO
+            END DO
         END IF
     ELSE
         ! Form y := alpha*A**T*x + y
         IF ((INCX == 1) .AND. (INCY == 1)) THEN
             ! Both increments equal to 1
-            CO k = 1, COO%nnz
+            DO k = 1, COO%nnz
                 i = COO%row_ind(k)
                 j = COO%col_ind(k)
                 Y(j) = Y(j) + ALPHA * COO%values(k) * X(i)
-            END CO
+            END DO
         ELSE
             ! General increments
-            CO k = 1, COO%nnz
+            DO k = 1, COO%nnz
                 i = COO%row_ind(k)
                 j = COO%col_ind(k)
                 ix = kx + (i - 1) * INCX
                 iy = ky + (j - 1) * INCY
                 Y(iy) = Y(iy) + ALPHA * COO%values(k) * X(ix)
-            END CO
+            END DO
         END IF
     END IF
     

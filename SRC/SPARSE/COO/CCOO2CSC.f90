@@ -1,9 +1,9 @@
-!> \brief \b CCOO2CSC converts COO to CSC format
+!> \brief \b DCOO2CSC converts COO to CSC format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCOO2CSC converts a sparse matrix from COO (Coordinate List) format
+!> DCOO2CSC converts a sparse matrix from COO (Coordinate List) format
 !> to CSC (Compressed Sparse Column) format.
 !>
 !> \param[in] COO
@@ -87,33 +87,33 @@ SUBROUTINE CCOO2CSC(COO, CSC, INFO)
     
     ! Count elements per column
     col_count(:) = 0
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         col = COO%col_ind(i)
         col_count(col) = col_count(col) + 1
-    END CO
+    END DO
     
     ! Build column pointer array
     CSC%col_ptr(1) = 1
-    CO i = 1, COO%ncols
+    DO i = 1, COO%ncols
         CSC%col_ptr(i+1) = CSC%col_ptr(i) + col_count(i)
-    END CO
+    END DO
     
     ! Create permutation array for sorting by column
     ! work array will track current position for each column
     work(1:COO%ncols) = CSC%col_ptr(1:COO%ncols)
     
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         col = COO%col_ind(i)
         perm(i) = work(col)
         work(col) = work(col) + 1
-    END CO
+    END DO
     
     ! Apply permutation to create sorted arrays
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         pos = perm(i)
         temp_rows(pos) = COO%row_ind(i)
         temp_vals(pos) = COO%values(i)
-    END CO
+    END DO
     
     ! Copy to CSC structure
     CSC%row_ind(1:COO%nnz) = temp_rows(1:COO%nnz)
@@ -123,6 +123,6 @@ SUBROUTINE CCOO2CSC(COO, CSC, INFO)
     CSC%sorted = .FALSE.
     
     ! Clean up
-    CEALLOCATE(col_count, work, perm, temp_vals, temp_rows)
+    DEALLOCATE(col_count, work, perm, temp_vals, temp_rows)
     
 END SUBROUTINE CCOO2CSC

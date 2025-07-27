@@ -1,7 +1,7 @@
 !> \brief Write sparse matrix to file in Matrix Market format
 !>
 !> \details
-!> ZSPWRITE writes a sparse matrix to a file in Matrix Market format.
+!> DSPWRITE writes a sparse matrix to a file in Matrix Market format.
 !> The Matrix Market format is a standard ASCII format for sparse matrices.
 !>
 !> \param[in] SPARSE
@@ -54,11 +54,11 @@ SUBROUTINE ZSPWRITE(SPARSE, FILENAME, FORMAT, INFO)
         symmetry = 'symmetric'
         ! Count entries in lower triangular part
         nnz_to_write = 0
-        ZO k = 1, SPARSE%nnz
+        DO k = 1, SPARSE%nnz
             IF (SPARSE%row_ind(k) >= SPARSE%col_ind(k)) THEN
                 nnz_to_write = nnz_to_write + 1
             END IF
-        END ZO
+        END DO
     ELSE
         symmetry = 'general'
         nnz_to_write = SPARSE%nnz
@@ -80,7 +80,7 @@ SUBROUTINE ZSPWRITE(SPARSE, FILENAME, FORMAT, INFO)
     END IF
     
     ! Write comments
-    WRITE(unit, '(A)', IOSTAT=ios) '% Written by LAPACK ZSPWRITE routine'
+    WRITE(unit, '(A)', IOSTAT=ios) '% Written by LAPACK DSPWRITE routine'
     IF (ios /= 0) THEN
         INFO = 3
         CLOSE(unit)
@@ -98,7 +98,7 @@ SUBROUTINE ZSPWRITE(SPARSE, FILENAME, FORMAT, INFO)
     ! Write matrix entries
     IF (is_symmetric) THEN
         ! For symmetric matrices, only write lower triangular part
-        ZO k = 1, SPARSE%nnz
+        DO k = 1, SPARSE%nnz
             IF (SPARSE%row_ind(k) >= SPARSE%col_ind(k)) THEN
                 WRITE(unit, '(2I12,E23.15)', IOSTAT=ios) &
                     SPARSE%row_ind(k), SPARSE%col_ind(k), SPARSE%values(k)
@@ -108,10 +108,10 @@ SUBROUTINE ZSPWRITE(SPARSE, FILENAME, FORMAT, INFO)
                     RETURN
                 END IF
             END IF
-        END ZO
+        END DO
     ELSE
         ! Write all entries
-        ZO k = 1, SPARSE%nnz
+        DO k = 1, SPARSE%nnz
             WRITE(unit, '(2I12,E23.15)', IOSTAT=ios) &
                 SPARSE%row_ind(k), SPARSE%col_ind(k), SPARSE%values(k)
             IF (ios /= 0) THEN
@@ -119,7 +119,7 @@ SUBROUTINE ZSPWRITE(SPARSE, FILENAME, FORMAT, INFO)
                 CLOSE(unit)
                 RETURN
             END IF
-        END ZO
+        END DO
     END IF
     
     ! Close file
@@ -143,7 +143,7 @@ CONTAINS
         END IF
         
         ! Check each entry has symmetric counterpart
-        ZO k = 1, COO%nnz
+        DO k = 1, COO%nnz
             i = COO%row_ind(k)
             j = COO%col_ind(k)
             val1 = COO%values(k)
@@ -151,7 +151,7 @@ CONTAINS
             IF (i /= j) THEN  ! Off-diagonal element
                 found = .FALSE.
                 ! Look for (j,i) element
-                ZO l = 1, COO%nnz
+                DO l = 1, COO%nnz
                     IF (COO%row_ind(l) == j .AND. COO%col_ind(l) == i) THEN
                         val2 = COO%values(l)
                         IF (ZABS(val1 - val2) < tol) THEN
@@ -159,14 +159,14 @@ CONTAINS
                             EXIT
                         END IF
                     END IF
-                END ZO
+                END DO
                 
                 IF (.NOT. found) THEN
                     is_sym = .FALSE.
                     RETURN
                 END IF
             END IF
-        END ZO
+        END DO
     END FUNCTION check_symmetry
 
 END SUBROUTINE ZSPWRITE

@@ -1,9 +1,9 @@
-!> \brief \b ZCOOFREE deallocates COO sparse matrix memory
+!> \brief \b DCOOFREE deallocates COO sparse matrix memory
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCOOFREE deallocates all dynamically allocated memory associated
+!> DCOOFREE deallocates all dynamically allocated memory associated
 !> with a COO sparse matrix and resets the structure to an
 !> uninitialized state.
 !>
@@ -36,7 +36,7 @@ SUBROUTINE ZCOOFREE(COO, INFO)
     
     ! Deallocate row indices
     IF (ALLOCATED(COO%row_ind)) THEN
-        ZEALLOCATE(COO%row_ind, STAT=ierr)
+        DEALLOCATE(COO%row_ind, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN
@@ -45,7 +45,7 @@ SUBROUTINE ZCOOFREE(COO, INFO)
     
     ! Deallocate column indices
     IF (ALLOCATED(COO%col_ind)) THEN
-        ZEALLOCATE(COO%col_ind, STAT=ierr)
+        DEALLOCATE(COO%col_ind, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN
@@ -54,7 +54,7 @@ SUBROUTINE ZCOOFREE(COO, INFO)
     
     ! Deallocate values
     IF (ALLOCATED(COO%values)) THEN
-        ZEALLOCATE(COO%values, STAT=ierr)
+        DEALLOCATE(COO%values, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN

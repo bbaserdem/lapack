@@ -53,18 +53,18 @@ SUBROUTINE CGECSR(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, BETA, C, LDC)
     IF (ALPHA == (0.0_real32, 0.0_real32)) THEN
         IF (BETA == (0.0_real32, 0.0_real32)) THEN
             ! C = 0
-            CO j = 1, N
-                CO i = 1, M
+            DO j = 1, N
+                DO i = 1, M
                     C(i,j) = (0.0_real32, 0.0_real32)
-                END CO
-            END CO
+                END DO
+            END DO
         ELSE IF (BETA /= (1.0_real32, 0.0_real32)) THEN
             ! C = beta * C
-            CO j = 1, N
-                CO i = 1, M
+            DO j = 1, N
+                DO i = 1, M
                     C(i,j) = BETA * C(i,j)
-                END CO
-            END CO
+                END DO
+            END DO
         END IF
         RETURN
     END IF
@@ -72,133 +72,133 @@ SUBROUTINE CGECSR(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, BETA, C, LDC)
     ! Check dimensions
     IF (nota) THEN
         IF (LDA < MAX(1,M)) THEN
-            PRINT *, 'CGECSR: LDA too small'
+            PRINT *, 'DGECSR: LDA too small'
             RETURN
         END IF
     ELSE
         IF (LDA < MAX(1,K)) THEN
-            PRINT *, 'CGECSR: LDA too small for transposed A'
+            PRINT *, 'DGECSR: LDA too small for transposed A'
             RETURN
         END IF
     END IF
     
     IF (LDC < MAX(1,M)) THEN
-        PRINT *, 'CGECSR: LDC too small'
+        PRINT *, 'DGECSR: LDC too small'
         RETURN
     END IF
     
     IF (notb) THEN
         IF (B%nrows /= K .OR. B%ncols /= N) THEN
-            PRINT *, 'CGECSR: Dimension mismatch in B'
+            PRINT *, 'DGECSR: Dimension mismatch in B'
             RETURN
         END IF
     ELSE
         IF (B%ncols /= K .OR. B%nrows /= N) THEN
-            PRINT *, 'CGECSR: Dimension mismatch in transposed B'
+            PRINT *, 'DGECSR: Dimension mismatch in transposed B'
             RETURN
         END IF
     END IF
     
     ! Initialize C
     IF (BETA == (0.0_real32, 0.0_real32)) THEN
-        CO j = 1, N
-            CO i = 1, M
+        DO j = 1, N
+            DO i = 1, M
                 C(i,j) = (0.0_real32, 0.0_real32)
-            END CO
-        END CO
+            END DO
+        END DO
     ELSE IF (BETA /= (1.0_real32, 0.0_real32)) THEN
-        CO j = 1, N
-            CO i = 1, M
+        DO j = 1, N
+            DO i = 1, M
                 C(i,j) = BETA * C(i,j)
-            END CO
-        END CO
+            END DO
+        END DO
     END IF
     
     ! Main computation
     IF (nota .AND. notb) THEN
         ! C = alpha*A*B + beta*C
         ! For each row l of B (which gives column values for C)
-        CO l = 1, K
+        DO l = 1, K
             row_start = B%row_ptr(l)
             row_end = B%row_ptr(l+1) - 1
             
             IF (row_start <= row_end) THEN
                 ! For each non-zero in row l of B
-                CO jb = row_start, row_end
+                DO jb = row_start, row_end
                     j = B%col_ind(jb)  ! Column index in B and C
                     temp = ALPHA * B%values(jb)
                     
                     ! C(:,j) += temp * A(:,l)
-                    CO i = 1, M
+                    DO i = 1, M
                         C(i,j) = C(i,j) + temp * A(i,l)
-                    END CO
-                END CO
+                    END DO
+                END DO
             END IF
-        END CO
+        END DO
         
     ELSE IF (.NOT. nota .AND. notb) THEN
         ! C = alpha*A^T*B + beta*C
         ! For each row l of B
-        CO l = 1, K
+        DO l = 1, K
             row_start = B%row_ptr(l)
             row_end = B%row_ptr(l+1) - 1
             
             IF (row_start <= row_end) THEN
                 ! For each non-zero in row l of B
-                CO jb = row_start, row_end
+                DO jb = row_start, row_end
                     j = B%col_ind(jb)  ! Column index in B and C
                     temp = ALPHA * B%values(jb)
                     
                     ! C(:,j) += temp * A(l,:)^T
-                    CO i = 1, M
+                    DO i = 1, M
                         C(i,j) = C(i,j) + temp * A(l,i)
-                    END CO
-                END CO
+                    END DO
+                END DO
             END IF
-        END CO
+        END DO
         
     ELSE IF (nota .AND. .NOT. notb) THEN
         ! C = alpha*A*B^T + beta*C
         ! B^T means we treat CSR rows as columns
         ! For each column j of C (which is row j of B)
-        CO j = 1, N
+        DO j = 1, N
             row_start = B%row_ptr(j)
             row_end = B%row_ptr(j+1) - 1
             
             IF (row_start <= row_end) THEN
                 ! For each non-zero in row j of B (column j of B^T)
-                CO jb = row_start, row_end
+                DO jb = row_start, row_end
                     l = B%col_ind(jb)  ! This is row index in B^T
                     temp = ALPHA * B%values(jb)
                     
                     ! C(:,j) += temp * A(:,l)
-                    CO i = 1, M
+                    DO i = 1, M
                         C(i,j) = C(i,j) + temp * A(i,l)
-                    END CO
-                END CO
+                    END DO
+                END DO
             END IF
-        END CO
+        END DO
         
     ELSE
         ! C = alpha*A^T*B^T + beta*C
         ! Both matrices transposed
-        CO j = 1, N
+        DO j = 1, N
             row_start = B%row_ptr(j)
             row_end = B%row_ptr(j+1) - 1
             
             IF (row_start <= row_end) THEN
                 ! For each non-zero in row j of B (column j of B^T)
-                CO jb = row_start, row_end
+                DO jb = row_start, row_end
                     l = B%col_ind(jb)  ! This is row index in B^T
                     temp = ALPHA * B%values(jb)
                     
                     ! C(:,j) += temp * A(l,:)^T
-                    CO i = 1, M
+                    DO i = 1, M
                         C(i,j) = C(i,j) + temp * A(l,i)
-                    END CO
-                END CO
+                    END DO
+                END DO
             END IF
-        END CO
+        END DO
     END IF
 
 END SUBROUTINE CGECSR

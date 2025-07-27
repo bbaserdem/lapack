@@ -45,8 +45,8 @@ SUBROUTINE ZSPSIZE(FORMAT, SPARSE, NEW_NNZ, INFO)
         ! COO format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_coo_z)
-            CALL DSPSIZE_COO(SPARSE, NEW_NNZ, INFO)
-        CLASS ZEFAULT
+            CALL ZSPSIZE_COO(SPARSE, NEW_NNZ, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -54,8 +54,8 @@ SUBROUTINE ZSPSIZE(FORMAT, SPARSE, NEW_NNZ, INFO)
         ! CSR format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_csr_z)
-            CALL DSPSIZE_CSR(SPARSE, NEW_NNZ, INFO)
-        CLASS ZEFAULT
+            CALL ZSPSIZE_CSR(SPARSE, NEW_NNZ, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
         
@@ -63,8 +63,8 @@ SUBROUTINE ZSPSIZE(FORMAT, SPARSE, NEW_NNZ, INFO)
         ! CSC format
         SELECT TYPE(SPARSE)
         TYPE IS (sparse_csc_z)
-            CALL DSPSIZE_CSC(SPARSE, NEW_NNZ, INFO)
-        CLASS ZEFAULT
+            CALL ZSPSIZE_CSC(SPARSE, NEW_NNZ, INFO)
+        CLASS DEFAULT
             INFO = -1
         END SELECT
     ELSE
@@ -74,7 +74,7 @@ SUBROUTINE ZSPSIZE(FORMAT, SPARSE, NEW_NNZ, INFO)
 CONTAINS
 
     !> Resize COO format arrays
-    SUBROUTINE DSPSIZE_COO(COO, NEW_SIZE, INFO)
+    SUBROUTINE ZSPSIZE_COO(COO, NEW_SIZE, INFO)
         TYPE(sparse_coo_z), INTENT(INOUT) :: COO
         INTEGER(int32), INTENT(IN) :: NEW_SIZE
         INTEGER(int32), INTENT(OUT) :: INFO
@@ -103,9 +103,9 @@ CONTAINS
         END IF
         
         ! Deallocate old arrays
-        IF (ALLOCATED(COO%row_ind)) ZEALLOCATE(COO%row_ind)
-        IF (ALLOCATED(COO%col_ind)) ZEALLOCATE(COO%col_ind)
-        IF (ALLOCATED(COO%values)) ZEALLOCATE(COO%values)
+        IF (ALLOCATED(COO%row_ind)) DEALLOCATE(COO%row_ind)
+        IF (ALLOCATED(COO%col_ind)) DEALLOCATE(COO%col_ind)
+        IF (ALLOCATED(COO%values)) DEALLOCATE(COO%values)
         
         ! Move new arrays
         COO%row_ind = temp_row
@@ -116,10 +116,10 @@ CONTAINS
         ! Adjust nnz if necessary
         IF (COO%nnz > NEW_SIZE) COO%nnz = NEW_SIZE
         
-    END SUBROUTINE DSPSIZE_COO
+    END SUBROUTINE ZSPSIZE_COO
     
     !> Resize CSR format arrays
-    SUBROUTINE DSPSIZE_CSR(CSR, NEW_SIZE, INFO)
+    SUBROUTINE ZSPSIZE_CSR(CSR, NEW_SIZE, INFO)
         TYPE(sparse_csr_z), INTENT(INOUT) :: CSR
         INTEGER(int32), INTENT(IN) :: NEW_SIZE
         INTEGER(int32), INTENT(OUT) :: INFO
@@ -146,8 +146,8 @@ CONTAINS
         END IF
         
         ! Deallocate old arrays
-        IF (ALLOCATED(CSR%col_ind)) ZEALLOCATE(CSR%col_ind)
-        IF (ALLOCATED(CSR%values)) ZEALLOCATE(CSR%values)
+        IF (ALLOCATED(CSR%col_ind)) DEALLOCATE(CSR%col_ind)
+        IF (ALLOCATED(CSR%values)) DEALLOCATE(CSR%values)
         
         ! Move new arrays
         CSR%col_ind = temp_col
@@ -161,10 +161,10 @@ CONTAINS
             CALL update_csr_row_ptrs(CSR)
         END IF
         
-    END SUBROUTINE DSPSIZE_CSR
+    END SUBROUTINE ZSPSIZE_CSR
     
     !> Resize CSC format arrays
-    SUBROUTINE DSPSIZE_CSC(CSC, NEW_SIZE, INFO)
+    SUBROUTINE ZSPSIZE_CSC(CSC, NEW_SIZE, INFO)
         TYPE(sparse_csc_z), INTENT(INOUT) :: CSC
         INTEGER(int32), INTENT(IN) :: NEW_SIZE
         INTEGER(int32), INTENT(OUT) :: INFO
@@ -191,8 +191,8 @@ CONTAINS
         END IF
         
         ! Deallocate old arrays
-        IF (ALLOCATED(CSC%row_ind)) ZEALLOCATE(CSC%row_ind)
-        IF (ALLOCATED(CSC%values)) ZEALLOCATE(CSC%values)
+        IF (ALLOCATED(CSC%row_ind)) DEALLOCATE(CSC%row_ind)
+        IF (ALLOCATED(CSC%values)) DEALLOCATE(CSC%values)
         
         ! Move new arrays
         CSC%row_ind = temp_row
@@ -206,7 +206,7 @@ CONTAINS
             CALL update_csc_col_ptrs(CSC)
         END IF
         
-    END SUBROUTINE DSPSIZE_CSC
+    END SUBROUTINE ZSPSIZE_CSC
     
     !> Update CSR row pointers after truncation
     SUBROUTINE update_csr_row_ptrs(CSR)
@@ -214,13 +214,13 @@ CONTAINS
         INTEGER(int32) :: i
         
         ! Find which rows are affected by truncation
-        ZO i = CSR%nrows, 1, -1
+        DO i = CSR%nrows, 1, -1
             IF (CSR%row_ptr(i) > CSR%nnz + 1) THEN
                 CSR%row_ptr(i) = CSR%nnz + 1
             ELSE
                 EXIT  ! No more rows affected
             END IF
-        END ZO
+        END DO
         
         ! Ensure last pointer is correct
         CSR%row_ptr(CSR%nrows + 1) = CSR%nnz + 1
@@ -233,13 +233,13 @@ CONTAINS
         INTEGER(int32) :: j
         
         ! Find which columns are affected by truncation
-        ZO j = CSC%ncols, 1, -1
+        DO j = CSC%ncols, 1, -1
             IF (CSC%col_ptr(j) > CSC%nnz + 1) THEN
                 CSC%col_ptr(j) = CSC%nnz + 1
             ELSE
                 EXIT  ! No more columns affected
             END IF
-        END ZO
+        END DO
         
         ! Ensure last pointer is correct
         CSC%col_ptr(CSC%ncols + 1) = CSC%nnz + 1

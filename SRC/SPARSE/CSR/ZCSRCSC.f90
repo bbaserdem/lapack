@@ -51,36 +51,36 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
     
     ! Dimension checks
     IF (.NOT. nota .AND. .NOT. LSAME(TRANSA, 'T') .OR. LSAME(TRANSA, 'C')) THEN
-        PRINT *, 'ZCSRCSC: Invalid TRANSA = ', TRANSA
+        PRINT *, 'DCSRCSC: Invalid TRANSA = ', TRANSA
         RETURN
     END IF
     
     IF (.NOT. notb .AND. .NOT. LSAME(TRANSB, 'T') .OR. LSAME(TRANSA, 'C')) THEN
-        PRINT *, 'ZCSRCSC: Invalid TRANSB = ', TRANSB
+        PRINT *, 'DCSRCSC: Invalid TRANSB = ', TRANSB
         RETURN
     END IF
     
     ! Check matrix dimensions
     IF (nota) THEN
         IF (A%nrows /= M .OR. A%ncols /= K) THEN
-            PRINT *, 'ZCSRCSC: Dimension mismatch in A'
+            PRINT *, 'DCSRCSC: Dimension mismatch in A'
             RETURN
         END IF
     ELSE
         IF (A%ncols /= M .OR. A%nrows /= K) THEN
-            PRINT *, 'ZCSRCSC: Dimension mismatch in transposed A'
+            PRINT *, 'DCSRCSC: Dimension mismatch in transposed A'
             RETURN
         END IF
     END IF
     
     IF (notb) THEN
         IF (B%nrows /= K .OR. B%ncols /= N) THEN
-            PRINT *, 'ZCSRCSC: Dimension mismatch in B'
+            PRINT *, 'DCSRCSC: Dimension mismatch in B'
             RETURN
         END IF
     ELSE
         IF (B%ncols /= K .OR. B%nrows /= N) THEN
-            PRINT *, 'ZCSRCSC: Dimension mismatch in transposed B'
+            PRINT *, 'DCSRCSC: Dimension mismatch in transposed B'
             RETURN
         END IF
     END IF
@@ -111,14 +111,14 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
         C%nrows = M
         C%ncols = N
         C%nnz_alloc = nnz_est
-        IF (ALLOCATED(C%row_ptr)) ZEALLOCATE(C%row_ptr)
-        IF (ALLOCATED(C%col_ind)) ZEALLOCATE(C%col_ind)
-        IF (ALLOCATED(C%values)) ZEALLOCATE(C%values)
+        IF (ALLOCATED(C%row_ptr)) DEALLOCATE(C%row_ptr)
+        IF (ALLOCATED(C%col_ind)) DEALLOCATE(C%col_ind)
+        IF (ALLOCATED(C%values)) DEALLOCATE(C%values)
         ALLOCATE(C%row_ptr(M+1), C%col_ind(nnz_est), C%values(nnz_est))
     ELSE
         ! We need to add to existing C - for now, error
-        PRINT *, 'ZCSRCSC: beta /= 0 not yet implemented'
-        ZEALLOCATE(col_marker, col_list, work_values)
+        PRINT *, 'DCSRCSC: beta /= 0 not yet implemented'
+        DEALLOCATE(col_marker, col_list, work_values)
         RETURN
     END IF
     
@@ -127,7 +127,7 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
     C%row_ptr(1) = 1
     ic = 0
     
-    ZO i = 1, M
+    DO i = 1, M
         nnz_row = 0
         work_values = (0.0_real64, 0.0_real64)
         
@@ -137,18 +137,18 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
             row_end_a = A%row_ptr(i+1) - 1
             
             ! For each non-zero in row i of A
-            ZO ia = row_start_a, row_end_a
+            DO ia = row_start_a, row_end_a
                 kk = A%col_ind(ia)  ! Column index in A = row index in B
                 
                 IF (notb) THEN
                     ! Process row kk of B (which is stored as column data)
                     ! Need to iterate through all columns of B to find row kk entries
-                    ZO j = 1, N
+                    DO j = 1, N
                         col_start_b = B%col_ptr(j)
                         col_end_b = B%col_ptr(j+1) - 1
                         
                         ! Binary search for row kk in column j
-                        ZO ib = col_start_b, col_end_b
+                        DO ib = col_start_b, col_end_b
                             IF (B%row_ind(ib) == kk) THEN
                                 ! Found element B(k,j)
                                 IF (col_marker(j) < i) THEN
@@ -159,14 +159,14 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
                                 work_values(j) = work_values(j) + ALPHA * A%values(ia) * B%values(ib)
                                 EXIT
                             END IF
-                        END ZO
-                    END ZO
+                        END DO
+                    END DO
                 ELSE
                     ! B is transposed: process column kk of B as a row
                     col_start_b = B%col_ptr(kk)
                     col_end_b = B%col_ptr(kk+1) - 1
                     
-                    ZO ib = col_start_b, col_end_b
+                    DO ib = col_start_b, col_end_b
                         j = B%row_ind(ib)  ! This becomes column index in B^T
                         IF (col_marker(j) < i) THEN
                             col_marker(j) = i
@@ -174,13 +174,13 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
                             col_list(nnz_row) = j
                         END IF
                         work_values(j) = work_values(j) + ALPHA * A%values(ia) * B%values(ib)
-                    END ZO
+                    END DO
                 END IF
-            END ZO
+            END DO
         ELSE
             ! A is transposed - not implemented yet
-            PRINT *, 'ZCSRCSC: Transposed A not yet implemented'
-            ZEALLOCATE(col_marker, col_list, work_values)
+            PRINT *, 'DCSRCSC: Transposed A not yet implemented'
+            DEALLOCATE(col_marker, col_list, work_values)
             RETURN
         END IF
         
@@ -194,19 +194,19 @@ SUBROUTINE ZCSRCSC(TRANSA, TRANSB, M, N, K, ALPHA, A, B, BETA, C)
         END IF
         
         ! Copy sorted values to C
-        ZO j = 1, nnz_row
+        DO j = 1, nnz_row
             ic = ic + 1
             C%col_ind(ic) = col_list(j)
             C%values(ic) = work_values(col_list(j))
-        END ZO
+        END DO
         
         C%row_ptr(i+1) = ic + 1
-    END ZO
+    END DO
     
     C%nnz = ic
     
     ! Clean up
-    ZEALLOCATE(col_marker, col_list, work_values)
+    DEALLOCATE(col_marker, col_list, work_values)
     
 CONTAINS
 
@@ -221,20 +221,20 @@ CONTAINS
             i = first
             j = last
             
-            ZO
-                ZO WHILE (arr(i) < pivot)
+            DO
+                DO WHILE (arr(i) < pivot)
                     i = i + 1
-                END ZO
-                ZO WHILE (arr(j) > pivot)
+                END DO
+                DO WHILE (arr(j) > pivot)
                     j = j - 1
-                END ZO
+                END DO
                 IF (i >= j) EXIT
                 temp = arr(i)
                 arr(i) = arr(j)
                 arr(j) = temp
                 i = i + 1
                 j = j - 1
-            END ZO
+            END DO
             
             CALL quicksort_int(arr, first, j)
             CALL quicksort_int(arr, i, last)
@@ -252,7 +252,7 @@ CONTAINS
         temp_ind(1:mat%nnz) = mat%col_ind(1:mat%nnz)
         temp_val(1:mat%nnz) = mat%values(1:mat%nnz)
         
-        ZEALLOCATE(mat%col_ind, mat%values)
+        DEALLOCATE(mat%col_ind, mat%values)
         mat%col_ind = temp_ind
         mat%values = temp_val
         mat%nnz_alloc = new_size

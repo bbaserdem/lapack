@@ -1,7 +1,7 @@
 !> \brief Read sparse matrix from file in Matrix Market format
 !>
 !> \details
-!> CSPREAD reads a sparse matrix from a file in Matrix Market format.
+!> DSPREAD reads a sparse matrix from a file in Matrix Market format.
 !> The Matrix Market format is a standard ASCII format for sparse matrices.
 !>
 !> \param[in] FILENAME
@@ -45,7 +45,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
     LOGICAL :: is_pattern, is_symmetric, is_hermitian
     
     ! External routines
-    EXTERNAL :: CCOOALLOC, CCOOINIT
+    EXTERNAL :: DCOOALLOC, DCOOINIT
     
     ! Initialize
     INFO = 0
@@ -107,7 +107,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
     is_hermitian = (symmetry == 'hermitian')
     
     ! Skip comment lines
-    CO
+    DO
         READ(unit, '(A)', IOSTAT=ios) line
         IF (ios /= 0) THEN
             INFO = 2
@@ -115,7 +115,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
             RETURN
         END IF
         IF (line(1:1) /= '%') EXIT
-    END CO
+    END DO
     
     ! Read matrix dimensions
     READ(line, *, IOSTAT=ios) nrows, ncols, nnz
@@ -141,7 +141,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
     
     ! Read matrix entries
     nnz_read = 0
-    CO k = 1, nnz
+    DO k = 1, nnz
         IF (is_pattern) THEN
             READ(unit, *, IOSTAT=ios) i, j
             val = (1.0_real32, 0.0_real32)
@@ -151,7 +151,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
         
         IF (ios /= 0) THEN
             INFO = 4
-            CEALLOCATE(row_ind, col_ind, values)
+            DEALLOCATE(row_ind, col_ind, values)
             CLOSE(unit)
             RETURN
         END IF
@@ -159,7 +159,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
         ! Check bounds
         IF (i < 1 .OR. i > nrows .OR. j < 1 .OR. j > ncols) THEN
             INFO = 4
-            CEALLOCATE(row_ind, col_ind, values)
+            DEALLOCATE(row_ind, col_ind, values)
             CLOSE(unit)
             RETURN
         END IF
@@ -177,7 +177,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
             col_ind(nnz_read) = i
             values(nnz_read) = val
         END IF
-    END CO
+    END DO
     
     CLOSE(unit)
     
@@ -185,7 +185,7 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
     CALL CCOOALLOC(nrows, ncols, nnz_read, SPARSE, INFO)
     IF (INFO /= 0) THEN
         INFO = 3
-        CEALLOCATE(row_ind, col_ind, values)
+        DEALLOCATE(row_ind, col_ind, values)
         RETURN
     END IF
     
@@ -198,6 +198,6 @@ SUBROUTINE CSPREAD(FILENAME, FORMAT, SPARSE, INFO)
     END IF
     
     ! Clean up
-    CEALLOCATE(row_ind, col_ind, values)
+    DEALLOCATE(row_ind, col_ind, values)
     
 END SUBROUTINE CSPREAD

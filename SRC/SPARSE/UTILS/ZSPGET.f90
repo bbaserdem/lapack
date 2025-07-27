@@ -1,9 +1,9 @@
-!> \brief \b ZSPGET retrieves an element from a sparse matrix
+!> \brief \b DSPGET retrieves an element from a sparse matrix
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZSPGET returns the value of element (I,J) from a sparse matrix.
+!> DSPGET returns the value of element (I,J) from a sparse matrix.
 !> The function performs a search to find the element. If the element
 !> is not found (i.e., it is zero), the function returns 0.0.
 !>
@@ -29,42 +29,42 @@
 !>          FORMAT is CHARACTER*3
 !>          The format of the sparse matrix: 'COO', 'CSR', or 'CSC'.
 !>
-!> \result ZSPGET
-!>          ZOUBLE PRECISION
+!> \result DSPGET
+!>          COMPLEX*16
 !>          The value of element (I,J), or 0.0 if not found.
 
-MODULE DSPGET_MODULE
+MODULE ZSPGET_MODULE
     USE sparse_types_extended
     USE sparse_constants
     IMPLICIT NONE
     
 CONTAINS
 
-    ZOUBLE PRECISION FUNCTION DSPGET_COO(COO, I, J)
+    COMPLEX*16 FUNCTION ZSPGET_COO(COO, I, J)
         TYPE(sparse_coo_z), INTENT(IN) :: COO
         INTEGER, INTENT(IN) :: I, J
         INTEGER :: k
         
         ! Initialize return value
-        DSPGET_COO = (0.0_real64, 0.0_real64)
+        ZSPGET_COO = (0.0_real64, 0.0_real64)
         
         ! Search for the element in COO format
-        ZO k = 1, COO%nnz
+        DO k = 1, COO%nnz
             IF ((COO%row_ind(k) == I) .AND. (COO%col_ind(k) == J)) THEN
-                DSPGET_COO = COO%values(k)
+                ZSPGET_COO = COO%values(k)
                 RETURN
             END IF
-        END ZO
+        END DO
         
-    END FUNCTION DSPGET_COO
+    END FUNCTION ZSPGET_COO
     
-    ZOUBLE PRECISION FUNCTION DSPGET_CSR(CSR, I, J)
+    COMPLEX*16 FUNCTION ZSPGET_CSR(CSR, I, J)
         TYPE(sparse_csr_z), INTENT(IN) :: CSR
         INTEGER, INTENT(IN) :: I, J
         INTEGER :: k, left, right, mid
         
         ! Initialize return value
-        DSPGET_CSR = (0.0_real64, 0.0_real64)
+        ZSPGET_CSR = (0.0_real64, 0.0_real64)
         
         ! Check bounds
         IF ((I < 1) .OR. (I > CSR%nrows) .OR. (J < 1) .OR. (J > CSR%ncols)) RETURN
@@ -78,36 +78,36 @@ CONTAINS
         
         ! If columns are sorted, use binary search
         IF (CSR%sorted) THEN
-            ZO WHILE (left <= right)
+            DO WHILE (left <= right)
                 mid = (left + right) / 2
                 IF (CSR%col_ind(mid) == J) THEN
-                    DSPGET_CSR = CSR%values(mid)
+                    ZSPGET_CSR = CSR%values(mid)
                     RETURN
                 ELSE IF (CSR%col_ind(mid) < J) THEN
                     left = mid + 1
                 ELSE
                     right = mid - 1
                 END IF
-            END ZO
+            END DO
         ELSE
             ! Linear search for unsorted columns
-            ZO k = left, right
+            DO k = left, right
                 IF (CSR%col_ind(k) == J) THEN
-                    DSPGET_CSR = CSR%values(k)
+                    ZSPGET_CSR = CSR%values(k)
                     RETURN
                 END IF
-            END ZO
+            END DO
         END IF
         
-    END FUNCTION DSPGET_CSR
+    END FUNCTION ZSPGET_CSR
     
-    ZOUBLE PRECISION FUNCTION DSPGET_CSC(CSC, I, J)
+    COMPLEX*16 FUNCTION ZSPGET_CSC(CSC, I, J)
         TYPE(sparse_csc_z), INTENT(IN) :: CSC
         INTEGER, INTENT(IN) :: I, J
         INTEGER :: k, left, right, mid
         
         ! Initialize return value
-        DSPGET_CSC = (0.0_real64, 0.0_real64)
+        ZSPGET_CSC = (0.0_real64, 0.0_real64)
         
         ! Check bounds
         IF ((I < 1) .OR. (I > CSC%nrows) .OR. (J < 1) .OR. (J > CSC%ncols)) RETURN
@@ -121,27 +121,27 @@ CONTAINS
         
         ! If rows are sorted, use binary search
         IF (CSC%sorted) THEN
-            ZO WHILE (left <= right)
+            DO WHILE (left <= right)
                 mid = (left + right) / 2
                 IF (CSC%row_ind(mid) == I) THEN
-                    DSPGET_CSC = CSC%values(mid)
+                    ZSPGET_CSC = CSC%values(mid)
                     RETURN
                 ELSE IF (CSC%row_ind(mid) < I) THEN
                     left = mid + 1
                 ELSE
                     right = mid - 1
                 END IF
-            END ZO
+            END DO
         ELSE
             ! Linear search for unsorted rows
-            ZO k = left, right
+            DO k = left, right
                 IF (CSC%row_ind(k) == I) THEN
-                    DSPGET_CSC = CSC%values(k)
+                    ZSPGET_CSC = CSC%values(k)
                     RETURN
                 END IF
-            END ZO
+            END DO
         END IF
         
-    END FUNCTION DSPGET_CSC
+    END FUNCTION ZSPGET_CSC
 
-END MODULE DSPGET_MODULE
+END MODULE ZSPGET_MODULE

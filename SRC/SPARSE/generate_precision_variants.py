@@ -104,7 +104,8 @@ class PrecisionPorter:
             )
         
         # Replace routine names (D prefix to target prefix)
-        content = re.sub(r'\bD([A-Z][A-Z0-9]*)\b', 
+        # But be careful not to replace DO loops!
+        content = re.sub(r'\bD([A-Z][A-Z0-9]*)\b(?!\s*[=:])', 
                         lambda m: prec + m.group(1), 
                         content)
         

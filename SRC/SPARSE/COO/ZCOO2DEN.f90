@@ -1,30 +1,30 @@
-!> \brief \b ZCOO2DEN converts COO to dense matrix format
+!> \brief \b DCOO2DEN converts COO to dense matrix format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCOO2DEN converts a sparse matrix from COO (Coordinate List) format
+!> DCOO2DEN converts a sparse matrix from COO (Coordinate List) format
 !> to dense matrix format, filling in zeros for missing elements.
 !>
 !> \param[in] COO
 !>          COO is TYPE(sparse_coo_z)
 !>          The input COO sparse matrix.
 !>
-!> \param[out] ZENSE
-!>          ZENSE is ZOUBLE PRECISION array, dimension (LDA,*)
+!> \param[out] DENSE
+!>          DENSE is COMPLEX*16 array, dimension (LDA,*)
 !>          On exit, the dense matrix representation of COO.
 !>          The array must be at least (LDA,COO%ncols).
 !>
 !> \param[in] LDA
 !>          LDA is INTEGER
-!>          The leading dimension of ZENSE. LDA >= max(1,COO%nrows).
+!>          The leading dimension of DENSE. LDA >= max(1,COO%nrows).
 !>
 !> \param[out] INFO
 !>          INFO is INTEGER
 !>          = 0: successful exit
 !>          < 0: if INFO = -i, the i-th argument had an illegal value
 
-SUBROUTINE ZCOO2DEN(COO, ZENSE, LDA, INFO)
+SUBROUTINE ZCOO2DEN(COO, DENSE, LDA, INFO)
     USE sparse_types_extended
     USE sparse_constants
     USE ISO_FORTRAN_ENV, ONLY: int32, real64
@@ -32,7 +32,7 @@ SUBROUTINE ZCOO2DEN(COO, ZENSE, LDA, INFO)
     
     ! Arguments
     TYPE(sparse_coo_z), INTENT(IN) :: COO
-    COMPLEX(real64), INTENT(OUT) :: ZENSE(LDA,*)
+    COMPLEX(real64), INTENT(OUT) :: DENSE(LDA,*)
     INTEGER, INTENT(IN) :: LDA
     INTEGER, INTENT(OUT) :: INFO
     
@@ -56,14 +56,14 @@ SUBROUTINE ZCOO2DEN(COO, ZENSE, LDA, INFO)
     END IF
     
     ! Initialize dense matrix to zero
-    ZO j = 1, COO%ncols
-        ZO i = 1, COO%nrows
-            ZENSE(i,j) = (0.0_real64, 0.0_real64)
-        END ZO
-    END ZO
+    DO j = 1, COO%ncols
+        DO i = 1, COO%nrows
+            DENSE(i,j) = (0.0_real64, 0.0_real64)
+        END DO
+    END DO
     
     ! Fill in non-zero elements from COO
-    ZO k = 1, COO%nnz
+    DO k = 1, COO%nnz
         row = COO%row_ind(k)
         col = COO%col_ind(k)
         val = COO%values(k)
@@ -77,7 +77,7 @@ SUBROUTINE ZCOO2DEN(COO, ZENSE, LDA, INFO)
         
         ! Note: This will overwrite if there are duplicates
         ! For duplicates, the last value wins
-        ZENSE(row,col) = val
-    END ZO
+        DENSE(row,col) = val
+    END DO
     
 END SUBROUTINE ZCOO2DEN

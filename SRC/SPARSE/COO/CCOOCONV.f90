@@ -1,9 +1,9 @@
-!> \brief \b CCOO2CSR converts COO to CSR format
+!> \brief \b DCOO2CSR converts COO to CSR format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCOO2CSR converts a sparse matrix from COO (Coordinate List) format
+!> DCOO2CSR converts a sparse matrix from COO (Coordinate List) format
 !> to CSR (Compressed Sparse Row) format.
 !>
 !> \param[in] COO
@@ -87,33 +87,33 @@ SUBROUTINE CCOO2CSR(COO, CSR, INFO)
     
     ! Count elements per row
     row_count(:) = 0
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         row = COO%row_ind(i)
         row_count(row) = row_count(row) + 1
-    END CO
+    END DO
     
     ! Build row pointer array
     CSR%row_ptr(1) = 1
-    CO i = 1, COO%nrows
+    DO i = 1, COO%nrows
         CSR%row_ptr(i+1) = CSR%row_ptr(i) + row_count(i)
-    END CO
+    END DO
     
     ! Create permutation array for sorting by row
     ! work array will track current position for each row
     work(1:COO%nrows) = CSR%row_ptr(1:COO%nrows)
     
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         row = COO%row_ind(i)
         perm(i) = work(row)
         work(row) = work(row) + 1
-    END CO
+    END DO
     
     ! Apply permutation to create sorted arrays
-    CO i = 1, COO%nnz
+    DO i = 1, COO%nnz
         pos = perm(i)
         temp_cols(pos) = COO%col_ind(i)
         temp_vals(pos) = COO%values(i)
-    END CO
+    END DO
     
     ! Copy to CSR structure
     CSR%col_ind(1:COO%nnz) = temp_cols(1:COO%nnz)
@@ -123,6 +123,6 @@ SUBROUTINE CCOO2CSR(COO, CSR, INFO)
     CSR%sorted = .FALSE.
     
     ! Clean up
-    CEALLOCATE(row_count, work, perm, temp_vals, temp_cols)
+    DEALLOCATE(row_count, work, perm, temp_vals, temp_cols)
     
 END SUBROUTINE CCOO2CSR

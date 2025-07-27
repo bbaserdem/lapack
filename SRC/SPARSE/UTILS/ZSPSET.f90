@@ -1,9 +1,9 @@
-!> \brief \b ZSPSET sets an element value in a sparse matrix
+!> \brief \b DSPSET sets an element value in a sparse matrix
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZSPSET sets the value of element (I,J) in a sparse matrix.
+!> DSPSET sets the value of element (I,J) in a sparse matrix.
 !> If the element already exists, its value is updated.
 !> If the element doesn't exist and VALUE is non-zero, it is added.
 !> If the element exists and VALUE is zero, it is removed.
@@ -13,7 +13,7 @@
 !> \param[in,out] COO
 !>          COO is TYPE(sparse_coo_z)
 !>          The sparse matrix in COO format to modify.
-!>          Note: Currently only COO format is supported for ZSPSET.
+!>          Note: Currently only COO format is supported for DSPSET.
 !>
 !> \param[in] I
 !>          I is INTEGER
@@ -24,7 +24,7 @@
 !>          The column index of the element (1-based).
 !>
 !> \param[in] VALUE
-!>          VALUE is ZOUBLE PRECISION
+!>          VALUE is COMPLEX*16
 !>          The value to set for element (I,J).
 !>
 !> \param[out] INFO
@@ -33,7 +33,7 @@
 !>          < 0: if INFO = -i, the i-th argument had an illegal value
 !>          = SPARSE_ERR_ALLOC: memory allocation failed
 
-SUBROUTINE DSPSET_COO(COO, I, J, VALUE, INFO)
+SUBROUTINE ZSPSET_COO(COO, I, J, VALUE, INFO)
     USE sparse_types_extended
     USE sparse_constants
     IMPLICIT NONE
@@ -66,21 +66,21 @@ SUBROUTINE DSPSET_COO(COO, I, J, VALUE, INFO)
     
     ! Search for the element
     found = .FALSE.
-    ZO k = 1, COO%nnz
+    DO k = 1, COO%nnz
         IF (COO%row_ind(k) == I .AND. COO%col_ind(k) == J) THEN
             found = .TRUE.
             EXIT
         END IF
-    END ZO
+    END DO
     
     IF (found) THEN
         IF (ZABS(VALUE) < SPARSE_ZERO_TOL) THEN
             ! Remove the element (shift remaining elements)
-            ZO k = k, COO%nnz - 1
+            DO k = k, COO%nnz - 1
                 COO%row_ind(k) = COO%row_ind(k+1)
                 COO%col_ind(k) = COO%col_ind(k+1)
                 COO%values(k) = COO%values(k+1)
-            END ZO
+            END DO
             COO%nnz = COO%nnz - 1
             ! Mark as unsorted and unchecked
             COO%sorted = .FALSE.
@@ -110,7 +110,7 @@ SUBROUTINE DSPSET_COO(COO, I, J, VALUE, INFO)
                 temp_val(1:COO%nnz) = COO%values(1:COO%nnz)
                 
                 ! Deallocate old arrays
-                ZEALLOCATE(COO%row_ind, COO%col_ind, COO%values)
+                DEALLOCATE(COO%row_ind, COO%col_ind, COO%values)
                 
                 ! Move new arrays
                 CALL MOVE_ALLOC(temp_row, COO%row_ind)
@@ -133,4 +133,4 @@ SUBROUTINE DSPSET_COO(COO, I, J, VALUE, INFO)
     END IF
     
     RETURN
-END SUBROUTINE DSPSET_COO
+END SUBROUTINE ZSPSET_COO

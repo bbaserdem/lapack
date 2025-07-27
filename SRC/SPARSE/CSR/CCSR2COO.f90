@@ -1,9 +1,9 @@
-!> \brief \b CCSR2COO converts CSR to COO format
+!> \brief \b DCSR2COO converts CSR to COO format
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCSR2COO converts a sparse matrix from CSR (Compressed Sparse Row) format
+!> DCSR2COO converts a sparse matrix from CSR (Compressed Sparse Row) format
 !> to COO (Coordinate List) format.
 !>
 !> \param[in] CSR
@@ -68,15 +68,15 @@ SUBROUTINE CCSR2COO(CSR, COO, INFO)
     
     ! Convert CSR to COO
     nnz_count = 0
-    CO i = 1, CSR%nrows
+    DO i = 1, CSR%nrows
         ! Process all elements in row i
-        CO j = CSR%row_ptr(i), CSR%row_ptr(i+1)-1
+        DO j = CSR%row_ptr(i), CSR%row_ptr(i+1)-1
             nnz_count = nnz_count + 1
             COO%row_ind(nnz_count) = i
             COO%col_ind(nnz_count) = CSR%col_ind(j)
             COO%values(nnz_count) = CSR%values(j)
-        END CO
-    END CO
+        END DO
+    END DO
     
     ! Verify we processed all elements
     IF (nnz_count /= CSR%nnz) THEN

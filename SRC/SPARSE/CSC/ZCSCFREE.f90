@@ -1,9 +1,9 @@
-!> \brief \b ZCSCFREE deallocates CSC sparse matrix memory
+!> \brief \b DCSCFREE deallocates CSC sparse matrix memory
 !>
 !> \par Purpose:
 !> =============
 !>
-!> ZCSCFREE deallocates all dynamically allocated memory associated
+!> DCSCFREE deallocates all dynamically allocated memory associated
 !> with a CSC sparse matrix and resets the structure to an
 !> uninitialized state.
 !>
@@ -36,7 +36,7 @@ SUBROUTINE ZCSCFREE(CSC, INFO)
     
     ! Deallocate column pointers
     IF (ALLOCATED(CSC%col_ptr)) THEN
-        ZEALLOCATE(CSC%col_ptr, STAT=ierr)
+        DEALLOCATE(CSC%col_ptr, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN
@@ -45,7 +45,7 @@ SUBROUTINE ZCSCFREE(CSC, INFO)
     
     ! Deallocate row indices
     IF (ALLOCATED(CSC%row_ind)) THEN
-        ZEALLOCATE(CSC%row_ind, STAT=ierr)
+        DEALLOCATE(CSC%row_ind, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN
@@ -54,7 +54,7 @@ SUBROUTINE ZCSCFREE(CSC, INFO)
     
     ! Deallocate values
     IF (ALLOCATED(CSC%values)) THEN
-        ZEALLOCATE(CSC%values, STAT=ierr)
+        DEALLOCATE(CSC%values, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN

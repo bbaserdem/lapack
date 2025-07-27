@@ -1,9 +1,9 @@
-!> \brief \b CCOOALLOC allocates a COO sparse matrix
+!> \brief \b DCOOALLOC allocates a COO sparse matrix
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCOOALLOC allocates memory for a COO format sparse matrix with specified
+!> DCOOALLOC allocates memory for a COO format sparse matrix with specified
 !> dimensions and estimated number of non-zeros.
 !>
 !> \param[in] NROWS
@@ -91,12 +91,12 @@ SUBROUTINE CCOOALLOC(NROWS, NCOLS, NNZ, COO, INFO)
     
 END SUBROUTINE CCOOALLOC
 
-!> \brief \b CCOOINIT initializes a COO sparse matrix from arrays
+!> \brief \b DCOOINIT initializes a COO sparse matrix from arrays
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCOOINIT initializes a COO format sparse matrix from provided arrays
+!> DCOOINIT initializes a COO format sparse matrix from provided arrays
 !> of row indices, column indices, and values.
 !>
 !> \param[in] ROWIND
@@ -108,7 +108,7 @@ END SUBROUTINE CCOOALLOC
 !>          The column indices (1-based) of the non-zero elements.
 !>
 !> \param[in] VAL
-!>          VAL is COUBLE PRECISION array, dimension (NNZ)
+!>          VAL is COMPLEX array, dimension (NNZ)
 !>          The non-zero values.
 !>
 !> \param[in] NNZ
@@ -164,7 +164,7 @@ SUBROUTINE CCOOINIT(ROWIND, COLIND, VAL, NNZ, COO, INFO)
     END IF
     
     ! Validate indices and copy data
-    CO i = 1, NNZ
+    DO i = 1, NNZ
         ! Check row index
         IF (ROWIND(i) < 1 .OR. ROWIND(i) > COO%nrows) THEN
             INFO = SPARSE_ERR_DIM
@@ -181,7 +181,7 @@ SUBROUTINE CCOOINIT(ROWIND, COLIND, VAL, NNZ, COO, INFO)
         COO%row_ind(i) = ROWIND(i)
         COO%col_ind(i) = COLIND(i)
         COO%values(i) = VAL(i)
-    END CO
+    END DO
     
     ! Set number of non-zeros
     COO%nnz = NNZ

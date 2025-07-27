@@ -1,9 +1,9 @@
-!> \brief \b CCSRFREE deallocates CSR sparse matrix memory
+!> \brief \b DCSRFREE deallocates CSR sparse matrix memory
 !>
 !> \par Purpose:
 !> =============
 !>
-!> CCSRFREE deallocates all dynamically allocated memory associated
+!> DCSRFREE deallocates all dynamically allocated memory associated
 !> with a CSR sparse matrix and resets the structure to an
 !> uninitialized state.
 !>
@@ -36,7 +36,7 @@ SUBROUTINE CCSRFREE(CSR, INFO)
     
     ! Deallocate row pointers
     IF (ALLOCATED(CSR%row_ptr)) THEN
-        CEALLOCATE(CSR%row_ptr, STAT=ierr)
+        DEALLOCATE(CSR%row_ptr, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN
@@ -45,7 +45,7 @@ SUBROUTINE CCSRFREE(CSR, INFO)
     
     ! Deallocate column indices
     IF (ALLOCATED(CSR%col_ind)) THEN
-        CEALLOCATE(CSR%col_ind, STAT=ierr)
+        DEALLOCATE(CSR%col_ind, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN
@@ -54,7 +54,7 @@ SUBROUTINE CCSRFREE(CSR, INFO)
     
     ! Deallocate values
     IF (ALLOCATED(CSR%values)) THEN
-        CEALLOCATE(CSR%values, STAT=ierr)
+        DEALLOCATE(CSR%values, STAT=ierr)
         IF (ierr /= 0) THEN
             INFO = SPARSE_ERR_ALLOC
             RETURN

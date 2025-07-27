@@ -32,8 +32,8 @@ SUBROUTINE DCOO2DEN(COO, DENSE, LDA, INFO)
     
     ! Arguments
     TYPE(sparse_coo_d), INTENT(IN) :: COO
-    REAL(real64), INTENT(OUT) :: DENSE(LDA,*)
     INTEGER, INTENT(IN) :: LDA
+    REAL(real64), INTENT(OUT) :: DENSE(LDA,*)
     INTEGER, INTENT(OUT) :: INFO
     
     ! Local variables
