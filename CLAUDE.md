@@ -77,4 +77,4 @@ If ANY answer is "No", you MUST combine operations into a single message!
 
 ## Task Master AI Instructions
 **Import Task Master's development workflow commands and guidelines, treat as if import is in the main CLAUDE.md file.**
-@./.taskmaster/CLAUDE.md
+@.taskmaster/CLAUDE.md
