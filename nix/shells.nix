@@ -40,9 +40,6 @@
     neo4j
   ];
   defaultHooks = ''
-    # Make our local node packages available to our shell; for mcp's
-    export PATH="./node_modules/.bin:$PATH"
-
     # Set Neo4j environment variables to use local project directory
     export NEO4J_CONF="$PWD/neo4j-data"
     export NEO4J_HOME="$PWD/neo4j-data"
