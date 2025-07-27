@@ -1220,7 +1220,7 @@
         "description": "Develop a Fortran code analysis tool capable of parsing Fortran source files and constructing call graphs. The tool should be generic and not include any LAPACK-specific logic.",
         "details": "1. Implement a Fortran parser using a suitable parsing library or framework. The parser should be able to handle various Fortran syntax elements, including declarations, expressions, control flow statements, and subroutine/function definitions.\n2. Design and implement a call graph data structure to represent the relationships between subroutines and functions in the Fortran code. The call graph should store information about which routines call which other routines.\n3. Implement an algorithm to traverse the parsed Fortran code and build the call graph. This involves identifying subroutine/function calls and adding corresponding edges to the call graph.\n4. Provide functionality to export the call graph in a standard format, such as GraphML or DOT, for visualization and further analysis.\n5. Ensure the tool is generic and does not include any LAPACK-specific logic or dependencies. Focus on parsing and call graph construction for general Fortran code.",
         "testStrategy": "1. Create a set of Fortran test files with varying complexity and structure, including different types of subroutines, functions, and control flow statements.\n2. Run the Fortran code analysis tool on the test files and verify that the parser correctly parses the code and builds the call graph.\n3. Manually inspect the generated call graphs to ensure that the relationships between routines are accurately represented.\n4. Compare the generated call graphs with expected call graphs (created manually or using other tools) to identify any discrepancies.\n5. Test the export functionality by exporting the call graphs in different formats and verifying that the exported files are valid and contain the correct information.\n6. Ensure that the tool does not produce any errors or warnings related to LAPACK-specific syntax or features.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1,
           14
@@ -1233,7 +1233,7 @@
             "description": "Refactor the existing Fortran parser (Task 2) to isolate the generic Fortran parsing logic, removing any LAPACK-specific code. This will involve creating a base parser class that handles standard Fortran syntax and semantics.",
             "dependencies": [],
             "details": "1. Identify and separate the generic Fortran parsing components from the existing `FortranParser` class.\n2. Create a new `GenericFortranParser` class that encapsulates this generic parsing logic.\n3. Ensure the `GenericFortranParser` can handle declarations, expressions, control flow statements, and subroutine/function definitions.\n4. Remove any LAPACK-specific naming convention or operation categorization logic from this base class.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create unit tests to verify that the `GenericFortranParser` correctly parses standard Fortran code without any LAPACK-specific elements. Test with various Fortran files that do not contain LAPACK routines."
           },
           {
@@ -1244,7 +1244,7 @@
               "22.1"
             ],
             "details": "1. Define abstract base classes or interfaces for `SubroutineNode`, `FunctionNode`, and `ModuleNode`.\n2. These base node types should include common attributes such as name, file path, and line number.\n3. Ensure the node types are generic and do not contain any LAPACK-specific information.\n4. Design the node types to be extensible for future features.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create unit tests to verify that the base node types can be instantiated and that they contain the expected attributes. Test the extensibility of the node types by creating derived classes."
           },
           {
@@ -1256,7 +1256,7 @@
               "22.2"
             ],
             "details": "1. Define interfaces for different types of hooks, such as `NameParsingHook`, `OperationCategorizationHook`, and `NodeCreationHook`.\n2. Create a `HookRegistry` class to manage the available hooks.\n3. Implement a mechanism to register and unregister hooks.\n4. Ensure the hook system is flexible and allows for adding new types of hooks in the future.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create unit tests to verify that the hook system can register and unregister hooks correctly. Test the functionality of different types of hooks by creating mock implementations and verifying that they are called at the appropriate times during parsing."
           },
           {
@@ -1268,7 +1268,7 @@
               "22.3"
             ],
             "details": "1. Update the JSON, CSV, and Cypher exporters to work with the `SubroutineNode`, `FunctionNode`, and `ModuleNode` base types.\n2. Ensure the exporters can extract the name, file path, and line number from the generic nodes.\n3. Maintain the data integrity of the exported call graph.\n4. Refactor the exporter code to be more modular and extensible.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create integration tests to verify that the exporters correctly export the call graph in JSON, CSV, and Cypher formats. Test with various Fortran files and verify that the exported data matches the expected format and content. Validate Cypher statements by importing them into a Neo4j database."
           },
           {
@@ -1282,7 +1282,7 @@
               "22.4"
             ],
             "details": "1. Create unit tests for the `GenericFortranParser`, base node types, and hook system.\n2. Create integration tests for the parser and call graph generator.\n3. Create end-to-end tests that parse Fortran files and export the call graph in different formats.\n4. Ensure the test suite covers various Fortran code structures, including different types of subroutines, functions, and control flow statements.\n5. Implement regression tests to prevent future bugs.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the test suite on a continuous integration server to ensure that the tool is always working correctly. Monitor the test results and fix any failing tests promptly. Add new tests as new features are added to the tool."
           }
         ]
@@ -1293,7 +1293,7 @@
         "description": "Create LAPACK-specific hooks and adapters that implement the fortran-mapper hook interfaces to provide LAPACK naming convention parsing, precision extraction, operation categorization, and custom node creation.",
         "details": "1. Implement a hook for parsing LAPACK naming conventions. This hook should be able to identify the specific LAPACK routine being called based on its name (e.g., `dgemm`, `zgesv`).\n2. Implement a hook for extracting precision information from LAPACK routine names. This hook should determine whether a routine operates on single-precision, double-precision, complex single-precision, or complex double-precision data.\n3. Implement a hook for categorizing LAPACK operations. This hook should classify routines based on their functionality (e.g., linear equation solvers, eigenvalue solvers, singular value decomposition).\n4. Implement a hook for creating custom nodes in the call graph. This hook should allow the creation of nodes that represent LAPACK routines and their specific attributes (e.g., precision, operation category).\n5. Ensure that the hooks and adapters are designed to be modular and extensible, allowing for the addition of new LAPACK routines and features in the future.\n6. Integrate the LAPACK-specific hooks and adapters with the Fortran parser and call graph generator from Task 22.",
         "testStrategy": "1. Create a set of Fortran test files that contain calls to various LAPACK routines with different naming conventions, precision levels, and operation categories.\n2. Run the Fortran code analysis tool with the LAPACK-specific hooks and adapters enabled on the test files.\n3. Verify that the parser correctly identifies the LAPACK routines, extracts the precision information, and categorizes the operations.\n4. Inspect the generated call graph to ensure that the LAPACK routines are represented as custom nodes with the correct attributes.\n5. Add unit tests to verify the functionality of each hook and adapter individually.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           22
         ],
@@ -1305,7 +1305,7 @@
             "description": "Create a NodeEnricher hook that parses LAPACK routine names to identify the specific LAPACK routine being called (e.g., `dgemm`, `zgesv`). This hook should extract the base routine name and any relevant flags or options encoded in the name.",
             "dependencies": [],
             "details": "Implement a class `LAPACKNodeEnricher` that implements the `NodeEnricher` interface. This class should take a node representing a Fortran subroutine/function call as input. It should then use regular expressions or string manipulation to parse the name of the routine and extract the LAPACK routine name. Store the extracted LAPACK routine name as a property on the node (e.g., `node['lapack_routine'] = 'gemm'`). Handle cases where the routine name does not conform to LAPACK conventions gracefully.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create a set of test cases with various LAPACK routine names (e.g., `dgemm`, `zgesv`, `sgemv`, `cgeqrf`). Verify that the `LAPACKNodeEnricher` correctly identifies the LAPACK routine name for each test case. Also, test with non-LAPACK routine names to ensure they are handled correctly."
           },
           {
@@ -1316,7 +1316,7 @@
               "23.1"
             ],
             "details": "Implement a class `LAPACKNodeCreator` that implements the `NodeCreator` interface. This class should take a node representing a LAPACK routine call (enriched by `LAPACKNodeEnricher`) as input. Based on the routine name, create PRECISION and OPERATION nodes and link them to the original routine node using appropriate relationship types (e.g., `HAS_PRECISION`, `IMPLEMENTS`). Use a dictionary or other data structure to map LAPACK routine names to their corresponding precision and operation categories. For example, 'dgemm' would map to PRECISION='double' and OPERATION='matrix multiplication'.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create a set of test cases with various LAPACK routine names. Verify that the `LAPACKNodeCreator` correctly creates PRECISION and OPERATION nodes for each test case and links them to the original routine node. Ensure that the correct precision and operation category are assigned based on the routine name."
           },
           {
@@ -1327,7 +1327,7 @@
               "23.2"
             ],
             "details": "Review the existing `parser.py` file and identify any code that is specific to LAPACK routines. This may include regular expressions, string manipulation functions, or data structures that are used to parse LAPACK routine names and extract information about their precision and operation category. Move this code into the `LAPACKNodeEnricher` and `LAPACKNodeCreator` classes, ensuring that it is properly integrated with the new hook interfaces. Remove the LAPACK-specific logic from `parser.py` to maintain a generic Fortran parser.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "After porting the LAPACK-specific logic, run the existing test suite for `parser.py` to ensure that the functionality has not been broken. Also, run the new test suites for `LAPACKNodeEnricher` and `LAPACKNodeCreator` to verify that the ported logic is working correctly in the new hook implementations."
           },
           {
@@ -1338,7 +1338,7 @@
               "23.3"
             ],
             "details": "Integrate the new LAPACK-specific hooks with the `lapack-util` library (if applicable) or any other relevant LAPACK utility libraries. Run the hooks on a set of LAPACK source files and verify that they can correctly parse the routine names and extract the necessary information. Compare the output of the hooks with the expected output based on the `lapack-util` library or other LAPACK documentation. Address any compatibility issues that arise.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create a set of test cases that use the `lapack-util` library (if applicable) to generate LAPACK routine names and other relevant information. Run the LAPACK-specific hooks on these test cases and verify that the output matches the expected output based on the `lapack-util` library. Also, test with different versions of the `lapack-util` library to ensure compatibility across versions."
           }
         ]
@@ -1404,7 +1404,7 @@
     ],
     "metadata": {
       "created": "2025-07-25T14:06:48.573Z",
-      "updated": "2025-07-27T16:39:21.771Z",
+      "updated": "2025-07-27T17:38:50.975Z",
       "description": "Tasks for master context"
     }
   }
