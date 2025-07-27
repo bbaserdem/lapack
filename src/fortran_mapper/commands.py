@@ -1,4 +1,4 @@
-"""Command implementations for lapack-util CLI."""
+"""Command implementations for fortran-mapper CLI."""
 
 import os
 from pathlib import Path

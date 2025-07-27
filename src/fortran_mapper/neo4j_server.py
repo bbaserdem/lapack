@@ -160,7 +160,7 @@ class Neo4jServer:
             print(f"Failed to start Neo4j: {stderr}")
             if "already running" in stderr.lower():
                 print("Another Neo4j instance may be running on the same port.")
-                print("Try stopping it first with: lapack-util neo4j stop")
+                print("Try stopping it first with: fortran-mapper neo4j stop")
             return False
         
         # Wait a bit for server to start
@@ -183,7 +183,7 @@ class Neo4jServer:
         
         print(f"Neo4j may have started but status check failed.")
         print(f"Check logs at: {self.log_dir}/")
-        print("Try: lapack-util neo4j status")
+        print("Try: fortran-mapper neo4j status")
         return True  # Return True since start command succeeded
     
     def stop(self) -> bool:
@@ -290,13 +290,13 @@ class Neo4jServer:
             return True
         else:
             print("Neo4j is not running for this project")
-            print("Start it with: lapack-util neo4j start")
+            print("Start it with: fortran-mapper neo4j start")
             
             # Check if PID file exists but process is gone
             if self.pid_file.exists():
                 print("\nNote: PID file exists but process is not running.")
                 print("The server may have crashed or been killed.")
-                print("Run 'lapack-util neo4j stop' to clean up.")
+                print("Run 'fortran-mapper neo4j stop' to clean up.")
             
             return False
     
