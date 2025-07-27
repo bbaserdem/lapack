@@ -13,6 +13,10 @@ rust-version.workspace = true
 description = "Safe Rust wrappers for LAPACK (Linear Algebra PACKage)"
 readme = "README.md"
 
+[lib]
+name = "lapack"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [dependencies]
 lapack-sys = { version = "0.1", path = "../lapack-sys" }
 thiserror = { version = "1.0", optional = true }

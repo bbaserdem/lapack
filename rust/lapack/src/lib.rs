@@ -19,21 +19,29 @@
 //!
 //! # Example
 //!
-//! ```no_run
-//! use lapack::{Layout, Transpose};
+//! ```rust
+//! use lapack::{Matrix, Vector, Layout};
 //! 
-//! // Solve a system of linear equations Ax = b
-//! let a = vec![1.0, 2.0, 3.0, 4.0]; // 2x2 matrix in column-major order
-//! let mut b = vec![5.0, 11.0];      // Right-hand side
+//! // Create a 2x2 matrix in row-major order
+//! let data = vec![1.0, 2.0, 3.0, 4.0];
+//! let matrix = Matrix::from_vec(data, 2, 2, Layout::RowMajor)?;
 //! 
-//! // Solve the system (result stored in b)
-//! lapack::dgesv(Layout::ColumnMajor, 2, 1, &mut a, 2, &mut b, 2)?;
+//! // Create a vector
+//! let vector = Vector::from_vec(vec![5.0, 11.0]);
+//! 
+//! // Convert matrix to column-major for LAPACK compatibility
+//! let col_major_matrix = matrix.to_column_major();
+//! 
+//! println!("Matrix: {}", matrix);
+//! println!("Vector: {}", vector);
 //! # Ok::<(), lapack::Error>(())
 //! ```
 
 pub mod error;
+pub mod matrix;
 
 pub use error::{Error, Result};
+pub use matrix::{Matrix, Vector};
 
 /// Matrix layout
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -55,8 +63,7 @@ pub enum Transpose {
     ConjugateTranspose,
 }
 
-// Module organization (to be implemented)
-#[cfg(feature = "driver")]
+// Module organization
 pub mod driver;      // Driver routines (solve, eigenvalues, etc.)
 
 #[cfg(feature = "computational")]
@@ -66,8 +73,4 @@ pub mod computational; // Computational routines
 pub mod auxiliary;    // Auxiliary routines
 
 // Re-export commonly used items at crate root for convenience
-#[cfg(feature = "linear-systems")]
-pub use driver::linear_systems::*;
-
-#[cfg(feature = "eigenvalues")]
-pub use driver::eigenvalues::*;
+// pub use driver::linear_systems::*;

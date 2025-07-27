@@ -433,6 +433,135 @@ if (LAPACK++)
   ExternalProject_Add_StepDependencies(lapackpp build blaspp ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 endif()
 
+#-------------------------------------
+# Rust Bindings
+option(BUILD_RUST_BINDINGS "Build Rust bindings" OFF)
+
+if(BUILD_RUST_BINDINGS)
+  message(STATUS "Rust bindings enabled")
+  message(STATUS "-------------------")
+  message(STATUS "Building safe Rust wrappers for LAPACK")
+  message(STATUS "The Rust bindings provide memory-safe, idiomatic Rust APIs")
+  message(STATUS "for LAPACK routines with comprehensive error handling.")
+  message(STATUS "-------------------")
+  
+  # Find Rust compiler and cargo
+  find_package(Rust 1.72 REQUIRED)
+  
+  if(RUST_FOUND)
+    message(STATUS "Found Rust ${RUST_VERSION}")
+    message(STATUS "Rust compiler: ${RUST_EXECUTABLE}")
+    message(STATUS "Cargo: ${CARGO_EXECUTABLE}")
+    
+    # Set Rust library names based on INDEX64 option
+    if(BUILD_INDEX64)
+      set(RUST_LAPACK_SYS_LIB "rust_lapack64_sys")
+      set(RUST_LAPACK_LIB "rust_lapack64")
+    else()
+      set(RUST_LAPACK_SYS_LIB "rust_lapack_sys")
+      set(RUST_LAPACK_LIB "rust_lapack")
+    endif()
+    
+    # Option for static vs dynamic linking
+    option(BUILD_SHARED_LIBS_RUST "Build Rust bindings as shared library" ${BUILD_SHARED_LIBS})
+    
+    # Set target type based on shared libs option
+    if(BUILD_SHARED_LIBS_RUST)
+      set(RUST_CRATE_TYPE "cdylib")
+      set(RUST_LIB_TYPE "SHARED")
+    else()
+      set(RUST_CRATE_TYPE "staticlib")
+      set(RUST_LIB_TYPE "STATIC")
+    endif()
+    
+    # Set Rust source directory
+    set(RUST_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/rust")
+    set(RUST_MANIFEST_PATH "${RUST_SOURCE_DIR}/Cargo.toml")
+    
+    # Check if Rust workspace exists
+    if(EXISTS "${RUST_MANIFEST_PATH}")
+      # Set environment variables for Rust build
+      set(RUST_ENV_VARS
+        "LAPACK_LIB_DIR=${CMAKE_BINARY_DIR}/lib"
+        "LAPACK_INCLUDE_DIR=${CMAKE_BINARY_DIR}/include"
+        "LAPACK_STATIC=${BUILD_SHARED_LIBS_RUST}"
+      )
+      
+      # Add Rust library targets using our FindRust function
+      rust_add_library(${RUST_LAPACK_SYS_LIB} "${RUST_SOURCE_DIR}/lapack-sys/Cargo.toml"
+        CRATE_TYPE ${RUST_CRATE_TYPE}
+        LIB_TYPE ${RUST_LIB_TYPE}
+        ENV_VARS ${RUST_ENV_VARS}
+      )
+      rust_add_library(${RUST_LAPACK_LIB} "${RUST_SOURCE_DIR}/lapack/Cargo.toml"
+        CRATE_TYPE ${RUST_CRATE_TYPE}
+        LIB_TYPE ${RUST_LIB_TYPE}
+        ENV_VARS ${RUST_ENV_VARS}
+      )
+      
+      # Link Rust libraries with LAPACK
+      if(NOT LATESTLAPACK_FOUND)
+        add_dependencies(${RUST_LAPACK_SYS_LIB} ${LAPACKLIB})
+      endif()
+      
+      if(LAPACKE)
+        add_dependencies(${RUST_LAPACK_SYS_LIB} ${LAPACKELIB})
+      endif()
+      
+      if(NOT BLAS_FOUND)
+        add_dependencies(${RUST_LAPACK_SYS_LIB} ${BLASLIB})
+      endif()
+      
+      # Note: Installation of Rust libraries is handled by custom install commands
+      # since they are imported targets built by cargo
+      
+      # Install Rust headers/documentation if they exist
+      if(EXISTS "${RUST_SOURCE_DIR}/include")
+        install(DIRECTORY "${RUST_SOURCE_DIR}/include/"
+          DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+          COMPONENT Development
+          FILES_MATCHING PATTERN "*.h"
+        )
+      endif()
+      
+      # Custom install for Rust libraries (since they are imported targets)
+      if(BUILD_SHARED_LIBS_RUST)
+        install(CODE "
+          execute_process(
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+              ${RUST_SOURCE_DIR}/lapack-sys/target/release/liblapack_sys.so
+              \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}${LAPACK_BINARY_PATH_SUFFIX}/
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+              ${RUST_SOURCE_DIR}/lapack/target/release/liblapack.so
+              \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}${LAPACK_BINARY_PATH_SUFFIX}/
+          )
+        ")
+      else()
+        install(CODE "
+          execute_process(
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+              ${RUST_SOURCE_DIR}/lapack-sys/target/release/liblapack_sys.a
+              \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}${LAPACK_BINARY_PATH_SUFFIX}/
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+              ${RUST_SOURCE_DIR}/lapack/target/release/liblapack.a
+              \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}${LAPACK_BINARY_PATH_SUFFIX}/
+          )
+        ")
+      endif()
+      
+      # Note: Rust targets are not added to ALL_TARGETS since they are imported targets
+      
+    else()
+      message(WARNING "Rust workspace not found at ${RUST_MANIFEST_PATH}")
+      message(WARNING "Rust bindings will not be built")
+      set(BUILD_RUST_BINDINGS OFF CACHE BOOL "Build Rust bindings" FORCE)
+    endif()
+    
+  else()
+    message(FATAL_ERROR "Rust compiler not found. Please install Rust or disable Rust bindings with -DBUILD_RUST_BINDINGS=OFF")
+  endif()
+endif()
+
 # --------------------------------------------------
 # CPACK Packaging
 

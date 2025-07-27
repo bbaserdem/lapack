@@ -18,6 +18,10 @@ libc.workspace = true
 # Temporarily comment out lapack-src to test bindgen in isolation
 # lapack-src = { version = "0.1", path = "../lapack-src" }
 
+[lib]
+name = "lapack_sys"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [build-dependencies]
 bindgen = "0.69"
 
