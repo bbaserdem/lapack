@@ -1,0 +1,28 @@
+# Task ID: 6
+# Title: Create Documentation and Examples
+# Status: done
+# Dependencies: 4
+# Priority: low
+# Description: Create documentation and examples for common use cases, document the graph schema structure, provide Neo4j query examples, and write a usage guide for the command-line tool.
+# Details:
+1. Create example scripts for common use cases, such as parsing a single file, building a dependency graph, and exporting to different formats.
+2. Document the graph schema structure, including node and relationship types, properties, and constraints.
+3. Provide Neo4j query examples for common tasks, such as finding all routines that call a specific function or identifying all files that define a specific routine.
+4. Write a usage guide for the command-line tool, including installation instructions, command-line options, and examples.
+
+# Test Strategy:
+Review the documentation for completeness and clarity. Ensure that the examples are easy to understand and follow. Verify that the Neo4j query examples are correct and efficient. Test the command-line tool with different options and inputs to ensure that it works as expected.
+
+# Subtasks:
+## 1. Create example scripts [done]
+### Dependencies: None
+### Description: Develop example scripts showing common use cases for the parser and graph builder
+### Details:
+
+
+## 2. Document Neo4j query examples [done]
+### Dependencies: None
+### Description: Provide example Cypher queries for common analysis tasks on the LAPACK graph
+### Details:
+
+

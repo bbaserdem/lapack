@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPACK Computational Graph Viewer</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #graph {
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .node {
+            cursor: pointer;
+        }
+        
+        .node circle {
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        
+        .node text {
+            font-size: 12px;
+            pointer-events: none;
+        }
+        
+        .link {
+            fill: none;
+            stroke: #999;
+            stroke-opacity: 0.6;
+            stroke-width: 1px;
+            marker-end: url(#arrow);
+        }
+        
+        .tooltip {
+            position: absolute;
+            text-align: left;
+            padding: 10px;
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        #controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        #controls label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        #info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 300px;
+        }
+        
+        .precision-s { fill: #4CAF50; }
+        .precision-d { fill: #2196F3; }
+        .precision-c { fill: #FF9800; }
+        .precision-z { fill: #9C27B0; }
+        .precision-null { fill: #757575; }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    
+    <div id="controls">
+        <h3>Controls</h3>
+        <label>
+            <input type="checkbox" id="showLabels" checked> Show Labels
+        </label>
+        <label>
+            Color by:
+            <select id="colorBy">
+                <option value="precision">Precision</option>
+                <option value="category">Category</option>
+                <option value="degree">Connectivity</option>
+            </select>
+        </label>
+        <label>
+            Node Size:
+            <select id="sizeBy">
+                <option value="uniform">Uniform</option>
+                <option value="degree">By Connectivity</option>
+            </select>
+        </label>
+    </div>
+    
+    <div id="info">
+        <h3>Graph Info</h3>
+        <p>Nodes: <span id="nodeCount">0</span></p>
+        <p>Edges: <span id="edgeCount">0</span></p>
+        <p>Click on a node to see details</p>
+        <div id="nodeInfo"></div>
+    </div>
+    
+    <div class="tooltip"></div>
+    
+    <script>
+        // Load data from JSON file
+        let graphData = null;
+        let simulation = null;
+        
+        // You'll need to load your exported JSON data here
+        // For now, create a file input to load the data
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.json';
+        fileInput.style.position = 'absolute';
+        fileInput.style.top = '100px';
+        fileInput.style.left = '10px';
+        document.body.appendChild(fileInput);
+        
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    graphData = JSON.parse(e.target.result);
+                    initializeGraph();
+                    fileInput.style.display = 'none';
+                };
+                reader.readAsText(file);
+            }
+        });
+        
+        function initializeGraph() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            // Update info
+            document.getElementById('nodeCount').textContent = graphData.nodes.length;
+            document.getElementById('edgeCount').textContent = graphData.edges.length;
+            
+            // Create SVG
+            const svg = d3.select('#graph')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            // Add arrow marker for directed edges
+            svg.append('defs').append('marker')
+                .attr('id', 'arrow')
+                .attr('viewBox', '0 -5 10 10')
+                .attr('refX', 15)
+                .attr('refY', 0)
+                .attr('markerWidth', 6)
+                .attr('markerHeight', 6)
+                .attr('orient', 'auto')
+                .append('path')
+                .attr('d', 'M0,-5L10,0L0,5')
+                .attr('fill', '#999');
+            
+            // Create container for zoom
+            const container = svg.append('g');
+            
+            // Add zoom behavior
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 10])
+                .on('zoom', (event) => {
+                    container.attr('transform', event.transform);
+                });
+            
+            svg.call(zoom);
+            
+            // Prepare the data
+            const nodes = graphData.nodes.map(d => ({...d}));
+            const links = graphData.edges.map(d => ({...d}));
+            
+            // Create force simulation
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links)
+                    .id(d => d.id)
+                    .distance(50))
+                .force('charge', d3.forceManyBody()
+                    .strength(-300))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(20));
+            
+            // Create links
+            const link = container.append('g')
+                .selectAll('line')
+                .data(links)
+                .join('line')
+                .attr('class', 'link');
+            
+            // Create nodes
+            const node = container.append('g')
+                .selectAll('g')
+                .data(nodes)
+                .join('g')
+                .attr('class', 'node')
+                .call(drag(simulation));
+            
+            // Add circles to nodes
+            node.append('circle')
+                .attr('r', 5)
+                .attr('class', d => `precision-${d.precision || 'null'}`);
+            
+            // Add labels to nodes
+            node.append('text')
+                .attr('dx', 12)
+                .attr('dy', 4)
+                .text(d => d.label)
+                .style('font-size', '12px');
+            
+            // Tooltip
+            const tooltip = d3.select('.tooltip');
+            
+            node.on('mouseover', (event, d) => {
+                tooltip.transition()
+                    .duration(200)
+                    .style('opacity', .9);
+                tooltip.html(`
+                    <strong>${d.label}</strong><br/>
+                    Precision: ${d.precision || 'N/A'}<br/>
+                    Category: ${d.category || 'N/A'}
+                `)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 28) + 'px');
+            })
+            .on('mouseout', () => {
+                tooltip.transition()
+                    .duration(500)
+                    .style('opacity', 0);
+            })
+            .on('click', (event, d) => {
+                showNodeDetails(d);
+            });
+            
+            // Update positions on tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                
+                node.attr('transform', d => `translate(${d.x},${d.y})`);
+            });
+            
+            // Control handlers
+            document.getElementById('showLabels').addEventListener('change', (e) => {
+                node.selectAll('text').style('display', e.target.checked ? 'block' : 'none');
+            });
+            
+            document.getElementById('colorBy').addEventListener('change', updateNodeColors);
+            document.getElementById('sizeBy').addEventListener('change', updateNodeSizes);
+        }
+        
+        function drag(simulation) {
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+            
+            return d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended);
+        }
+        
+        function showNodeDetails(node) {
+            const inDegree = graphData.edges.filter(e => e.target === node.id).length;
+            const outDegree = graphData.edges.filter(e => e.source === node.id).length;
+            
+            document.getElementById('nodeInfo').innerHTML = `
+                <hr>
+                <h4>${node.label}</h4>
+                <p>Precision: ${node.precision || 'N/A'}</p>
+                <p>Category: ${node.category || 'N/A'}</p>
+                <p>In-degree: ${inDegree}</p>
+                <p>Out-degree: ${outDegree}</p>
+            `;
+        }
+        
+        function updateNodeColors() {
+            // Implementation for color updates based on selection
+        }
+        
+        function updateNodeSizes() {
+            // Implementation for size updates based on selection
+        }
+    </script>
+</body>
+</html>

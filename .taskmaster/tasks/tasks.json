@@ -1,0 +1,705 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Development Environment",
+        "description": "Set up the development environment by adding pytest and other development dependencies to pyproject.toml, configuring uv, and ensuring all dependencies are properly installed.",
+        "details": "1. Add pytest, neo4j Python driver, and any other necessary development tools to the `pyproject.toml` file.\n2. Configure `uv` to manage the project's virtual environment and dependencies.\n3. Use `uv pip install -e .[dev]` to install the project and its development dependencies.\n4. Verify the installation by running `pytest --version` and ensuring that pytest is correctly installed and configured.",
+        "testStrategy": "Run `pytest --version` to confirm pytest is installed. Check the `pyproject.toml` file to ensure all dependencies are listed. Manually inspect the virtual environment to verify the presence of installed packages.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Add pytest and pytest-cov to pyproject.toml",
+            "description": "Add pytest>=7.0.0 and pytest-cov>=4.0.0 to the dev dependencies in pyproject.toml",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          },
+          {
+            "id": 2,
+            "title": "Install dependencies with uv",
+            "description": "Run uv sync or uv pip install to install the development dependencies",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement and Test Fortran Parser",
+        "description": "Implement and test the FortranParser class to parse LAPACK/BLAS source files, extract ASTs, detect routines, and extract call graphs. Handle LAPACK naming conventions and error cases.",
+        "details": "1. Create a `FortranParser` class that uses the `fortran-src` Haskell tool to parse Fortran source code.\n2. Implement methods to extract the AST from the parsed code.\n3. Implement routine detection and call graph extraction logic.\n4. Add support for parsing LAPACK naming conventions (S/D/C/Z prefixes).\n5. Implement error handling for malformed Fortran files.\n```python\nclass FortranParser:\n    def __init__(self, filepath):\n        self.filepath = filepath\n\n    def parse(self):\n        # Use fortran-src to parse the file\n        pass\n\n    def extract_ast(self):\n        # Extract AST from the parsed code\n        pass\n\n    def detect_routines(self):\n        # Detect routines in the code\n        pass\n\n    def extract_call_graph(self):\n        # Extract call graph from the code\n        pass\n```",
+        "testStrategy": "Create a suite of unit tests using pytest. Test with various LAPACK/BLAS source files, including those with different prefixes and malformed syntax. Verify that the AST is correctly extracted, routines are detected, and call graphs are accurately generated. Check error handling by providing intentionally malformed files.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Run existing Fortran parser tests",
+            "description": "Execute tests/test_fortran_parser.py to verify current parser functionality",
+            "details": "<info added on 2025-07-25T16:01:06.239Z>\nTests completed successfully. The existing Fortran parser tests all pass (6/6 tests). The parser correctly handles routine extraction, LAPACK naming conventions, and basic call graph extraction.\n</info added on 2025-07-25T16:01:06.239Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 2,
+            "title": "Test parser with real LAPACK/BLAS files",
+            "description": "Run the parser on actual LAPACK source files (e.g., BLAS/SRC/dgemm.f) and verify AST extraction",
+            "details": "<info added on 2025-07-25T16:02:26.244Z>\nSuccessfully tested parser with real LAPACK/BLAS files. Parsed 6 files including dgemm.f, sgemm.f, cgemm.f, zgemm.f (BLAS Level 3), and dgetrf.f, dgetrs.f (LAPACK). All files parsed correctly, extracting routine names, types, and call relationships. The parser correctly identified calls to XERBLA, DGEMM, DTRSM, DLASWP, etc.\n</info added on 2025-07-25T16:02:26.244Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 3,
+            "title": "Verify LAPACK naming convention parsing",
+            "description": "Test that S/D/C/Z prefixes are correctly parsed and precision/operation extraction works",
+            "details": "<info added on 2025-07-25T16:03:46.402Z>\nVerified LAPACK naming convention parsing works correctly. Tested all 4 precision types: S (single), D (double), C (complex), Z (double complex). The parser correctly extracts precision from first character and operation from remaining characters. Also correctly handles non-LAPACK routines like XERBLA and LSAME by returning None for precision/operation.\n</info added on 2025-07-25T16:03:46.402Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Design and Validate Graph Schema",
+        "description": "Design and validate the graph schema for Neo4j import, including node types (Routine, File, Operation, Precision) and relationship types (CALLS, DEFINED_IN, IMPLEMENTS, HAS_PRECISION). Ensure schema consistency and uniqueness constraints.",
+        "details": "1. Define the graph schema with node types: Routine, File, Operation, Precision.\n2. Define relationship types: CALLS, DEFINED_IN, IMPLEMENTS, HAS_PRECISION.\n3. Implement a `GraphSchema` class to create and validate the schema.\n4. Implement uniqueness constraints for nodes and relationships.\n```python\nclass GraphSchema:\n    def __init__(self):\n        self.node_types = ['Routine', 'File', 'Operation', 'Precision']\n        self.relationship_types = ['CALLS', 'DEFINED_IN', 'IMPLEMENTS', 'HAS_PRECISION']\n\n    def validate(self, graph):\n        # Validate the graph against the schema\n        pass\n```",
+        "testStrategy": "Create unit tests to verify the graph schema. Test node and relationship types. Validate schema consistency by attempting to create invalid graphs. Ensure uniqueness constraints are enforced. Use a mock Neo4j database for testing.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Run graph schema tests",
+            "description": "Execute tests/test_graph_schema.py to verify graph creation functionality",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 2,
+            "title": "Verify node and relationship creation",
+            "description": "Test that all node types (Routine, File, Operation, Precision) and relationships are created correctly",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement and Test Export Formats",
+        "description": "Implement and test the export functionality for JSON, CSV, and Cypher formats. Ensure all formats preserve data integrity and are suitable for visualization tools and Neo4j import.",
+        "details": "1. Implement JSON export for visualization tools.\n2. Implement CSV export for neo4j-admin bulk import.\n3. Implement Cypher statement generation for direct Neo4j import.\n4. Ensure all formats preserve data integrity by correctly mapping AST data to the export formats.\n```python\nclass Exporter:\n    def __init__(self, graph):\n        self.graph = graph\n\n    def to_json(self, filepath):\n        # Export graph to JSON format\n        pass\n\n    def to_csv(self, filepath):\n        # Export graph to CSV format\n        pass\n\n    def to_cypher(self, filepath):\n        # Generate Cypher statements for graph import\n        pass\n```",
+        "testStrategy": "Create unit tests for each export format. Verify that the exported data matches the expected format and content. Test JSON export with visualization tools. Test CSV export with neo4j-admin. Validate Cypher statements by importing them into a Neo4j database. Compare the original data with the imported data to ensure integrity.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Test JSON export functionality",
+            "description": "Verify that graph schema exports correctly to JSON format for visualization",
+            "details": "<info added on 2025-07-25T16:57:29.731Z>\nSuccessfully tested JSON export functionality. The GraphSchema class already had a to_json() method that exports nodes and relationships. Created an Exporter wrapper class as requested that provides to_json(), to_csv(), and to_cypher() methods. Implemented comprehensive unit tests in test_exporter.py that verify JSON export creates valid files with all nodes and relationships preserved. Integration tests confirm JSON export works correctly with real LAPACK routine data.\n</info added on 2025-07-25T16:57:29.731Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 2,
+            "title": "Test CSV export for neo4j-admin",
+            "description": "Verify CSV export creates proper files for bulk import into Neo4j",
+            "details": "<info added on 2025-07-25T16:58:01.583Z>\nSuccessfully tested CSV export functionality. The GraphSchema class had a to_csv() method that creates separate CSV files for each node type and relationship type, suitable for neo4j-admin bulk import. Created comprehensive tests that verify: CSV files are created for each node/relationship type, headers contain all properties, data integrity is preserved, and the format is compatible with neo4j-admin import tool. The export creates files like routine_nodes.csv, file_nodes.csv, calls_relationships.csv, etc.\n</info added on 2025-07-25T16:58:01.583Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 3,
+            "title": "Test Cypher statement generation",
+            "description": "Verify that Cypher CREATE statements are generated correctly for direct Neo4j import",
+            "details": "<info added on 2025-07-25T17:00:14.492Z>\nSuccessfully tested Cypher statement generation. The GraphSchema class had a to_cypher_statements() method that generates: 1) CREATE CONSTRAINT statements for ensuring unique nodes, 2) CREATE INDEX statements for performance optimization, 3) MERGE statements for creating nodes with properties, 4) MERGE statements for creating relationships. The Exporter wrapper writes these to a file with proper formatting and comments. Tests verify that the generated Cypher is valid and contains all expected elements for direct import into Neo4j.\n</info added on 2025-07-25T17:00:14.492Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Perform Integration Testing",
+        "description": "Perform integration testing by parsing multiple related LAPACK files, building complete dependency graphs, and testing with different routine types. Verify cross-file dependency resolution.",
+        "details": "1. Parse multiple related LAPACK files using the `FortranParser`.\n2. Build complete dependency graphs from the parsed files.\n3. Test with different routine types (BLAS Level 1, 2, 3, LAPACK solvers).\n4. Verify cross-file dependency resolution by ensuring that dependencies between files are correctly identified and represented in the graph.",
+        "testStrategy": "Create integration tests that parse multiple LAPACK files and build dependency graphs. Verify that all dependencies are correctly resolved, including cross-file dependencies. Test with different routine types to ensure comprehensive coverage. Use a Neo4j database to visualize and validate the generated graphs.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create integration test for multiple files",
+            "description": "Test parsing multiple related LAPACK files and building complete dependency graphs",
+            "details": "<info added on 2025-07-25T17:45:06.013Z>\nSuccessfully created comprehensive integration tests in test_integration_enhanced.py that test parsing multiple LAPACK files (BLAS Level 1, 2, 3 and LAPACK solvers), build complete dependency graphs, and verify cross-file dependencies. All 7 tests are passing.\n</info added on 2025-07-25T17:45:06.013Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 5
+          },
+          {
+            "id": 2,
+            "title": "Test cross-file dependency resolution",
+            "description": "Verify that calls between routines in different files are properly tracked",
+            "details": "<info added on 2025-07-25T17:45:26.471Z>\nImplemented comprehensive cross-file dependency resolution tests. Tests verify that LAPACK routines correctly reference BLAS routines from different files, handle missing dependencies gracefully, and properly track all call relationships across file boundaries. The enhanced test suite includes 7 comprehensive test methods covering different routine types and dependency scenarios.\n</info added on 2025-07-25T17:45:26.471Z>",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 5
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Create Documentation and Examples",
+        "description": "Create documentation and examples for common use cases, document the graph schema structure, provide Neo4j query examples, and write a usage guide for the command-line tool.",
+        "details": "1. Create example scripts for common use cases, such as parsing a single file, building a dependency graph, and exporting to different formats.\n2. Document the graph schema structure, including node and relationship types, properties, and constraints.\n3. Provide Neo4j query examples for common tasks, such as finding all routines that call a specific function or identifying all files that define a specific routine.\n4. Write a usage guide for the command-line tool, including installation instructions, command-line options, and examples.",
+        "testStrategy": "Review the documentation for completeness and clarity. Ensure that the examples are easy to understand and follow. Verify that the Neo4j query examples are correct and efficient. Test the command-line tool with different options and inputs to ensure that it works as expected.",
+        "priority": "low",
+        "dependencies": [
+          4
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create example scripts",
+            "description": "Develop example scripts showing common use cases for the parser and graph builder",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 2,
+            "title": "Document Neo4j query examples",
+            "description": "Provide example Cypher queries for common analysis tasks on the LAPACK graph",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 6
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Set up and Configure Neo4j Server",
+        "description": "Set up and configure a Neo4j server to store and manage the LAPACK subroutine dependency graph. This includes installing Neo4j, configuring it for local access, and optimizing settings for graph storage and querying.",
+        "details": "1.  **Install Neo4j:** Download and install the Neo4j Community Edition from the official Neo4j website. Follow the installation instructions for the target operating system (Linux, macOS, or Windows).\n2.  **Configure Neo4j:**\n    *   Modify the `neo4j.conf` file (located in the Neo4j configuration directory) to allow remote access (if needed) by setting `dbms.default_listen_address=0.0.0.0`.\n    *   Set the heap size in `neo4j.conf` based on available system memory. A reasonable starting point is `dbms.memory.heap.initial_size=4g` and `dbms.memory.heap.max_size=8g`. Adjust these values based on the size of the LAPACK dependency graph.\n    *   Configure the location of the database files by setting `dbms.directories.data` and `dbms.directories.logs`.\n    *   Enable Cypher shell access by uncommenting `dbms.shell.enabled=true`.\n3.  **Start Neo4j Server:** Start the Neo4j server using the appropriate command for the operating system (e.g., `neo4j start` on Linux/macOS).\n4.  **Verify Installation:** Access the Neo4j browser interface by navigating to `http://localhost:7474` in a web browser. Use the default credentials (neo4j/neo4j) to log in and change the password.\n5.  **Create a Database:** Create a new Neo4j database specifically for the LAPACK dependency graph. This can be done through the Neo4j browser interface or using Cypher commands.\n6.  **Optimize Configuration:**\n    *   Tune Neo4j's memory settings based on the size of the graph. Monitor performance and adjust `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` accordingly.\n    *   Consider using Neo4j Bloom for graph visualization and exploration.\n7.  **Security Considerations:** If the Neo4j server is exposed to a network, configure appropriate authentication and authorization mechanisms to protect the database.",
+        "testStrategy": "1.  **Installation Verification:** Ensure that Neo4j is installed correctly and the server starts without errors.\n2.  **Browser Access:** Verify that the Neo4j browser interface is accessible via `http://localhost:7474`.\n3.  **Database Creation:** Confirm that a new database can be created successfully.\n4.  **Configuration Validation:** Check that the configured settings in `neo4j.conf` are applied correctly by examining the Neo4j logs.\n5.  **Performance Testing:** Import a sample LAPACK dependency graph (generated from Task 4) into the Neo4j database. Run several Cypher queries to test query performance. Monitor CPU and memory usage during query execution. Adjust memory settings as needed.\n6.  **Security Audit:** If the Neo4j server is exposed to a network, perform a security audit to ensure that appropriate authentication and authorization mechanisms are in place.",
+        "status": "pending",
+        "dependencies": [
+          3,
+          4
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Local Neo4j Data Directory",
+            "description": "Create a dedicated directory for Neo4j database files outside the Nix store to persist data. This directory will store the LAPACK dependency graph data.",
+            "dependencies": [],
+            "details": "Create a directory, for example, `mkdir /home/user/neo4j-lapack-data`. This directory will be referenced in the Neo4j configuration file.",
+            "status": "done",
+            "testStrategy": "Verify the directory is created and accessible with appropriate permissions."
+          },
+          {
+            "id": 2,
+            "title": "Configure Neo4j for LAPACK Graph",
+            "description": "Modify the `neo4j.conf` file to configure Neo4j for local access, specify the data directory, and optimize memory settings for the LAPACK dependency graph.",
+            "dependencies": [],
+            "details": "Edit `/nix/store/98g0ky36l4w452hjz6wqaf93gpbfrl2r-neo4j-5.26.1/conf/neo4j.conf`. Set `dbms.default_listen_address=0.0.0.0` for access. Set `dbms.directories.data=/home/user/neo4j-lapack-data`. Adjust `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` based on available memory (e.g., 4g and 8g initially).",
+            "status": "done",
+            "testStrategy": "Inspect the `neo4j.conf` file to ensure the settings are correctly applied. Check Neo4j logs for any configuration errors during startup."
+          },
+          {
+            "id": 3,
+            "title": "Start Neo4j Server",
+            "description": "Start the Neo4j server using the `neo4j start` command from the Nix store path.",
+            "dependencies": [],
+            "details": "Execute `/nix/store/98g0ky36l4w452hjz6wqaf93gpbfrl2r-neo4j-5.26.1/bin/neo4j start` to start the Neo4j server.",
+            "status": "done",
+            "testStrategy": "Check the Neo4j logs for successful startup messages. Verify that the Neo4j process is running using `ps aux | grep neo4j`."
+          },
+          {
+            "id": 4,
+            "title": "Verify Neo4j Installation and Access",
+            "description": "Access the Neo4j browser interface to verify the installation and ensure the server is running correctly.",
+            "dependencies": [],
+            "details": "Open a web browser and navigate to `http://localhost:7474`. Log in with the default credentials (neo4j/neo4j) and change the password. Ensure the browser interface is functional.",
+            "status": "done",
+            "testStrategy": "Confirm that the Neo4j browser interface loads successfully and that you can log in and change the password."
+          },
+          {
+            "id": 5,
+            "title": "Create Initial Database Schema for LAPACK Dependencies",
+            "description": "Create the initial database schema in Neo4j based on the designed graph schema (Task 3), including node labels, relationship types, and constraints.",
+            "dependencies": [],
+            "details": "Using the Neo4j browser or Cypher shell, execute Cypher commands to create node labels (Routine, File, Operation, Precision), relationship types (CALLS, DEFINED_IN, IMPLEMENTS, HAS_PRECISION), and uniqueness constraints as defined in Task 3.",
+            "status": "done",
+            "testStrategy": "Verify that the schema elements are created correctly by querying the Neo4j system catalog. Attempt to create duplicate nodes to confirm uniqueness constraints are enforced."
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Phase 1: Foundation - Directory Structure and Core Types",
+        "description": "Set up the foundation for sparse matrix implementation in LAPACK. Create the directory structure under /SRC/SPARSE/ and implement core type definitions.",
+        "details": "Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR/, CSC/, IO/. Implement sparse_types.f90 module with derived types for COO, CSR, and CSC formats. Implement sparse_constants.f90 for error codes and format identifiers. Create basic COO operations: DCOOALLOC (memory allocation), DCOOINIT (initialization from arrays), DCOOCHECK (validation), and DCOOFREE (deallocation).",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create /SRC/SPARSE/ directory hierarchy",
+            "description": "Create the main SPARSE directory under /SRC/ with subdirectories: MODULES/, COO/, CSR/, CSC/, IO/",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 2,
+            "title": "Implement sparse_types.f90 module",
+            "description": "Create module with derived type definitions for sparse_coo_d, sparse_csr_d, and sparse_csc_d structures",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 3,
+            "title": "Implement sparse_constants.f90 module",
+            "description": "Define sparse-specific constants, error codes, and format identifiers",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 4,
+            "title": "Implement DCOOALLOC routine",
+            "description": "Create routine for COO matrix memory allocation",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 5,
+            "title": "Implement DCOOINIT routine",
+            "description": "Create routine to initialize COO matrix from row, column, and value arrays",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 6,
+            "title": "Implement DCOOCHECK routine",
+            "description": "Create routine to validate COO matrix structure (bounds checking, duplicate detection)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 7,
+            "title": "Implement DCOOFREE routine",
+            "description": "Create routine to deallocate COO matrix memory",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Phase 2: Core Conversions - Format Transformation Routines",
+        "description": "Implement conversion routines between different sparse matrix formats (COO, CSR, CSC) and between sparse and dense formats.",
+        "details": "Implement DCOO2CSR (COO to CSR conversion with row sorting), DCOO2CSC (COO to CSC conversion with column sorting), DCSR2COO and DCSC2COO (reverse conversions). Implement dense matrix interface: DDEN2COO (dense to COO, skipping zeros) and DCOO2DEN (COO to dense, filling zeros). These conversions are critical for interoperability with existing LAPACK routines.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement DCOO2CSR conversion",
+            "description": "Convert COO to CSR format with row sorting and row pointer construction",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 2,
+            "title": "Implement DCOO2CSC conversion",
+            "description": "Convert COO to CSC format with column sorting and column pointer construction",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 3,
+            "title": "Implement DCSR2COO conversion",
+            "description": "Convert CSR format back to COO",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 4,
+            "title": "Implement DCSC2COO conversion",
+            "description": "Convert CSC format back to COO",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 5,
+            "title": "Implement DDEN2COO conversion",
+            "description": "Convert dense matrix to COO format, skipping zero elements",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 6,
+            "title": "Implement DCOO2DEN conversion",
+            "description": "Convert COO to dense matrix, filling in zeros",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 9
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Phase 3: Basic Operations - SpMV and Element Access",
+        "description": "Implement sparse matrix-vector multiplication (SpMV) for all formats and basic element operations.",
+        "details": "Implement DCSRMV (CSR matrix-vector multiply, optimized for row access), DCSCMV (CSC matrix-vector multiply for column operations), and DCOOMV (COO reference implementation). Add element operations: DSPGET (get element value), DSPSET (set element value with potential reallocation), and DCOOTRANS (in-place COO transpose). These operations form the core computational kernel for sparse linear algebra.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement DCSRMV routine",
+            "description": "CSR matrix-vector multiplication optimized for row access",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 2,
+            "title": "Implement DCSCMV routine",
+            "description": "CSC matrix-vector multiplication for column operations",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 3,
+            "title": "Implement DCOOMV routine",
+            "description": "COO matrix-vector multiplication as reference implementation",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 4,
+            "title": "Implement DSPGET function",
+            "description": "Get element value from sparse matrix with search",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 5,
+            "title": "Implement DSPSET subroutine",
+            "description": "Set element value in sparse matrix, handle reallocation if needed",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 6,
+            "title": "Implement DCOOTRANS subroutine",
+            "description": "In-place transpose of COO matrix",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 10
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Phase 4: Testing and Integration - Validation and Build System",
+        "description": "Create comprehensive test suite and integrate sparse matrix module with LAPACK build system.",
+        "details": "Create test matrices (identity, tridiagonal, random sparse patterns). Test all conversion routines for round-trip accuracy. Verify SpMV results against dense DGEMV. Create performance benchmark suite. Implement I/O routines: DSPREAD and DSPWRITE for Matrix Market format. Update CMakeLists.txt and Makefile to include sparse module. Ensure proper installation rules and dependencies.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9,
+          10
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create test matrices",
+            "description": "Generate identity, tridiagonal, and random sparse test matrices",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 2,
+            "title": "Test conversion round-trips",
+            "description": "Verify accuracy of all format conversions (COO->CSR->COO, etc.)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 3,
+            "title": "Verify SpMV correctness",
+            "description": "Compare sparse matrix-vector multiply results against dense DGEMV",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 4,
+            "title": "Create performance benchmarks",
+            "description": "Develop benchmark suite for sparse operations",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 5,
+            "title": "Implement DSPREAD routine",
+            "description": "Read sparse matrices in Matrix Market format",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 6,
+            "title": "Implement DSPWRITE routine",
+            "description": "Write sparse matrices in Matrix Market format",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 7,
+            "title": "Update CMakeLists.txt",
+            "description": "Add sparse module to CMake build configuration",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 8,
+            "title": "Add Makefile targets",
+            "description": "Create Makefile targets for sparse routine compilation",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Phase 5: Advanced Features - Matrix Operations and Optimization",
+        "description": "Implement advanced sparse matrix operations including matrix-matrix multiplication and optimization utilities.",
+        "details": "Implement DCSRCSC (sparse-sparse multiplication), DGECSR (dense-sparse multiplication), and DSPADD2 (sparse matrix addition). Add optimization utilities: DSPSORT (sort indices for better cache performance), DSPCOMP (remove duplicates and explicit zeros), and DSPSIZE (dynamic reallocation for changing sparsity patterns). These features enable complex sparse linear algebra operations.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "priority": "low",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement DCSRCSC routine",
+            "description": "Sparse-sparse multiplication (CSR × CSC)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 2,
+            "title": "Implement DGECSR routine",
+            "description": "Dense-sparse multiplication",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 3,
+            "title": "Implement DSPADD2 routine",
+            "description": "Addition of same-format sparse matrices",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 4,
+            "title": "Implement DSPSORT routine",
+            "description": "Sort indices for better cache performance",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 5,
+            "title": "Implement DSPCOMP routine",
+            "description": "Remove duplicates and explicit zeros",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 6,
+            "title": "Implement DSPSIZE routine",
+            "description": "Dynamic reallocation for changing sparsity patterns",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Phase 6: Extended Precision - Multi-precision Support",
+        "description": "Port all sparse matrix routines to support LAPACK's full range of data types: single, double, complex, and double complex.",
+        "details": "Port all double precision (D) routines to single precision (S prefix), complex (C prefix), and double complex (Z prefix). Maintain consistent naming and interface across all precisions. Create comprehensive documentation with examples for each precision. Ensure numerical stability considerations are addressed for each data type. This completes full LAPACK integration.",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "priority": "low",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Port to single precision",
+            "description": "Convert all double precision (D) routines to single precision (S prefix)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 2,
+            "title": "Port to complex type",
+            "description": "Convert all routines to complex type (C prefix)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 3,
+            "title": "Port to double complex",
+            "description": "Convert all routines to double complex (Z prefix)",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 4,
+            "title": "Create documentation",
+            "description": "Write comprehensive documentation with examples for all precisions",
+            "details": "",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-25T14:06:48.573Z",
+      "updated": "2025-07-27T00:24:07.773Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

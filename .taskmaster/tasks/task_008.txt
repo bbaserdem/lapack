@@ -1,0 +1,55 @@
+# Task ID: 8
+# Title: Phase 1: Foundation - Directory Structure and Core Types
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Set up the foundation for sparse matrix implementation in LAPACK. Create the directory structure under /SRC/SPARSE/ and implement core type definitions.
+# Details:
+Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR/, CSC/, IO/. Implement sparse_types.f90 module with derived types for COO, CSR, and CSC formats. Implement sparse_constants.f90 for error codes and format identifiers. Create basic COO operations: DCOOALLOC (memory allocation), DCOOINIT (initialization from arrays), DCOOCHECK (validation), and DCOOFREE (deallocation).
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. Create /SRC/SPARSE/ directory hierarchy [pending]
+### Dependencies: None
+### Description: Create the main SPARSE directory under /SRC/ with subdirectories: MODULES/, COO/, CSR/, CSC/, IO/
+### Details:
+
+
+## 2. Implement sparse_types.f90 module [pending]
+### Dependencies: None
+### Description: Create module with derived type definitions for sparse_coo_d, sparse_csr_d, and sparse_csc_d structures
+### Details:
+
+
+## 3. Implement sparse_constants.f90 module [pending]
+### Dependencies: None
+### Description: Define sparse-specific constants, error codes, and format identifiers
+### Details:
+
+
+## 4. Implement DCOOALLOC routine [pending]
+### Dependencies: None
+### Description: Create routine for COO matrix memory allocation
+### Details:
+
+
+## 5. Implement DCOOINIT routine [pending]
+### Dependencies: None
+### Description: Create routine to initialize COO matrix from row, column, and value arrays
+### Details:
+
+
+## 6. Implement DCOOCHECK routine [pending]
+### Dependencies: None
+### Description: Create routine to validate COO matrix structure (bounds checking, duplicate detection)
+### Details:
+
+
+## 7. Implement DCOOFREE routine [pending]
+### Dependencies: None
+### Description: Create routine to deallocate COO matrix memory
+### Details:
+
+

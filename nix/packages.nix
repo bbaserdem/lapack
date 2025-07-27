@@ -1,6 +1,8 @@
 {
   pkgs,
   inputs,
+  uvBoilerplate,
+  projectName,
   ...
 }: let
   inherit (pkgs) lib stdenv testers callPackage;
@@ -91,4 +93,9 @@ in {
   lapack-reference = lapackDerivation;
   # Our docker container for running swarms
   docker-claudeFlow = import ./claudeFlow/docker.nix {inherit pkgs;};
+  # Our python utility projects here
+  ${projectName} =
+    uvBoilerplate.pythonSet.mkVirtualEnv
+    "${projectName}-env"
+    uvBoilerplate.workspace.deps.default;
 }
