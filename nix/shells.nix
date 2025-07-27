@@ -86,10 +86,34 @@
 
   # Organize branch
   featuresPackages = with pkgs; [
+    # Rust toolchain
+    cargo
+    rustfmt
+    clippy
+    rust-analyzer
+    
+    # For bindgen
+    rust-bindgen
+    clang
+    
+    # For linking with LAPACK
+    pkg-config
+    openblas
+    
+    # Documentation
+    mdbook
   ];
   featuresHooks = ''
+    echo "Rust development environment loaded"
+    echo "  cargo: $(cargo --version)"
+    echo "  rustc: $(cargo rustc -- --version | head -n1)"
+    echo "  bindgen: $(rust-bindgen --version)"
   '';
   featuresEnv = {
+    # For bindgen to find libclang
+    LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+    # For rust-bindgen
+    BINDGEN_EXTRA_CLANG_ARGS = "-I${pkgs.openblas.dev}/include";
   };
 in {
   # Main dev shell

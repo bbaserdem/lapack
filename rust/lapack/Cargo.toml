@@ -1,0 +1,27 @@
+[package]
+name = "lapack"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation = "https://docs.rs/lapack"
+categories.workspace = true
+keywords.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Safe Rust wrappers for LAPACK (Linear Algebra PACKage)"
+readme = "README.md"
+
+[dependencies]
+lapack-sys = { version = "0.1", path = "../lapack-sys" }
+thiserror = "1.0"
+num-complex = "0.4"
+num-traits = "0.2"
+
+[dev-dependencies]
+approx = "0.5"
+ndarray = "0.15"
+
+[features]
+default = []

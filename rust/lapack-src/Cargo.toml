@@ -1,0 +1,35 @@
+[package]
+name = "lapack-src"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation = "https://docs.rs/lapack-src"
+categories.workspace = true
+keywords.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "LAPACK source provider for selecting backend implementations"
+readme = "README.md"
+
+[dependencies]
+
+[features]
+default = []
+netlib = ["netlib-src"]
+openblas = ["openblas-src"]
+intel-mkl = ["intel-mkl-src"]
+
+# Backend dependencies (to be added as they are implemented)
+[dependencies.netlib-src]
+version = "0.8"
+optional = true
+
+[dependencies.openblas-src]
+version = "0.10"
+optional = true
+
+[dependencies.intel-mkl-src]
+version = "0.8"
+optional = true

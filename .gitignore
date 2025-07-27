@@ -226,7 +226,8 @@ node_modules/
 # OS specific
 .DS_Store
 
+.cursor/
+
 # Task files
 # tasks.json
 # tasks/ 
-.cursor/
