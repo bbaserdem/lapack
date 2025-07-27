@@ -1,0 +1,1 @@
+"""Domain-specific adapters for fortran-mapper."""
