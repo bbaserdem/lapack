@@ -2,7 +2,13 @@
 
 Low-level FFI bindings to LAPACK (Linear Algebra PACKage).
 
-This crate provides raw, unsafe bindings to LAPACK functions. These bindings are automatically generated from LAPACK source code.
+This crate provides raw, unsafe bindings to LAPACK functions through the LAPACKE C interface. These bindings are automatically generated from LAPACKE headers using bindgen.
+
+## Build Requirements
+
+This crate uses bindgen to generate FFI bindings at build time. This requires:
+- Clang/LLVM (for bindgen to parse C headers)
+- LAPACKE headers (included in the LAPACK source tree)
 
 ## Usage
 

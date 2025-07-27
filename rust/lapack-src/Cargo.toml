@@ -34,8 +34,8 @@ netlib-system = ["netlib", "system", "netlib-src/system"]
 openblas-static = ["openblas", "static", "openblas-src/static"]
 openblas-system = ["openblas", "system", "openblas-src/system"]
 
-intel-mkl-static = ["intel-mkl", "static", "intel-mkl-src/static"]
-intel-mkl-dynamic = ["intel-mkl", "intel-mkl-src/dynamic"]
+intel-mkl-static = ["intel-mkl", "static", "intel-mkl-src/mkl-static-lp64-seq"]
+intel-mkl-system = ["intel-mkl", "system"]
 
 # Cache feature for build performance
 cache = ["openblas-src?/cache"]

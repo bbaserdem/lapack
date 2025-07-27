@@ -15,16 +15,23 @@ readme = "README.md"
 
 [dependencies]
 libc.workspace = true
-lapack-src = { version = "0.1", path = "../lapack-src" }
+# Temporarily comment out lapack-src to test bindgen in isolation
+# lapack-src = { version = "0.1", path = "../lapack-src" }
 
 [build-dependencies]
-# Dependencies for code generation will be added here
+bindgen = "0.69"
 
 [features]
 default = ["std"]
 
 # Standard library support
 std = []
+
+# Enable tests that require LAPACK to be installed
+test-with-lapack = []
+
+# Enable 64-bit integer interface (ILP64)
+ilp64 = []
 
 # Pass-through features from lapack crate
 # These control which FFI bindings are generated/included
