@@ -44,6 +44,12 @@
 			"args": [
 				"@modelcontextprotocol/server-github"
 			]
-		}
+		},
+        "mcpServers": {
+            "nixos": {
+            "command": "nix",
+                "args": ["run", "github:utensils/mcp-nixos", "--"]
+            }
+        }
 	}
 }
