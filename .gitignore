@@ -190,6 +190,7 @@ exports/
 *.png
 *.mkv
 *.webm
+*.mp4
 
 # Claude Flow swarm data
 .swarm/

@@ -125,11 +125,30 @@
     CPLUS_INCLUDE_PATH = "$PWD/result/include:${pkgs.openblas.dev}/include";
   };
 in {
-  # Main dev shell
+  # Main dev shell, contain everything
   default = pkgs.mkShell {
-    packages = defaultPackages;
+    packages =
+      uvShellSet.packages
+      ++ defaultPackages
+      ++ devopsPackages
+      ++ organizePackages
+      ++ featurePackages;
+    env =
+      defaultEnv
+      // organizeEnv
+      // uvShellSet.env
+      // featureEnv;
     # Shell hooks
-    shellHook = defaultHooks;
+    shellHook =
+      defaultHooks
+      + "\n"
+      + devopsHooks
+      + "\n"
+      + organizeHooks
+      + "\n"
+      + uvShellSet.shellHook
+      + "\n"
+      + featureHooks;
   };
 
   # Devops dev shell, we do docker stuff here
