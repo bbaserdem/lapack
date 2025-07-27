@@ -1,7 +1,9 @@
 {
+  "name": "lapack",
+  "private": true,
   "dependencies": {
     "@anthropic-ai/claude-code": "^1.0.60",
     "claude-flow": "^2.0.0-alpha.72",
-    "task-master-ai": "^0.21.0"
+    "task-master-ai": "^0.22.0"
   }
 }
