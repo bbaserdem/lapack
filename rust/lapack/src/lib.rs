@@ -4,6 +4,19 @@
 //! It handles memory safety, error checking, and provides a more ergonomic
 //! API compared to the raw FFI bindings.
 //!
+//! # Features
+//!
+//! This crate uses feature flags to control which routines are available:
+//!
+//! - `std` (default): Use the standard library
+//! - `full`: Enable all LAPACK routines
+//! - `driver`: Enable all driver routines
+//! - `computational`: Enable all computational routines
+//! - `auxiliary`: Enable all auxiliary routines
+//!
+//! See the [crate documentation](https://docs.rs/lapack) for a complete list
+//! of available features.
+//!
 //! # Example
 //!
 //! ```no_run
@@ -43,6 +56,18 @@ pub enum Transpose {
 }
 
 // Module organization (to be implemented)
-// pub mod driver;      // Driver routines (solve, eigenvalues, etc.)
-// pub mod computational; // Computational routines
-// pub mod auxiliary;    // Auxiliary routines
+#[cfg(feature = "driver")]
+pub mod driver;      // Driver routines (solve, eigenvalues, etc.)
+
+#[cfg(feature = "computational")]
+pub mod computational; // Computational routines
+
+#[cfg(feature = "auxiliary")]
+pub mod auxiliary;    // Auxiliary routines
+
+// Re-export commonly used items at crate root for convenience
+#[cfg(feature = "linear-systems")]
+pub use driver::linear_systems::*;
+
+#[cfg(feature = "eigenvalues")]
+pub use driver::eigenvalues::*;

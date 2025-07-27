@@ -16,7 +16,7 @@ documentation = "https://docs.rs/lapack"
 categories = ["science", "mathematics", "api-bindings"]
 keywords = ["lapack", "linear-algebra", "matrix", "blas"]
 edition = "2021"
-rust-version = "1.56"
+rust-version = "1.72"
 
 [workspace.dependencies]
 libc = "0.2"

@@ -1172,8 +1172,8 @@
             "title": "Determine Minimum Rust Version and Edition",
             "description": "Select a minimum supported Rust version (MSRV) and Rust edition. Consider compatibility with commonly used tools and libraries, as well as access to modern Rust features.",
             "dependencies": [],
-            "details": "Choose a recent stable Rust version (e.g., 1.65 or later) that balances access to modern features with compatibility. Specify the Rust edition (e.g., 2021) in the `Cargo.toml` file. Document the MSRV in the `README.md` file. Use `rustup show` to check the current stable version.",
-            "status": "in-progress",
+            "details": "Choose a recent stable Rust version (e.g., 1.65 or later) that balances access to modern features with compatibility. Specify the Rust edition (e.g., 2021) in the `Cargo.toml` file. Document the MSRV in the `README.md` file. Use `rustup show` to check the current stable version.\n<info added on 2025-07-27T03:51:42.518Z>\n- Set rust-version = \"1.72\" (up from 1.56)\n- Kept edition = \"2021\" (rather than 2024 for broader compatibility)\n- Documented rationale in rust/README.md\n- Based decision on: scientific computing ecosystem requirements (ndarray 1.64+, BLAS backends 1.71+), stability (1.72 is from Aug 2023), and modern feature access\n</info added on 2025-07-27T03:51:42.518Z>",
+            "status": "done",
             "testStrategy": "N/A - This is a configuration decision."
           },
           {
@@ -1181,8 +1181,8 @@
             "title": "Plan Error Handling Strategy",
             "description": "Define the error handling strategy for the crate. Decide whether to use `Result` for recoverable errors and `panic!` for unrecoverable errors. Consider using a custom error type.",
             "dependencies": [],
-            "details": "Favor `Result` for recoverable errors such as invalid input or memory allocation failures. Use `panic!` only for truly unrecoverable errors, such as memory corruption. Define a custom error type (e.g., `LapackError`) using an `enum` to represent different error conditions. Implement `From` traits for converting errors from underlying libraries (e.g., C libraries) to `LapackError`. Document the error handling strategy in the `README.md` file.",
-            "status": "pending",
+            "details": "Favor `Result` for recoverable errors such as invalid input or memory allocation failures. Use `panic!` only for truly unrecoverable errors, such as memory corruption. Define a custom error type (e.g., `LapackError`) using an `enum` to represent different error conditions. Implement `From` traits for converting errors from underlying libraries (e.g., C libraries) to `LapackError`. Document the error handling strategy in the `README.md` file.\n<info added on 2025-07-27T03:55:49.908Z>\n- Found existing error.rs with well-designed LapackError enum using thiserror\n- Enhanced error conversion with routine-specific handling (e.g., SingularMatrix for dgesv)\n- Added check_lapack_info utility method for FFI boundary\n- Documented comprehensive error handling strategy in README\n- Strategy: Result<T, Error> for all fallible ops, no panics in library code, meaningful error types from INFO codes\n- FFI boundary: unsafe raw functions in lapack-sys, safe wrappers with error checking in lapack crate\n</info added on 2025-07-27T03:55:49.908Z>",
+            "status": "done",
             "testStrategy": "N/A - This is a design decision."
           },
           {
@@ -1190,8 +1190,8 @@
             "title": "Choose Static/Dynamic Linking Defaults",
             "description": "Decide on the default linking behavior (static or dynamic) for the underlying LAPACK library. Consider portability, performance, and ease of distribution.",
             "dependencies": [],
-            "details": "Dynamic linking is generally preferred for ease of distribution and reduced binary size. However, static linking may be necessary in some cases for portability or performance reasons. Provide feature flags to allow users to choose between static and dynamic linking. The default should be dynamic linking. Document the linking strategy and feature flags in the `README.md` file.",
-            "status": "pending",
+            "details": "Dynamic linking is generally preferred for ease of distribution and reduced binary size. However, static linking may be necessary in some cases for portability or performance reasons. Provide feature flags to allow users to choose between static and dynamic linking. The default should be dynamic linking. Document the linking strategy and feature flags in the `README.md` file.\n<info added on 2025-07-27T03:59:51.910Z>\n- Designed comprehensive feature flag system following ecosystem patterns\n- Backend selection: netlib, openblas, intel-mkl (mutually exclusive)\n- Linking modes: default (dynamic), -static, -system variants\n- Added cache feature for build performance (OpenBLAS)\n- Created build.rs for lapack-sys to handle platform-specific linking\n- Documented complete strategy with platform notes and recommendations\n- Default: no backend selected (libraries shouldn't force backends)\n- Applications choose backend + linking mode via lapack-src features\n</info added on 2025-07-27T03:59:51.910Z>",
+            "status": "done",
             "testStrategy": "N/A - This is a configuration decision."
           },
           {
@@ -1199,8 +1199,8 @@
             "title": "Design Feature Flags Structure",
             "description": "Design the structure of feature flags to enable/disable optional functionality, such as different LAPACK implementations (e.g., OpenBLAS, Intel MKL), or specific routines.",
             "dependencies": [],
-            "details": "Use feature flags to allow users to select their preferred LAPACK implementation (e.g., `openblas`, `intel-mkl`). Provide feature flags for enabling/disabling specific routines or groups of routines. Consider using hierarchical feature flags (e.g., `level1`, `level2`, `level3` for BLAS routines). Document the feature flags in the `Cargo.toml` file and the `README.md` file.",
-            "status": "pending",
+            "details": "Use feature flags to allow users to select their preferred LAPACK implementation (e.g., `openblas`, `intel-mkl`). Provide feature flags for enabling/disabling specific routines or groups of routines. Consider using hierarchical feature flags (e.g., `level1`, `level2`, `level3` for BLAS routines). Document the feature flags in the `Cargo.toml` file and the `README.md` file.\n<info added on 2025-07-27T04:12:03.502Z>\n- Created hierarchical system following LAPACK's organization (driver/computational/auxiliary)\n- Driver subcategories: linear-systems, least-squares, eigenvalues, svd\n- Computational subcategories: factorization, orthogonal, reduction\n- Auxiliary subcategories: blas1, blas2, blas3, utility\n- Precision control: single, double, complex, all-precisions\n- Advanced features: parallel, serialization, std/no_std support\n- Documented all features in README with usage examples\n- Added conditional compilation in lib.rs for feature-gated modules\n- Pass-through features in lapack-sys for controlling FFI bindings\n</info added on 2025-07-27T04:12:03.502Z>",
+            "status": "done",
             "testStrategy": "N/A - This is a design decision."
           },
           {
@@ -1217,7 +1217,7 @@
     ],
     "metadata": {
       "created": "2025-07-25T14:06:48.573Z",
-      "updated": "2025-07-27T03:41:34.721Z",
+      "updated": "2025-07-27T04:12:08.294Z",
       "description": "Tasks for master context"
     }
   }

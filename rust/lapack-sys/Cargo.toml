@@ -15,9 +15,30 @@ readme = "README.md"
 
 [dependencies]
 libc.workspace = true
+lapack-src = { version = "0.1", path = "../lapack-src" }
 
 [build-dependencies]
 # Dependencies for code generation will be added here
 
 [features]
-default = []
+default = ["std"]
+
+# Standard library support
+std = []
+
+# Pass-through features from lapack crate
+# These control which FFI bindings are generated/included
+linear-systems = []
+least-squares = []
+eigenvalues = []
+svd = []
+factorization = []
+orthogonal = []
+reduction = []
+blas1 = []
+blas2 = []
+blas3 = []
+utility = []
+single = []
+double = []
+complex = []

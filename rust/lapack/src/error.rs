@@ -45,9 +45,27 @@ impl Error {
         } else if info > 0 {
             // The meaning of positive info depends on the routine
             // This is a simplified version; real implementation would be routine-specific
-            Error::LapackError { info }
+            match routine {
+                "dgesv" | "sgesv" | "zgesv" | "cgesv" => {
+                    Error::SingularMatrix { position: info }
+                }
+                "dgeev" | "sgeev" | "zgeev" | "cgeev" |
+                "dsyev" | "ssyev" | "zheev" | "cheev" => {
+                    Error::ConvergenceFailure { iterations: info }
+                }
+                _ => Error::LapackError { info }
+            }
         } else {
             unreachable!("from_lapack_info called with info=0")
+        }
+    }
+    
+    /// Check LAPACK info parameter and convert to Result
+    pub fn check_lapack_info(info: i32, routine: &str) -> Result<()> {
+        if info == 0 {
+            Ok(())
+        } else {
+            Err(Self::from_lapack_info(info, routine))
         }
     }
 }

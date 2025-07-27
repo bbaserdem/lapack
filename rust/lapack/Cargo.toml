@@ -24,4 +24,48 @@ approx = "0.5"
 ndarray = "0.15"
 
 [features]
-default = []
+default = ["std"]
+
+# Standard library support (can be disabled for no_std environments)
+std = ["lapack-sys/std", "thiserror/std", "num-complex/std", "num-traits/std"]
+
+# Full LAPACK support (all routines)
+full = ["driver", "computational", "auxiliary"]
+
+# Major routine categories
+driver = ["linear-systems", "least-squares", "eigenvalues", "svd"]
+computational = ["factorization", "orthogonal", "reduction"]
+auxiliary = ["blas1", "blas2", "blas3", "utility"]
+
+# Driver routine subcategories
+linear-systems = []      # Linear equation solvers (gesv, posv, etc.)
+least-squares = []       # Least squares problems (gels, gelss, etc.)
+eigenvalues = []         # Eigenvalue problems (geev, syev, etc.)
+svd = []                 # Singular value decomposition (gesvd, etc.)
+
+# Computational routine subcategories
+factorization = []       # LU, Cholesky, QR factorizations
+orthogonal = []          # Orthogonal/unitary transformations
+reduction = []           # Matrix reductions (to triangular, bidiagonal, etc.)
+
+# BLAS support levels (auxiliary)
+blas1 = []               # Vector operations (axpy, dot, etc.)
+blas2 = []               # Matrix-vector operations (gemv, ger, etc.)
+blas3 = []               # Matrix-matrix operations (gemm, etc.)
+utility = []             # Utility routines (lacpy, laset, etc.)
+
+# Performance and precision options
+single = []              # Single precision support (f32)
+double = []              # Double precision support (f64) 
+complex = []             # Complex number support
+all-precisions = ["single", "double", "complex"]
+
+# Advanced features
+parallel = []            # Parallel execution support
+serialization = ["serde"]  # Serialization support
+
+# Optional dependencies
+[dependencies.serde]
+version = "1.0"
+optional = true
+features = ["derive"]
