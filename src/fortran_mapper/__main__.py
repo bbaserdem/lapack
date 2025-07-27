@@ -136,6 +136,32 @@ def main():
     neo4j_parser.add_argument('--data-dir',
                              help='Neo4j data directory (default: ./neo4j-data)')
     
+    # Visualize command with subcommands
+    visualize_parser = subparsers.add_parser('visualize',
+                                           help='Interactive graph visualization')
+    visualize_subparsers = visualize_parser.add_subparsers(dest='visualize_command',
+                                                          help='Visualization commands')
+    
+    # Visualize serve subcommand
+    serve_parser = visualize_subparsers.add_parser('serve',
+                                                  help='Start visualization web server')
+    serve_parser.add_argument('-p', '--port', type=int, default=8080,
+                             help='Port to run server on (default: 8080)')
+    serve_parser.add_argument('--no-open', action='store_true',
+                             help='Do not automatically open browser')
+    
+    # Visualize export subcommand
+    export_viz_parser = visualize_subparsers.add_parser('export',
+                                                       help='Export visualization data')
+    export_viz_parser.add_argument('output_dir',
+                                  help='Directory to export visualization data')
+    
+    # Visualize schema subcommand
+    schema_parser = visualize_subparsers.add_parser('schema',
+                                                   help='Display or export graph schema')
+    schema_parser.add_argument('-o', '--output',
+                              help='Export schema to file (JSON format)')
+    
     args = parser.parse_args()
     
     # Configure logging
@@ -269,6 +295,26 @@ def main():
         elif args.command == 'neo4j':
             from .neo4j_server import neo4j_server_command
             return neo4j_server_command(args.action, args.data_dir, verbose=args.debug)
+        
+        elif args.command == 'visualize':
+            if args.visualize_command == 'serve' or args.visualize_command is None:
+                commands.visualize_serve_command(
+                    port=args.port if hasattr(args, 'port') else 8080,
+                    auto_open=not getattr(args, 'no_open', False),
+                    **neo4j_args
+                )
+            
+            elif args.visualize_command == 'export':
+                commands.visualize_export_command(
+                    args.output_dir,
+                    **neo4j_args
+                )
+            
+            elif args.visualize_command == 'schema':
+                commands.visualize_schema_command(
+                    output=args.output if hasattr(args, 'output') else None,
+                    **neo4j_args
+                )
         
     except KeyboardInterrupt:
         print("\nOperation cancelled.")

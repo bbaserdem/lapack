@@ -1,0 +1,1 @@
+# This file ensures static files are included in the package
