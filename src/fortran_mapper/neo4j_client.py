@@ -180,8 +180,8 @@ class Neo4jClient:
             # Get top routines by connections
             top_routines = session.run("""
                 MATCH (r:Routine)
-                WITH r, size((r)-[:CALLS]->()) as out_degree,
-                     size((r)<-[:CALLS]-()) as in_degree
+                WITH r, COUNT {(r)-[:CALLS]->()} as out_degree,
+                     COUNT {(r)<-[:CALLS]-()} as in_degree
                 RETURN r.name as name, out_degree, in_degree, 
                        out_degree + in_degree as total_degree
                 ORDER BY total_degree DESC

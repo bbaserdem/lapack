@@ -207,13 +207,23 @@ class LapackParser:
         if not name or len(name) < 2:
             return None
         
-        # Check for BLAS/LAPACK patterns
-        for category, pattern in self.lapack_patterns.items():
-            if pattern.match(name):
-                return category
-        
         # Check for common patterns in the name
         name_upper = name.upper()
+        
+        # Check for specific operation patterns first (more specific than type patterns)
+        if self._extract_precision(name):
+            if 'COPY' in name_upper or 'SWAP' in name_upper or 'SCAL' in name_upper:
+                return 'vector_operation'
+            elif 'GEMM' in name_upper or 'GEMV' in name_upper:
+                return 'matrix_multiplication'
+            elif 'DOT' in name_upper:
+                return 'inner_product'
+            elif 'NRM' in name_upper or 'NORM' in name_upper:
+                return 'norm'
+            elif 'SUM' in name_upper or 'ASUM' in name_upper:
+                return 'sum'
+            elif 'MAX' in name_upper or 'MIN' in name_upper:
+                return 'extrema'
         
         # Matrix types (2nd and 3rd characters)
         if len(name_upper) >= 3:
@@ -263,20 +273,10 @@ class LapackParser:
         if name_upper in ['XERBLA', 'LSAME', 'XERBLA_ARRAY']:
             return 'utility'
         
-        # If starts with precision but no clear category
-        if self._extract_precision(name):
-            if 'COPY' in name_upper or 'SWAP' in name_upper or 'SCAL' in name_upper:
-                return 'vector_operation'
-            elif 'GEMM' in name_upper or 'GEMV' in name_upper:
-                return 'matrix_multiplication'
-            elif 'DOT' in name_upper:
-                return 'inner_product'
-            elif 'NRM' in name_upper or 'NORM' in name_upper:
-                return 'norm'
-            elif 'SUM' in name_upper or 'ASUM' in name_upper:
-                return 'sum'
-            elif 'MAX' in name_upper or 'MIN' in name_upper:
-                return 'extrema'
+        # Check for BLAS/LAPACK general patterns as fallback
+        for category, pattern in self.lapack_patterns.items():
+            if pattern.match(name):
+                return category
         
         return 'other'
     
@@ -322,12 +322,13 @@ class LapackParser:
                         type: $type,
                         precision: $precision,
                         category: $category,
+                        file_path: $file_path,
                         line_number: $line,
                         argument_count: $arg_count
                     })
                 """, name=name, type=routine_type, precision=precision,
-                    category=category, line=sub.line_number,
-                    arg_count=len(sub.arguments))
+                    category=category, file_path=sub.file_path, 
+                    line=sub.line_number, arg_count=len(sub.arguments))
             
             # Create DEFINED_IN relationships
             print("Creating DEFINED_IN relationships...")

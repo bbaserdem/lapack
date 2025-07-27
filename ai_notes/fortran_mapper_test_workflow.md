@@ -87,8 +87,8 @@ cat neo4j-data/neo4j.conf | head -20
 # Start Neo4j server
 fortran-mapper neo4j start
 
-# Parse a small subset of LAPACK files
-fortran-mapper parse SRC/dgemm.f SRC/dgetrf.f SRC/dgesv.f --debug
+# Parse a small subset of LAPACK files (NOTE: Use directories, not individual files)
+fortran-mapper --debug parse BLAS/SRC/ SRC/
 
 # Check parsing succeeded
 fortran-mapper stats
@@ -96,12 +96,29 @@ fortran-mapper stats
 
 **Expected Result**:
 - Parsing should complete without errors
+- Should find ~2,263 subroutines and ~9,385 call relationships
 - Stats should show parsed routines, files, and relationships
+
+### 3.3 Neo4j Export Test
+```bash
+# Export parsed data to Neo4j (this takes time for large datasets)
+# For faster testing, parse smaller subset first:
+fortran-mapper --debug parse BLAS/SRC/ -o neo4j
+
+# Or export after parsing to memory:
+fortran-mapper --debug parse BLAS/SRC/ SRC/
+fortran-mapper query "MATCH (n) DETACH DELETE n"  # Clear existing data
+fortran-mapper --debug parse BLAS/SRC/ SRC/ -o neo4j  # Re-export to Neo4j
+```
+
+**Expected Result**:
+- Neo4j export should complete (may take several minutes for full dataset)
+- Database should contain all parsed routines with proper properties
 
 ### 3.2 Batch Parsing Test
 ```bash
-# Parse multiple files with exclusions
-fortran-mapper parse SRC/ --exclude "*test*" "*example*" --debug
+# Parse multiple files with exclusions (NOTE: --debug comes before subcommand)
+fortran-mapper --debug parse SRC/ --exclude "*test*" "*example*"
 
 # Verify parsing results
 fortran-mapper stats
@@ -116,8 +133,8 @@ fortran-mapper stats
 
 ### 4.1 Routine Node Verification
 ```bash
-# Query routine nodes
-fortran-mapper query "MATCH (r:Routine) RETURN r.name, r.precision, r.category, r.file_path LIMIT 10"
+# Query routine nodes (includes line_number property)
+fortran-mapper query "MATCH (r:Routine) RETURN r.name, r.precision, r.category, r.file_path, r.line_number LIMIT 10"
 
 # Check specific routine details
 fortran-mapper query "MATCH (r:Routine {name: 'DGEMM'}) RETURN r"
@@ -130,36 +147,37 @@ fortran-mapper query "MATCH (r:Routine {name: 'DGEMM'}) RETURN r"
 - `file_path`: Source file location
 - `line_number`: Line in source file
 
-### 4.2 Precision Node Verification
+### 4.2 Precision Information Verification
 ```bash
-# Query precision nodes
-fortran-mapper query "MATCH (p:Precision) RETURN p.name, p.description LIMIT 10"
+# Query precision values (stored as properties, not separate nodes)
+fortran-mapper query "MATCH (r:Routine) RETURN DISTINCT r.precision ORDER BY r.precision"
 
-# Check precision relationships
-fortran-mapper query "MATCH (r:Routine)-[:HAS_PRECISION]->(p:Precision) RETURN r.name, p.name LIMIT 10"
+# Count routines by precision
+fortran-mapper query "MATCH (r:Routine) RETURN r.precision, count(r) as count ORDER BY count DESC"
 ```
 
-**Expected Precision Nodes**:
-- Single precision (S)
-- Double precision (D)
-- Complex single (C)
-- Complex double (Z)
+**Expected Precision Values**:
+- `single` (S prefix routines)
+- `double` (D prefix routines) 
+- `complex` (C prefix routines)
+- `double_complex` (Z prefix routines)
+- `null` (utility routines without precision)
 
-### 4.3 Operation Category Node Verification
+### 4.3 Operation Category Verification
 ```bash
-# Query operation categories
-fortran-mapper query "MATCH (o:Operation) RETURN o.name, o.description LIMIT 20"
+# Query operation categories (stored as properties, not separate nodes)
+fortran-mapper query "MATCH (r:Routine) RETURN DISTINCT r.category ORDER BY r.category"
 
-# Check operation relationships
-fortran-mapper query "MATCH (r:Routine)-[:IMPLEMENTS]->(o:Operation) RETURN r.name, o.name LIMIT 10"
+# Count routines by category
+fortran-mapper query "MATCH (r:Routine) RETURN r.category, count(r) as count ORDER BY count DESC LIMIT 20"
 ```
 
 **Expected Operation Categories**:
-- Linear equation solvers
-- Matrix multiplication
-- Matrix factorization
-- Eigenvalue problems
-- Singular value decomposition
+- `matrix_multiplication` (GEMM, GEMV routines)
+- `vector_operation` (COPY, SWAP, SCAL)
+- `general_factorization` (GETRF)
+- `general_solve` (GETRS)
+- `utility` (XERBLA, LSAME)
 
 ### 4.4 File Node Verification
 ```bash
@@ -171,9 +189,18 @@ fortran-mapper query "MATCH (r:Routine)-[:DEFINED_IN]->(f:File) RETURN r.name, f
 ```
 
 **Expected File Properties**:
-- `path`: Full file path
-- `name`: File name
-- Should have relationships to routines defined in them
+- `path`: Full file path (e.g., "SRC/clalsa.f")
+- `name`: File name (e.g., "clalsa.f")
+- Should have DEFINED_IN relationships from routines
+
+**Verification Commands**:
+```bash
+# Count total file relationships (should match routine count)
+fortran-mapper query "MATCH (r:Routine)-[:DEFINED_IN]->(f:File) RETURN count(*) as total_relationships"
+
+# Show files with most routines
+fortran-mapper query "MATCH (f:File)<-[:DEFINED_IN]-(r:Routine) RETURN f.name, count(r) as routine_count ORDER BY routine_count DESC LIMIT 10"
+```
 
 ## 5. Relationship Verification
 
@@ -244,17 +271,19 @@ fortran-mapper query "MATCH (r:Routine) RETURN count(r)"
 
 ### 7.1 Complex Query Tests
 ```bash
-# Test precision pattern analysis
+# Test precision pattern analysis (using properties)
 fortran-mapper query "
-MATCH (r:Routine)-[:HAS_PRECISION]->(p:Precision)
-RETURN p.name, count(r) as routine_count
+MATCH (r:Routine)
+WHERE r.precision IS NOT NULL
+RETURN r.precision, count(r) as routine_count
 ORDER BY routine_count DESC
 "
 
-# Test operation category analysis
+# Test operation category analysis (using properties)
 fortran-mapper query "
-MATCH (r:Routine)-[:IMPLEMENTS]->(o:Operation)
-RETURN o.name, count(r) as routine_count
+MATCH (r:Routine)
+WHERE r.category IS NOT NULL
+RETURN r.category, count(r) as routine_count
 ORDER BY routine_count DESC
 "
 
@@ -292,8 +321,8 @@ fortran-mapper explore categories
 
 ### 8.1 Invalid Input Handling
 ```bash
-# Test with non-existent files
-fortran-mapper parse nonexistent_file.f
+# Test with non-existent directories/files
+fortran-mapper parse nonexistent_directory/
 
 # Test with invalid Neo4j connection
 fortran-mapper --neo4j-uri bolt://invalid:7687 stats
@@ -309,8 +338,8 @@ fortran-mapper query "INVALID CYPHER SYNTAX"
 
 ### 8.2 Large Dataset Handling
 ```bash
-# Parse larger subset of LAPACK
-fortran-mapper parse SRC/ --exclude "*test*"
+# Parse larger subset of LAPACK (NOTE: Global --debug flag placement)
+fortran-mapper --debug parse SRC/ --exclude "*test*"
 
 # Test performance with large queries
 fortran-mapper query "MATCH (r:Routine) RETURN r LIMIT 1000"
@@ -396,6 +425,16 @@ time fortran-mapper export json performance_test.json
 
 ### Issue: Missing node properties
 **Solution**: Verify that the parsing logic correctly extracts LAPACK-specific information.
+
+### Issue: "unrecognized arguments: --debug"
+**Solution**: Global flags like `--debug` must come BEFORE the subcommand, not after.
+- ❌ Wrong: `fortran-mapper parse SRC/ --debug`
+- ✅ Correct: `fortran-mapper --debug parse SRC/`
+
+### Issue: "Parsed 0 subroutines"
+**Solution**: Use directory paths, not individual file paths. The parser uses glob patterns to find `*.f` files within directories.
+- ❌ Wrong: `fortran-mapper parse file1.f file2.f`
+- ✅ Correct: `fortran-mapper parse SRC/ BLAS/SRC/`
 
 ### Issue: Import/export failures
 **Solution**: Check file permissions and disk space, verify file format validity.
