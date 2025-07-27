@@ -33,11 +33,13 @@
     # Needed for mcp's and claude
     nodejs
     typescript
+    uv
     quaestor
     # Shell aliases
     scripts
     # Visualizing computational graph
     neo4j
+    haskellPackages.fortran-src
   ];
   defaultHooks = ''
     # Set Neo4j environment variables to use local project directory
@@ -81,6 +83,14 @@
   '';
   organizeEnv = {
   };
+
+  # Organize branch
+  featuresPackages = with pkgs; [
+  ];
+  featuresHooks = ''
+  '';
+  featuresEnv = {
+  };
 in {
   # Main dev shell
   default = pkgs.mkShell {
@@ -101,5 +111,12 @@ in {
     packages = uvShellSet.packages ++ defaultPackages ++ organizePackages;
     env = defaultEnv // organizeEnv // uvShellSet.env;
     shellHook = defaultHooks + "\n" + organizeHooks + "\n" + uvShellSet.shellHook;
+  };
+
+  # Features dev shell; generate code reports as well
+  features = pkgs.mkShell {
+    packages = defaultPackages ++ featuresPackages;
+    env = defaultEnv // featuresEnv;
+    shellHook = defaultHooks + "\n" + featuresHooks;
   };
 }
