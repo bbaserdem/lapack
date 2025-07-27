@@ -85,11 +85,11 @@
   };
 
   # Organize branch
-  featuresPackages = with pkgs; [
+  featurePackages = with pkgs; [
   ];
-  featuresHooks = ''
+  featureHooks = ''
   '';
-  featuresEnv = {
+  featureEnv = {
   };
 in {
   # Main dev shell
@@ -114,9 +114,9 @@ in {
   };
 
   # Features dev shell; generate code reports as well
-  features = pkgs.mkShell {
-    packages = defaultPackages ++ featuresPackages;
-    env = defaultEnv // featuresEnv;
-    shellHook = defaultHooks + "\n" + featuresHooks;
+  feature = pkgs.mkShell {
+    packages = defaultPackages ++ featurePackages;
+    env = defaultEnv // featureEnv;
+    shellHook = defaultHooks + "\n" + featureHooks;
   };
 }
