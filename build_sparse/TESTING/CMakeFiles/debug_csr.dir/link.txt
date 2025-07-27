@@ -1,0 +1,1 @@
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/gfortran -Wl,--dependency-file=CMakeFiles/debug_csr.dir/link.d CMakeFiles/debug_csr.dir/debug_csr.f90.o -o debug_csr  ../liblapack_sparse.a

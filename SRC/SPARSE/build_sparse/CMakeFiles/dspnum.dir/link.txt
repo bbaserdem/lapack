@@ -1,0 +1,1 @@
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/gfortran -Wl,--dependency-file=CMakeFiles/dspnum.dir/link.d  -Wall -Wextra -std=f2008 -fall-intrinsics CMakeFiles/dspnum.dir/TESTING/dspnum.f90.o -o dspnum  liblapack_sparse.a

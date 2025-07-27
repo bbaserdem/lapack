@@ -11,31 +11,31 @@ Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR
 
 
 # Subtasks:
-## 1. Create /SRC/SPARSE/ directory hierarchy [pending]
+## 1. Create /SRC/SPARSE/ directory hierarchy [done]
 ### Dependencies: None
 ### Description: Create the main SPARSE directory under /SRC/ with subdirectories: MODULES/, COO/, CSR/, CSC/, IO/
 ### Details:
 
 
-## 2. Implement sparse_types.f90 module [pending]
+## 2. Implement sparse_types.f90 module [done]
 ### Dependencies: None
 ### Description: Create module with derived type definitions for sparse_coo_d, sparse_csr_d, and sparse_csc_d structures
 ### Details:
 
 
-## 3. Implement sparse_constants.f90 module [pending]
+## 3. Implement sparse_constants.f90 module [done]
 ### Dependencies: None
 ### Description: Define sparse-specific constants, error codes, and format identifiers
 ### Details:
 
 
-## 4. Implement DCOOALLOC routine [pending]
+## 4. Implement DCOOALLOC routine [done]
 ### Dependencies: None
 ### Description: Create routine for COO matrix memory allocation
 ### Details:
 
 
-## 5. Implement DCOOINIT routine [pending]
+## 5. Implement DCOOINIT routine [done]
 ### Dependencies: None
 ### Description: Create routine to initialize COO matrix from row, column, and value arrays
 ### Details:
@@ -50,6 +50,18 @@ Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR
 ## 7. Implement DCOOFREE routine [pending]
 ### Dependencies: None
 ### Description: Create routine to deallocate COO matrix memory
+### Details:
+
+
+## 8. Implement DCSRALLOC and DCSRINIT routines [done]
+### Dependencies: None
+### Description: Create CSR matrix allocation and initialization routines
+### Details:
+
+
+## 9. Implement DCSCALLOC and DCSCINIT routines [done]
+### Dependencies: None
+### Description: Create CSC matrix allocation and initialization routines
 ### Details:
 
 

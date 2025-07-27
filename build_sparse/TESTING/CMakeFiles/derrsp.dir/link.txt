@@ -1,0 +1,1 @@
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/gfortran -Wl,--dependency-file=CMakeFiles/derrsp.dir/link.d CMakeFiles/derrsp.dir/derrsp.f90.o -o derrsp  ../liblapack_sparse.a

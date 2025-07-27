@@ -1,0 +1,6 @@
+# The fortran modules provided by this target.
+provides
+ dspget_module.mod
+ sparse_constants.mod
+ sparse_types.mod
+ sparse_types_extended.mod

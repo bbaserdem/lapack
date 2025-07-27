@@ -1,0 +1,1 @@
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/gfortran -Wl,--dependency-file=CMakeFiles/dspedge.dir/link.d CMakeFiles/dspedge.dir/dspedge.f90.o -o dspedge  ../liblapack_sparse.a

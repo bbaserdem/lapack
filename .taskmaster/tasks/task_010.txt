@@ -11,7 +11,7 @@ Implement DCSRMV (CSR matrix-vector multiply, optimized for row access), DCSCMV 
 
 
 # Subtasks:
-## 1. Implement DCSRMV routine [pending]
+## 1. Implement DCSRMV routine [in-progress]
 ### Dependencies: None
 ### Description: CSR matrix-vector multiplication optimized for row access
 ### Details:
