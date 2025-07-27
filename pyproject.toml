@@ -27,3 +27,6 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"fortran_mapper.visualization.static" = ["*.html", "*.css", "*.js"]
