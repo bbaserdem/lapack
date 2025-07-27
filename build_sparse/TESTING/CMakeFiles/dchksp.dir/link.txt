@@ -1,0 +1,1 @@
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/gfortran -Wl,--dependency-file=CMakeFiles/dchksp.dir/link.d CMakeFiles/dchksp.dir/dchksp.f90.o -o dchksp  ../liblapack_sparse.a libsparse_test_utils.a ../liblapack_sparse.a

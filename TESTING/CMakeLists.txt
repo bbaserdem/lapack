@@ -12,6 +12,7 @@ if(MSVC_VERSION)
 endif()
 add_subdirectory(LIN)
 add_subdirectory(EIG)
+add_subdirectory(SPARSE)
 
 
 # Only run this test if python 3 is found

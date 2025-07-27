@@ -1,0 +1,40 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/lapack_sparse.dir/COO/DCOO2CSC.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOO2DEN.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOOCHECK.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOOCONV.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOOFREE.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOOINIT.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOOMV.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DCOOTRANS.f90.o"
+  "CMakeFiles/lapack_sparse.dir/COO/DDEN2COO.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSC/DCSC2COO.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSC/DCSCFREE.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSC/DCSCINIT.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSC/DCSCMV.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSR/DCSR2COO.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSR/DCSRCSC.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSR/DCSRFREE.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSR/DCSRINIT.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSR/DCSRMV.f90.o"
+  "CMakeFiles/lapack_sparse.dir/CSR/DGECSR.f90.o"
+  "CMakeFiles/lapack_sparse.dir/IO/DSPREAD.f90.o"
+  "CMakeFiles/lapack_sparse.dir/IO/DSPWRITE.f90.o"
+  "CMakeFiles/lapack_sparse.dir/MODULES/sparse_constants.f90.o"
+  "CMakeFiles/lapack_sparse.dir/MODULES/sparse_types.f90.o"
+  "CMakeFiles/lapack_sparse.dir/MODULES/sparse_types_extended.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/DSPADD2.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/DSPCOMP.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/DSPGET.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/DSPSET.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/DSPSIZE.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/DSPSORT.f90.o"
+  "CMakeFiles/lapack_sparse.dir/UTILS/LSAME.f90.o"
+  "liblapack_sparse.a"
+  "liblapack_sparse.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang Fortran)
+  include(CMakeFiles/lapack_sparse.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

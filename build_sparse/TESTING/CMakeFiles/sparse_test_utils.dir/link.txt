@@ -1,0 +1,2 @@
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/ar qc libsparse_test_utils.a CMakeFiles/sparse_test_utils.dir/dsptests.f90.o CMakeFiles/sparse_test_utils.dir/dlatsp.f90.o CMakeFiles/sparse_test_utils.dir/slatsp.f90.o CMakeFiles/sparse_test_utils.dir/chkxer.f90.o
+/nix/store/daqvllcd5f499pd9jkj12aal6w1jws7g-gfortran-wrapper-14.2.1.20250322/bin/ranlib libsparse_test_utils.a

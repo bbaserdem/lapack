@@ -216,7 +216,7 @@
         "description": "Set up and configure a Neo4j server to store and manage the LAPACK subroutine dependency graph. This includes installing Neo4j, configuring it for local access, and optimizing settings for graph storage and querying.",
         "details": "1.  **Install Neo4j:** Download and install the Neo4j Community Edition from the official Neo4j website. Follow the installation instructions for the target operating system (Linux, macOS, or Windows).\n2.  **Configure Neo4j:**\n    *   Modify the `neo4j.conf` file (located in the Neo4j configuration directory) to allow remote access (if needed) by setting `dbms.default_listen_address=0.0.0.0`.\n    *   Set the heap size in `neo4j.conf` based on available system memory. A reasonable starting point is `dbms.memory.heap.initial_size=4g` and `dbms.memory.heap.max_size=8g`. Adjust these values based on the size of the LAPACK dependency graph.\n    *   Configure the location of the database files by setting `dbms.directories.data` and `dbms.directories.logs`.\n    *   Enable Cypher shell access by uncommenting `dbms.shell.enabled=true`.\n3.  **Start Neo4j Server:** Start the Neo4j server using the appropriate command for the operating system (e.g., `neo4j start` on Linux/macOS).\n4.  **Verify Installation:** Access the Neo4j browser interface by navigating to `http://localhost:7474` in a web browser. Use the default credentials (neo4j/neo4j) to log in and change the password.\n5.  **Create a Database:** Create a new Neo4j database specifically for the LAPACK dependency graph. This can be done through the Neo4j browser interface or using Cypher commands.\n6.  **Optimize Configuration:**\n    *   Tune Neo4j's memory settings based on the size of the graph. Monitor performance and adjust `dbms.memory.heap.initial_size` and `dbms.memory.heap.max_size` accordingly.\n    *   Consider using Neo4j Bloom for graph visualization and exploration.\n7.  **Security Considerations:** If the Neo4j server is exposed to a network, configure appropriate authentication and authorization mechanisms to protect the database.",
         "testStrategy": "1.  **Installation Verification:** Ensure that Neo4j is installed correctly and the server starts without errors.\n2.  **Browser Access:** Verify that the Neo4j browser interface is accessible via `http://localhost:7474`.\n3.  **Database Creation:** Confirm that a new database can be created successfully.\n4.  **Configuration Validation:** Check that the configured settings in `neo4j.conf` are applied correctly by examining the Neo4j logs.\n5.  **Performance Testing:** Import a sample LAPACK dependency graph (generated from Task 4) into the Neo4j database. Run several Cypher queries to test query performance. Monitor CPU and memory usage during query execution. Adjust memory settings as needed.\n6.  **Security Audit:** If the Neo4j server is exposed to a network, perform a security audit to ensure that appropriate authentication and authorization mechanisms are in place.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           3,
           4
@@ -276,7 +276,7 @@
         "description": "Set up the foundation for sparse matrix implementation in LAPACK. Create the directory structure under /SRC/SPARSE/ and implement core type definitions.",
         "details": "Create directory hierarchy: /SRC/SPARSE/ with subdirectories MODULES/, COO/, CSR/, CSC/, IO/. Implement sparse_types.f90 module with derived types for COO, CSR, and CSC formats. Implement sparse_constants.f90 for error codes and format identifiers. Create basic COO operations: DCOOALLOC (memory allocation), DCOOINIT (initialization from arrays), DCOOCHECK (validation), and DCOOFREE (deallocation).",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "subtasks": [
@@ -285,7 +285,7 @@
             "title": "Create /SRC/SPARSE/ directory hierarchy",
             "description": "Create the main SPARSE directory under /SRC/ with subdirectories: MODULES/, COO/, CSR/, CSC/, IO/",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -294,7 +294,7 @@
             "title": "Implement sparse_types.f90 module",
             "description": "Create module with derived type definitions for sparse_coo_d, sparse_csr_d, and sparse_csc_d structures",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -303,7 +303,7 @@
             "title": "Implement sparse_constants.f90 module",
             "description": "Define sparse-specific constants, error codes, and format identifiers",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -312,7 +312,7 @@
             "title": "Implement DCOOALLOC routine",
             "description": "Create routine for COO matrix memory allocation",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -321,7 +321,7 @@
             "title": "Implement DCOOINIT routine",
             "description": "Create routine to initialize COO matrix from row, column, and value arrays",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -330,7 +330,7 @@
             "title": "Implement DCOOCHECK routine",
             "description": "Create routine to validate COO matrix structure (bounds checking, duplicate detection)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -339,7 +339,25 @@
             "title": "Implement DCOOFREE routine",
             "description": "Create routine to deallocate COO matrix memory",
             "details": "",
-            "status": "pending",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 8,
+            "title": "Implement DCSRALLOC and DCSRINIT routines",
+            "description": "Create CSR matrix allocation and initialization routines",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 9,
+            "title": "Implement DCSCALLOC and DCSCINIT routines",
+            "description": "Create CSC matrix allocation and initialization routines",
+            "details": "",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           }
@@ -351,7 +369,7 @@
         "description": "Implement conversion routines between different sparse matrix formats (COO, CSR, CSC) and between sparse and dense formats.",
         "details": "Implement DCOO2CSR (COO to CSR conversion with row sorting), DCOO2CSC (COO to CSC conversion with column sorting), DCSR2COO and DCSC2COO (reverse conversions). Implement dense matrix interface: DDEN2COO (dense to COO, skipping zeros) and DCOO2DEN (COO to dense, filling zeros). These conversions are critical for interoperability with existing LAPACK routines.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8
         ],
@@ -362,7 +380,7 @@
             "title": "Implement DCOO2CSR conversion",
             "description": "Convert COO to CSR format with row sorting and row pointer construction",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -371,7 +389,7 @@
             "title": "Implement DCOO2CSC conversion",
             "description": "Convert COO to CSC format with column sorting and column pointer construction",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -380,7 +398,7 @@
             "title": "Implement DCSR2COO conversion",
             "description": "Convert CSR format back to COO",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -389,7 +407,7 @@
             "title": "Implement DCSC2COO conversion",
             "description": "Convert CSC format back to COO",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -398,7 +416,7 @@
             "title": "Implement DDEN2COO conversion",
             "description": "Convert dense matrix to COO format, skipping zero elements",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           },
@@ -407,7 +425,7 @@
             "title": "Implement DCOO2DEN conversion",
             "description": "Convert COO to dense matrix, filling in zeros",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 9
           }
@@ -419,7 +437,7 @@
         "description": "Implement sparse matrix-vector multiplication (SpMV) for all formats and basic element operations.",
         "details": "Implement DCSRMV (CSR matrix-vector multiply, optimized for row access), DCSCMV (CSC matrix-vector multiply for column operations), and DCOOMV (COO reference implementation). Add element operations: DSPGET (get element value), DSPSET (set element value with potential reallocation), and DCOOTRANS (in-place COO transpose). These operations form the core computational kernel for sparse linear algebra.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9
@@ -431,7 +449,7 @@
             "title": "Implement DCSRMV routine",
             "description": "CSR matrix-vector multiplication optimized for row access",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -440,7 +458,7 @@
             "title": "Implement DCSCMV routine",
             "description": "CSC matrix-vector multiplication for column operations",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -449,7 +467,7 @@
             "title": "Implement DCOOMV routine",
             "description": "COO matrix-vector multiplication as reference implementation",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -458,7 +476,7 @@
             "title": "Implement DSPGET function",
             "description": "Get element value from sparse matrix with search",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -467,7 +485,7 @@
             "title": "Implement DSPSET subroutine",
             "description": "Set element value in sparse matrix, handle reallocation if needed",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           },
@@ -476,7 +494,7 @@
             "title": "Implement DCOOTRANS subroutine",
             "description": "In-place transpose of COO matrix",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 10
           }
@@ -488,7 +506,7 @@
         "description": "Create comprehensive test suite and integrate sparse matrix module with LAPACK build system.",
         "details": "Create test matrices (identity, tridiagonal, random sparse patterns). Test all conversion routines for round-trip accuracy. Verify SpMV results against dense DGEMV. Create performance benchmark suite. Implement I/O routines: DSPREAD and DSPWRITE for Matrix Market format. Update CMakeLists.txt and Makefile to include sparse module. Ensure proper installation rules and dependencies.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9,
@@ -501,7 +519,7 @@
             "title": "Create test matrices",
             "description": "Generate identity, tridiagonal, and random sparse test matrices",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -510,7 +528,7 @@
             "title": "Test conversion round-trips",
             "description": "Verify accuracy of all format conversions (COO->CSR->COO, etc.)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -519,7 +537,7 @@
             "title": "Verify SpMV correctness",
             "description": "Compare sparse matrix-vector multiply results against dense DGEMV",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -528,7 +546,7 @@
             "title": "Create performance benchmarks",
             "description": "Develop benchmark suite for sparse operations",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -537,7 +555,7 @@
             "title": "Implement DSPREAD routine",
             "description": "Read sparse matrices in Matrix Market format",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -546,7 +564,7 @@
             "title": "Implement DSPWRITE routine",
             "description": "Write sparse matrices in Matrix Market format",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -555,7 +573,7 @@
             "title": "Update CMakeLists.txt",
             "description": "Add sparse module to CMake build configuration",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           },
@@ -564,7 +582,16 @@
             "title": "Add Makefile targets",
             "description": "Create Makefile targets for sparse routine compilation",
             "details": "",
-            "status": "pending",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 9,
+            "title": "Write initial tests for sparse matrix initialization",
+            "description": "Create test_sparse_init.f90 with tests for COO, CSR, CSC initialization and DCOO2CSR conversion",
+            "details": "",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 11
           }
@@ -576,7 +603,7 @@
         "description": "Implement advanced sparse matrix operations including matrix-matrix multiplication and optimization utilities.",
         "details": "Implement DCSRCSC (sparse-sparse multiplication), DGECSR (dense-sparse multiplication), and DSPADD2 (sparse matrix addition). Add optimization utilities: DSPSORT (sort indices for better cache performance), DSPCOMP (remove duplicates and explicit zeros), and DSPSIZE (dynamic reallocation for changing sparsity patterns). These features enable complex sparse linear algebra operations.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9,
@@ -590,7 +617,7 @@
             "title": "Implement DCSRCSC routine",
             "description": "Sparse-sparse multiplication (CSR × CSC)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -599,7 +626,7 @@
             "title": "Implement DGECSR routine",
             "description": "Dense-sparse multiplication",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -608,7 +635,7 @@
             "title": "Implement DSPADD2 routine",
             "description": "Addition of same-format sparse matrices",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -617,7 +644,7 @@
             "title": "Implement DSPSORT routine",
             "description": "Sort indices for better cache performance",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -626,7 +653,7 @@
             "title": "Implement DSPCOMP routine",
             "description": "Remove duplicates and explicit zeros",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -635,7 +662,7 @@
             "title": "Implement DSPSIZE routine",
             "description": "Dynamic reallocation for changing sparsity patterns",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           }
@@ -647,7 +674,7 @@
         "description": "Port all sparse matrix routines to support LAPACK's full range of data types: single, double, complex, and double complex.",
         "details": "Port all double precision (D) routines to single precision (S prefix), complex (C prefix), and double complex (Z prefix). Maintain consistent naming and interface across all precisions. Create comprehensive documentation with examples for each precision. Ensure numerical stability considerations are addressed for each data type. This completes full LAPACK integration.",
         "testStrategy": "",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           8,
           9,
@@ -662,7 +689,7 @@
             "title": "Port to single precision",
             "description": "Convert all double precision (D) routines to single precision (S prefix)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -671,7 +698,7 @@
             "title": "Port to complex type",
             "description": "Convert all routines to complex type (C prefix)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -680,7 +707,7 @@
             "title": "Port to double complex",
             "description": "Convert all routines to double complex (Z prefix)",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -689,7 +716,7 @@
             "title": "Create documentation",
             "description": "Write comprehensive documentation with examples for all precisions",
             "details": "",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           }
@@ -1211,6 +1238,193 @@
             "details": "Examine the source code of existing Rust LAPACK crates to understand how they handle FFI bindings, memory management, and error handling. Pay attention to the use of `unsafe` code and the implementation of safe wrappers. Identify any potential pitfalls or common mistakes. Document the findings in a separate document (e.g., `research.md`).\n<info added on 2025-07-27T03:23:22.400Z>\nCompleted research on existing Rust LAPACK crates. Created comprehensive research.md document with findings on:\n\n1. lapack-sys: Code generation approach, follows -sys conventions, raw FFI bindings\n2. ndarray-linalg: Trait-based API with ownership variants, modular design, zero-copy views\n3. openblas-sys: Environment-based configuration, cross-compilation support, cache features\n4. lapacke-sys/lapacke: Two-tier architecture pattern (unsafe sys + safe wrapper)\n\nKey best practices identified:\n- Two-tier architecture (-sys crate + safe wrapper)\n- Code generation for maintainability\n- Feature-based backend selection\n- Trait-based APIs with ownership variants\n- Result-based error handling\n- Column-major layout awareness\n- Zero-cost abstractions\n\nRecommendations documented for:\n- Project structure\n- API design patterns\n- Build configuration\n- Error handling\n- Testing strategy\n\nFull details in research.md file.\n</info added on 2025-07-27T03:23:22.400Z>",
             "status": "done",
             "testStrategy": "N/A - This is a research task."
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Implement Fortran Parser and Call Graph Generator",
+        "description": "Develop a Fortran code analysis tool capable of parsing Fortran source files and constructing call graphs. The tool should be generic and not include any LAPACK-specific logic.",
+        "details": "1. Implement a Fortran parser using a suitable parsing library or framework. The parser should be able to handle various Fortran syntax elements, including declarations, expressions, control flow statements, and subroutine/function definitions.\n2. Design and implement a call graph data structure to represent the relationships between subroutines and functions in the Fortran code. The call graph should store information about which routines call which other routines.\n3. Implement an algorithm to traverse the parsed Fortran code and build the call graph. This involves identifying subroutine/function calls and adding corresponding edges to the call graph.\n4. Provide functionality to export the call graph in a standard format, such as GraphML or DOT, for visualization and further analysis.\n5. Ensure the tool is generic and does not include any LAPACK-specific logic or dependencies. Focus on parsing and call graph construction for general Fortran code.",
+        "testStrategy": "1. Create a set of Fortran test files with varying complexity and structure, including different types of subroutines, functions, and control flow statements.\n2. Run the Fortran code analysis tool on the test files and verify that the parser correctly parses the code and builds the call graph.\n3. Manually inspect the generated call graphs to ensure that the relationships between routines are accurately represented.\n4. Compare the generated call graphs with expected call graphs (created manually or using other tools) to identify any discrepancies.\n5. Test the export functionality by exporting the call graphs in different formats and verifying that the exported files are valid and contain the correct information.\n6. Ensure that the tool does not produce any errors or warnings related to LAPACK-specific syntax or features.",
+        "status": "pending",
+        "dependencies": [
+          1,
+          14
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Extract Generic Fortran Parsing Logic",
+            "description": "Refactor the existing Fortran parser (Task 2) to isolate the generic Fortran parsing logic, removing any LAPACK-specific code. This will involve creating a base parser class that handles standard Fortran syntax and semantics.",
+            "dependencies": [],
+            "details": "1. Identify and separate the generic Fortran parsing components from the existing `FortranParser` class.\n2. Create a new `GenericFortranParser` class that encapsulates this generic parsing logic.\n3. Ensure the `GenericFortranParser` can handle declarations, expressions, control flow statements, and subroutine/function definitions.\n4. Remove any LAPACK-specific naming convention or operation categorization logic from this base class.",
+            "status": "pending",
+            "testStrategy": "Create unit tests to verify that the `GenericFortranParser` correctly parses standard Fortran code without any LAPACK-specific elements. Test with various Fortran files that do not contain LAPACK routines."
+          },
+          {
+            "id": 2,
+            "title": "Define Base Node Types for Call Graph",
+            "description": "Define the base node types for the call graph data structure. These node types should represent generic Fortran constructs such as subroutines, functions, and modules. This will involve creating abstract classes or interfaces for these node types.",
+            "dependencies": [
+              "22.1"
+            ],
+            "details": "1. Define abstract base classes or interfaces for `SubroutineNode`, `FunctionNode`, and `ModuleNode`.\n2. These base node types should include common attributes such as name, file path, and line number.\n3. Ensure the node types are generic and do not contain any LAPACK-specific information.\n4. Design the node types to be extensible for future features.",
+            "status": "pending",
+            "testStrategy": "Create unit tests to verify that the base node types can be instantiated and that they contain the expected attributes. Test the extensibility of the node types by creating derived classes."
+          },
+          {
+            "id": 3,
+            "title": "Implement Hook System with Interfaces and Registry",
+            "description": "Implement a hook system that allows for extending the Fortran parser with custom logic. This will involve defining interfaces for different types of hooks (e.g., name parsing, operation categorization) and creating a registry to manage the available hooks.",
+            "dependencies": [
+              "22.1",
+              "22.2"
+            ],
+            "details": "1. Define interfaces for different types of hooks, such as `NameParsingHook`, `OperationCategorizationHook`, and `NodeCreationHook`.\n2. Create a `HookRegistry` class to manage the available hooks.\n3. Implement a mechanism to register and unregister hooks.\n4. Ensure the hook system is flexible and allows for adding new types of hooks in the future.",
+            "status": "pending",
+            "testStrategy": "Create unit tests to verify that the hook system can register and unregister hooks correctly. Test the functionality of different types of hooks by creating mock implementations and verifying that they are called at the appropriate times during parsing."
+          },
+          {
+            "id": 4,
+            "title": "Port Exporters to Work with Generic Nodes",
+            "description": "Modify the existing call graph exporters (Task 4) to work with the generic node types defined in subtask 22.2. This will involve updating the exporters to extract the necessary information from the generic nodes and format it correctly for the target export format.",
+            "dependencies": [
+              "22.2",
+              "22.3"
+            ],
+            "details": "1. Update the JSON, CSV, and Cypher exporters to work with the `SubroutineNode`, `FunctionNode`, and `ModuleNode` base types.\n2. Ensure the exporters can extract the name, file path, and line number from the generic nodes.\n3. Maintain the data integrity of the exported call graph.\n4. Refactor the exporter code to be more modular and extensible.",
+            "status": "pending",
+            "testStrategy": "Create integration tests to verify that the exporters correctly export the call graph in JSON, CSV, and Cypher formats. Test with various Fortran files and verify that the exported data matches the expected format and content. Validate Cypher statements by importing them into a Neo4j database."
+          },
+          {
+            "id": 5,
+            "title": "Create Comprehensive Test Suite",
+            "description": "Create a comprehensive test suite for the generic Fortran parser and call graph generator. This test suite should include unit tests, integration tests, and end-to-end tests to ensure the tool is working correctly and that it can handle various Fortran code structures.",
+            "dependencies": [
+              "22.1",
+              "22.2",
+              "22.3",
+              "22.4"
+            ],
+            "details": "1. Create unit tests for the `GenericFortranParser`, base node types, and hook system.\n2. Create integration tests for the parser and call graph generator.\n3. Create end-to-end tests that parse Fortran files and export the call graph in different formats.\n4. Ensure the test suite covers various Fortran code structures, including different types of subroutines, functions, and control flow statements.\n5. Implement regression tests to prevent future bugs.",
+            "status": "pending",
+            "testStrategy": "Run the test suite on a continuous integration server to ensure that the tool is always working correctly. Monitor the test results and fix any failing tests promptly. Add new tests as new features are added to the tool."
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Implement LAPACK-Specific Hooks and Adapters",
+        "description": "Create LAPACK-specific hooks and adapters that implement the fortran-mapper hook interfaces to provide LAPACK naming convention parsing, precision extraction, operation categorization, and custom node creation.",
+        "details": "1. Implement a hook for parsing LAPACK naming conventions. This hook should be able to identify the specific LAPACK routine being called based on its name (e.g., `dgemm`, `zgesv`).\n2. Implement a hook for extracting precision information from LAPACK routine names. This hook should determine whether a routine operates on single-precision, double-precision, complex single-precision, or complex double-precision data.\n3. Implement a hook for categorizing LAPACK operations. This hook should classify routines based on their functionality (e.g., linear equation solvers, eigenvalue solvers, singular value decomposition).\n4. Implement a hook for creating custom nodes in the call graph. This hook should allow the creation of nodes that represent LAPACK routines and their specific attributes (e.g., precision, operation category).\n5. Ensure that the hooks and adapters are designed to be modular and extensible, allowing for the addition of new LAPACK routines and features in the future.\n6. Integrate the LAPACK-specific hooks and adapters with the Fortran parser and call graph generator from Task 22.",
+        "testStrategy": "1. Create a set of Fortran test files that contain calls to various LAPACK routines with different naming conventions, precision levels, and operation categories.\n2. Run the Fortran code analysis tool with the LAPACK-specific hooks and adapters enabled on the test files.\n3. Verify that the parser correctly identifies the LAPACK routines, extracts the precision information, and categorizes the operations.\n4. Inspect the generated call graph to ensure that the LAPACK routines are represented as custom nodes with the correct attributes.\n5. Add unit tests to verify the functionality of each hook and adapter individually.",
+        "status": "pending",
+        "dependencies": [
+          22
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement LAPACK NodeEnricher for Naming Conventions",
+            "description": "Create a NodeEnricher hook that parses LAPACK routine names to identify the specific LAPACK routine being called (e.g., `dgemm`, `zgesv`). This hook should extract the base routine name and any relevant flags or options encoded in the name.",
+            "dependencies": [],
+            "details": "Implement a class `LAPACKNodeEnricher` that implements the `NodeEnricher` interface. This class should take a node representing a Fortran subroutine/function call as input. It should then use regular expressions or string manipulation to parse the name of the routine and extract the LAPACK routine name. Store the extracted LAPACK routine name as a property on the node (e.g., `node['lapack_routine'] = 'gemm'`). Handle cases where the routine name does not conform to LAPACK conventions gracefully.",
+            "status": "pending",
+            "testStrategy": "Create a set of test cases with various LAPACK routine names (e.g., `dgemm`, `zgesv`, `sgemv`, `cgeqrf`). Verify that the `LAPACKNodeEnricher` correctly identifies the LAPACK routine name for each test case. Also, test with non-LAPACK routine names to ensure they are handled correctly."
+          },
+          {
+            "id": 2,
+            "title": "Implement NodeCreator for PRECISION and OPERATION Nodes",
+            "description": "Create a NodeCreator hook that creates PRECISION and OPERATION nodes based on the parsed LAPACK routine name. This hook should determine the precision (single, double, complex single, complex double) and operation category (linear equation solver, eigenvalue solver, etc.) of the routine.",
+            "dependencies": [
+              "23.1"
+            ],
+            "details": "Implement a class `LAPACKNodeCreator` that implements the `NodeCreator` interface. This class should take a node representing a LAPACK routine call (enriched by `LAPACKNodeEnricher`) as input. Based on the routine name, create PRECISION and OPERATION nodes and link them to the original routine node using appropriate relationship types (e.g., `HAS_PRECISION`, `IMPLEMENTS`). Use a dictionary or other data structure to map LAPACK routine names to their corresponding precision and operation categories. For example, 'dgemm' would map to PRECISION='double' and OPERATION='matrix multiplication'.",
+            "status": "pending",
+            "testStrategy": "Create a set of test cases with various LAPACK routine names. Verify that the `LAPACKNodeCreator` correctly creates PRECISION and OPERATION nodes for each test case and links them to the original routine node. Ensure that the correct precision and operation category are assigned based on the routine name."
+          },
+          {
+            "id": 3,
+            "title": "Port LAPACK-Specific Logic from parser.py",
+            "description": "Move any existing LAPACK-specific logic from the old `parser.py` (Task 22) into the new hook implementations (`LAPACKNodeEnricher` and `LAPACKNodeCreator`). This includes logic for parsing routine names, extracting precision information, and categorizing operations.",
+            "dependencies": [
+              "23.2"
+            ],
+            "details": "Review the existing `parser.py` file and identify any code that is specific to LAPACK routines. This may include regular expressions, string manipulation functions, or data structures that are used to parse LAPACK routine names and extract information about their precision and operation category. Move this code into the `LAPACKNodeEnricher` and `LAPACKNodeCreator` classes, ensuring that it is properly integrated with the new hook interfaces. Remove the LAPACK-specific logic from `parser.py` to maintain a generic Fortran parser.",
+            "status": "pending",
+            "testStrategy": "After porting the LAPACK-specific logic, run the existing test suite for `parser.py` to ensure that the functionality has not been broken. Also, run the new test suites for `LAPACKNodeEnricher` and `LAPACKNodeCreator` to verify that the ported logic is working correctly in the new hook implementations."
+          },
+          {
+            "id": 4,
+            "title": "Test Compatibility with lapack-util",
+            "description": "Ensure that the new LAPACK-specific hooks and adapters are compatible with the current `lapack-util` library or any other relevant LAPACK utility libraries. Verify that the hooks can correctly parse and process LAPACK routine names and extract the necessary information.",
+            "dependencies": [
+              "23.3"
+            ],
+            "details": "Integrate the new LAPACK-specific hooks with the `lapack-util` library (if applicable) or any other relevant LAPACK utility libraries. Run the hooks on a set of LAPACK source files and verify that they can correctly parse the routine names and extract the necessary information. Compare the output of the hooks with the expected output based on the `lapack-util` library or other LAPACK documentation. Address any compatibility issues that arise.",
+            "status": "pending",
+            "testStrategy": "Create a set of test cases that use the `lapack-util` library (if applicable) to generate LAPACK routine names and other relevant information. Run the LAPACK-specific hooks on these test cases and verify that the output matches the expected output based on the `lapack-util` library. Also, test with different versions of the `lapack-util` library to ensure compatibility across versions."
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Update lapack-util to use fortran-mapper with LAPACK adapter",
+        "description": "Update the lapack-util crate to use the fortran-mapper crate with a LAPACK adapter, ensuring backward compatibility. Update documentation and provide migration guides for existing users.",
+        "details": "1.  Integrate the `fortran-mapper` crate into `lapack-util`.\n2.  Develop a LAPACK adapter for `fortran-mapper` to handle LAPACK-specific naming conventions and data types.\n3.  Implement backward compatibility shims to ensure existing code using `lapack-util` continues to function without modification.\n4.  Update the `lapack-util` API to expose new functionality provided by `fortran-mapper`.\n5.  Write migration guides for existing users, detailing the changes and how to update their code to take advantage of the new features.\n6.  Update documentation to reflect the new architecture and API.\n7.  Address any deprecation warnings or errors introduced by the integration.\n8.  Consider providing feature flags to enable/disable certain parts of the new functionality for testing and gradual adoption.",
+        "testStrategy": "1.  Run existing unit and integration tests to ensure backward compatibility.\n2.  Create new unit and integration tests to verify the functionality of the LAPACK adapter and new API.\n3.  Test with a variety of LAPACK routines and data types to ensure comprehensive coverage.\n4.  Manually test the migration process using the provided migration guides.\n5.  Benchmark performance to ensure the integration does not introduce significant performance regressions.\n6.  Verify that the updated documentation is accurate and complete.\n7.  Create example projects that use the updated `lapack-util` crate to demonstrate common use cases.",
+        "status": "pending",
+        "dependencies": [
+          22,
+          23,
+          6
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Replace internal parser with fortran-mapper + LAPACK adapter",
+            "description": "Integrate the `fortran-mapper` crate and the LAPACK adapter into `lapack-util`, replacing the existing internal parser. This involves modifying the code to use the new parsing mechanism for processing Fortran source files.",
+            "dependencies": [],
+            "details": "1. Add `fortran-mapper` and the LAPACK adapter as dependencies in `Cargo.toml`. 2. Modify the existing parsing logic to utilize `fortran-mapper` for parsing Fortran source code. 3. Implement the LAPACK adapter to handle LAPACK-specific naming conventions and data types within the `fortran-mapper` framework. 4. Ensure that the adapter correctly translates LAPACK-specific constructs into a format understandable by `fortran-mapper`. 5. Remove the old internal parser.",
+            "status": "pending",
+            "testStrategy": "Create unit tests to verify that the `fortran-mapper` and LAPACK adapter are correctly parsing LAPACK source files. Compare the output of the new parser with the old parser to ensure consistency."
+          },
+          {
+            "id": 2,
+            "title": "Maintain existing CLI interface for backward compatibility",
+            "description": "Ensure that the existing command-line interface (CLI) of `lapack-util` remains functional and backward compatible after the integration of `fortran-mapper`. This involves adapting the CLI to work with the new parsing mechanism and ensuring that existing commands and options continue to function as expected.",
+            "dependencies": [
+              "24.1"
+            ],
+            "details": "1. Analyze the existing CLI interface and identify the parts that rely on the old parser. 2. Adapt the CLI to use the output of `fortran-mapper` and the LAPACK adapter. 3. Ensure that all existing commands and options continue to function as expected. 4. Add new CLI options if needed to expose new functionality provided by `fortran-mapper`. 5. Implement compatibility shims to handle any differences in the output format between the old and new parsers.",
+            "status": "pending",
+            "testStrategy": "Run existing integration tests to verify that the CLI continues to function as expected. Create new integration tests to verify the functionality of any new CLI options. Manually test the CLI with a variety of LAPACK source files to ensure comprehensive coverage."
+          },
+          {
+            "id": 3,
+            "title": "Create migration documentation and guides",
+            "description": "Develop comprehensive migration documentation and guides for existing users of `lapack-util`. This documentation should detail the changes introduced by the integration of `fortran-mapper`, explain how to update existing code to work with the new version, and provide examples of how to use the new features.",
+            "dependencies": [
+              "24.2"
+            ],
+            "details": "1. Identify the key changes introduced by the integration of `fortran-mapper`. 2. Write a detailed migration guide that explains how to update existing code to work with the new version. 3. Provide examples of how to use the new features provided by `fortran-mapper`. 4. Address any potential compatibility issues and provide solutions for resolving them. 5. Include a FAQ section to answer common questions about the migration process.",
+            "status": "pending",
+            "testStrategy": "Review the migration documentation with existing users of `lapack-util` to ensure that it is clear and easy to understand. Gather feedback and make revisions as needed."
+          },
+          {
+            "id": 4,
+            "title": "Provide examples for other Fortran projects",
+            "description": "Create example projects demonstrating how to use `lapack-util` with `fortran-mapper` in various Fortran projects. These examples should showcase different use cases and demonstrate how to integrate `lapack-util` into existing Fortran codebases.",
+            "dependencies": [
+              "24.3"
+            ],
+            "details": "1. Identify common use cases for `lapack-util` in Fortran projects. 2. Create example projects that demonstrate how to use `lapack-util` with `fortran-mapper` in each of these use cases. 3. Provide clear and concise instructions on how to build and run the example projects. 4. Include comments in the code to explain the key concepts and techniques. 5. Ensure that the example projects are well-documented and easy to understand.",
+            "status": "pending",
+            "testStrategy": "Build and run the example projects on a variety of platforms to ensure that they work correctly. Review the example projects with experienced Fortran developers to ensure that they are accurate and representative of real-world use cases."
           }
         ]
       }

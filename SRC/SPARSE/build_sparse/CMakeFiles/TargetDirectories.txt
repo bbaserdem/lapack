@@ -1,0 +1,13 @@
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/lapack_sparse.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/dchkaa_sparse.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/dchksp.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/dtimsp.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/dspedge.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/dspnum.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/dspmem.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/edit_cache.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/rebuild_cache.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/list_install_components.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/install.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/install/local.dir
+/home/batuhan/Projects/Gauntlet_Projects/lapack/worktrees/feature-sparse/SRC/SPARSE/build_sparse/CMakeFiles/install/strip.dir
