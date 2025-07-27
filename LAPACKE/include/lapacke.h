@@ -34,6 +34,7 @@
 #define _LAPACKE_H_
 
 #include "lapack.h"
+#include "lapacke_sparse.h"
 
 #ifdef __cplusplus
 extern "C" {
