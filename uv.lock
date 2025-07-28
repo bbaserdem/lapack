@@ -523,6 +523,11 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+all = [
+    { name = "matplotlib" },
+    { name = "neo4j" },
+    { name = "plotly" },
+]
 dev = [
     { name = "mypy" },
     { name = "pytest" },
@@ -539,10 +544,13 @@ visualization = [
 
 [package.metadata]
 requires-dist = [
+    { name = "matplotlib", marker = "extra == 'all'", specifier = ">=3.5" },
     { name = "matplotlib", marker = "extra == 'visualization'", specifier = ">=3.5" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.0" },
+    { name = "neo4j", marker = "extra == 'all'", specifier = ">=5.0" },
     { name = "neo4j", marker = "extra == 'neo4j'", specifier = ">=5.0" },
     { name = "networkx", specifier = ">=2.8" },
+    { name = "plotly", marker = "extra == 'all'", specifier = ">=5.0" },
     { name = "plotly", marker = "extra == 'visualization'", specifier = ">=5.0" },
     { name = "psutil", specifier = ">=5.9" },
     { name = "pydot", specifier = ">=1.4" },
@@ -550,7 +558,7 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1" },
 ]
-provides-extras = ["neo4j", "visualization", "dev"]
+provides-extras = ["neo4j", "all", "visualization", "dev"]
 
 [[package]]
 name = "fqdn"
@@ -1031,7 +1039,7 @@ wheels = [
 [[package]]
 name = "lapack-workspace"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 
 [[package]]
 name = "lark"

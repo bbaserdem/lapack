@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "connectome"
@@ -57,8 +57,8 @@ Homepage = "https://github.com/bbaserdem/lapack"
 Repository = "https://github.com/bbaserdem/lapack"
 Documentation = "https://github.com/bbaserdem/lapack/tree/main/connectome"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/connectome"]
 
 [tool.mypy]
 python_version = "3.13"
