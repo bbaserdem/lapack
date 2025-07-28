@@ -4,6 +4,7 @@
   "dependencies": {
     "@anthropic-ai/claude-code": "1.0.61",
     "@modelcontextprotocol/server-github": "2025.4.8",
+    "@sourcegraph/amp": "0.0.1753712616-g47ae3b",
     "claude-flow": "^2.0.0-alpha.72",
     "ruv-swarm": "1.0.18",
     "task-master-ai": "0.22.0"

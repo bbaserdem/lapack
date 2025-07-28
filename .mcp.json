@@ -1,26 +1,8 @@
 {
 	"mcpServers": {
-		"claude-flow": {
-			"type": "stdio",
-			"command": "npx",
-			"args": [
-				"claude-flow@alpha",
-				"mcp",
-				"start"
-			]
-		},
-		"ruv-swarm": {
-			"type": "stdio",
-			"command": "npx",
-			"args": [
-				"ruv-swarm@latest",
-				"mcp",
-				"start"
-			]
-		},
 		"taskmaster-ai": {
 			"type": "stdio",
-			"command": "npx",
+			"command": "pnpx",
 			"args": [
 				"-y",
 				"--package=task-master-ai",
@@ -40,9 +22,16 @@
 				"NEO4J_DATABASE": "neo4j"
 			}
 		},
+		"git": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"mcp-server-git"
+			]
+		},
 		"github": {
 			"type": "stdio",
-			"command": "npx",
+			"command": "pnpx",
 			"args": [
 				"@modelcontextprotocol/server-github"
 			]
