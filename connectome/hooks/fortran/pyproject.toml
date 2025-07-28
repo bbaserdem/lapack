@@ -49,3 +49,6 @@ disallow_untyped_defs = true
 target-version = "py313"
 line-length = 100
 select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM", "RUF"]
+
+[tool.uv.sources]
+fortran-mapper = { path = "../../../fortran-mapper" }

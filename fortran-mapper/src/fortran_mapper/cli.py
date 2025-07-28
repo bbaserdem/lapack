@@ -7,7 +7,12 @@ from pathlib import Path
 import logging
 
 from .core.parser import FortranMapper
-from .adapters.lapack import LapackNodeEnricher, LapackNodeCreator
+# LAPACK hooks are now in a separate package
+try:
+    from fortran_mapper_hooks_lapack import LapackNodeEnricher, LapackNodeCreator
+    LAPACK_HOOKS_AVAILABLE = True
+except ImportError:
+    LAPACK_HOOKS_AVAILABLE = False
 from .core.nodes import NodeType
 
 
@@ -75,6 +80,28 @@ Examples:
     test_parser.add_argument('--verbose', '-v', action='store_true',
                            help='Enable verbose output')
     
+    # Neo4j server management commands
+    neo4j_parser = subparsers.add_parser('neo4j', help='Neo4j server management')
+    neo4j_subparsers = neo4j_parser.add_subparsers(dest='neo4j_action', help='Neo4j actions')
+    
+    # Start command
+    start_parser = neo4j_subparsers.add_parser('start', help='Start Neo4j server')
+    start_parser.add_argument('--data-dir', help='Neo4j data directory (default: ./neo4j-data)')
+    
+    # Stop command
+    stop_parser = neo4j_subparsers.add_parser('stop', help='Stop Neo4j server')
+    stop_parser.add_argument('--data-dir', help='Neo4j data directory (default: ./neo4j-data)')
+    
+    # Status command
+    status_parser = neo4j_subparsers.add_parser('status', help='Check Neo4j server status')
+    status_parser.add_argument('--data-dir', help='Neo4j data directory (default: ./neo4j-data)')
+    status_parser.add_argument('--verbose', '-v', action='store_true',
+                             help='Show detailed process information')
+    
+    # Console command
+    console_parser = neo4j_subparsers.add_parser('console', help='Start Neo4j in console mode (foreground)')
+    console_parser.add_argument('--data-dir', help='Neo4j data directory (default: ./neo4j-data)')
+    
     return parser
 
 
@@ -87,6 +114,10 @@ def cmd_parse(args):
     
     # Register LAPACK hooks if requested
     if args.lapack:
+        if not LAPACK_HOOKS_AVAILABLE:
+            print("❌ LAPACK hooks not available. Install with: uv pip install fortran-mapper-hooks-lapack")
+            print("   Or for development: cd hooks/lapack && uv pip install -e .")
+            return 1
         mapper.register_hook("node_enricher", LapackNodeEnricher())
         mapper.register_hook("node_creator", LapackNodeCreator())
         print("✅ Enabled LAPACK-specific hooks")
@@ -238,6 +269,31 @@ def cmd_test(args):
         return 1
 
 
+def cmd_neo4j(args):
+    """Handle neo4j server management commands."""
+    try:
+        # Import neo4j server management module
+        from .neo4j_server import neo4j_server_command
+        
+        if not args.neo4j_action:
+            print("❌ No action specified. Use: start, stop, status, or console")
+            return 1
+        
+        return neo4j_server_command(
+            args.neo4j_action,
+            data_dir=args.data_dir,
+            verbose=getattr(args, 'verbose', False)
+        )
+        
+    except ImportError as e:
+        print(f"❌ Failed to import neo4j_server module: {e}")
+        print("   Make sure psutil is installed: uv pip install psutil")
+        return 1
+    except Exception as e:
+        print(f"❌ Neo4j command failed: {e}")
+        return 1
+
+
 def main():
     """Main entry point."""
     parser = create_parser()
@@ -254,6 +310,8 @@ def main():
         return cmd_stats(args)
     elif args.command == 'test':
         return cmd_test(args)
+    elif args.command == 'neo4j':
+        return cmd_neo4j(args)
     else:
         print(f"❌ Unknown command: {args.command}")
         return 1

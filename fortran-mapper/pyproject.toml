@@ -26,6 +26,7 @@ classifiers = [
 dependencies = [
     "networkx>=2.8",
     "pydot>=1.4",
+    "psutil>=5.9",
 ]
 
 [project.optional-dependencies]
@@ -40,6 +41,9 @@ dev = [
 
 [project.scripts]
 fortran-mapper = "fortran_mapper.cli:main"
+
+[project.entry-points."fortran_mapper.hooks"]
+lapack = "fortran_mapper_hooks_lapack"
 
 [tool.setuptools.packages.find]
 where = ["src"]

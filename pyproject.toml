@@ -1,14 +1,16 @@
 # LAPACK Analysis Workspace
 # 
 # This workspace contains two main packages:
-# - fortran-mapper/: Generic Fortran code analysis library
-# - connectome/: LAPACK-specific connectome analysis tool
-#
-# To work with individual packages:
-#   cd fortran-mapper && pip install -e .
-#   cd connectome && pip install -e .
+# - fortran-mapper/: Generic Fortran code analysis library, with lapack hooks
+# - connectome/: code agnostic connectivity analysis tool, with some lapack and fortran hooks
 
-[tool.workspace]
+[project]
+name = "lapack-workspace"
+version = "0.1.0"
+description = "LAPACK Analysis Workspace"
+requires-python = ">=3.13"
+
+[tool.uv.workspace]
 members = [
     "fortran-mapper",
     "connectome"
