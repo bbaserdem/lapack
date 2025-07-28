@@ -32,6 +32,7 @@
     cmake
     # Needed for mcp's and claude
     nodejs
+    pnpm
     typescript
     uv
     quaestor
