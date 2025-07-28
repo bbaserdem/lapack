@@ -34,7 +34,7 @@
     ...
   } @ inputs: let
     outputs = self;
-    pythonProject = import ./nix/python.nix;
+    pythonProject = import ./python.nix;
   in
     flake-utils.lib.eachDefaultSystem (system: let
       # Grab UV stuff
