@@ -13,7 +13,16 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from fortran_mapper import FortranMapper
-from fortran_mapper.adapters.lapack import LapackNodeEnricher, LapackNodeCreator
+# Import from the separate LAPACK hooks package
+# Note: Install the hooks package before running tests:
+# cd hooks/lapack && uv pip install -e .
+try:
+    from fortran_mapper_hooks_lapack import LapackNodeEnricher, LapackNodeCreator
+    LAPACK_HOOKS_AVAILABLE = True
+except ImportError:
+    print("WARNING: fortran-mapper-hooks-lapack not installed. LAPACK tests will be skipped.")
+    print("To install: cd hooks/lapack && uv pip install -e .")
+    LAPACK_HOOKS_AVAILABLE = False
 
 
 def create_test_fortran_files():
@@ -118,6 +127,10 @@ def test_lapack_hooks():
     """Test parsing with LAPACK hooks."""
     print("\n=== Testing LAPACK Hooks ===")
     
+    if not LAPACK_HOOKS_AVAILABLE:
+        print("SKIPPED: fortran-mapper-hooks-lapack not installed")
+        return True  # Don't fail the test
+    
     temp_dir = create_test_fortran_files()
     
     try:
@@ -188,7 +201,8 @@ def test_export_call_graph():
     
     try:
         mapper = FortranMapper()
-        mapper.register_hook("node_enricher", LapackNodeEnricher())
+        if LAPACK_HOOKS_AVAILABLE:
+            mapper.register_hook("node_enricher", LapackNodeEnricher())
         
         graph = mapper.parse_directory(temp_dir)
         

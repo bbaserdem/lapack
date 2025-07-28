@@ -11,7 +11,16 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from fortran_mapper import FortranMapper
-from fortran_mapper.adapters.lapack import LapackNodeEnricher, LapackNodeCreator
+# Import from the separate LAPACK hooks package
+# Make sure to install it first: cd hooks/lapack && uv pip install -e .
+try:
+    from fortran_mapper_hooks_lapack import LapackNodeEnricher, LapackNodeCreator
+except ImportError:
+    print("ERROR: fortran-mapper-hooks-lapack not installed!")
+    print("Please install it first:")
+    print("  cd hooks/lapack")
+    print("  uv pip install -e .")
+    sys.exit(1)
 
 
 def demo_simple_usage():

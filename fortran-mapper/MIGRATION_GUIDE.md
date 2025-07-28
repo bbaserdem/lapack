@@ -38,7 +38,7 @@ parser.export_to_neo4j(driver)
 **After (fortran-mapper):**
 ```python
 from fortran_mapper import FortranMapper
-from fortran_mapper.adapters.lapack import LapackNodeEnricher, LapackNodeCreator
+from fortran_mapper_hooks_lapack import LapackNodeEnricher, LapackNodeCreator
 
 mapper = FortranMapper()
 mapper.register_hook("node_enricher", LapackNodeEnricher())
@@ -47,6 +47,14 @@ mapper.register_hook("node_creator", LapackNodeCreator())
 graph = mapper.parse_directory("path/to/lapack")
 mapper.export_to_json(graph, "output.json")
 mapper.export_to_neo4j(graph, driver)
+```
+
+Note: Install the LAPACK hooks package separately:
+```bash
+# Using uv:
+uv pip install fortran-mapper-hooks-lapack
+# Or for development:
+cd hooks/lapack && uv pip install -e .
 ```
 
 ## Detailed Migration Steps
@@ -62,7 +70,7 @@ from lapack_analyzer.graph_schema import create_schema_from_routines
 
 # NEW
 from fortran_mapper import FortranMapper
-from fortran_mapper.adapters.lapack import LapackNodeEnricher, LapackNodeCreator
+from fortran_mapper_hooks_lapack import LapackNodeEnricher, LapackNodeCreator
 from fortran_mapper.core.nodes import NodeType
 ```
 

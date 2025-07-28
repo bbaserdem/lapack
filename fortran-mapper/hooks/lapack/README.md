@@ -2,6 +2,16 @@
 
 LAPACK-specific hooks for the fortran-mapper library.
 
+## Installation
+
+```bash
+# Using uv (recommended)
+uv pip install fortran-mapper-hooks-lapack
+
+# For development
+uv pip install -e .
+```
+
 ## Overview
 
 This package provides LAPACK domain knowledge to the generic fortran-mapper, including:

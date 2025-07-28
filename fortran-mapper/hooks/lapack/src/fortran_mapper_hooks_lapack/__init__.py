@@ -8,11 +8,11 @@ naming conventions and computational categories.
 
 __version__ = "0.1.0"
 
-# Import main hook classes (to be implemented)
-# from .lapack_enricher import LapackNodeEnricher
-# from .lapack_creator import LapackNodeCreator
+# Import main hook classes
+from .enricher import LapackNodeEnricher
+from .creator import LapackNodeCreator
 
 __all__ = [
-    # "LapackNodeEnricher",
-    # "LapackNodeCreator",
+    "LapackNodeEnricher",
+    "LapackNodeCreator",
 ]

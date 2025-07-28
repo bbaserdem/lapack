@@ -68,9 +68,20 @@ graph = mapper.parse_directory("path/to/src")
 
 ### LAPACK/BLAS Example
 
+First install the LAPACK hooks package:
+```bash
+# Using uv (recommended):
+uv pip install fortran-mapper-hooks-lapack
+
+# Or install from the local directory for development:
+cd hooks/lapack
+uv pip install -e .
+```
+
+Then use it:
 ```python
 from fortran_mapper import FortranMapper
-from fortran_mapper.adapters.lapack import LapackNodeEnricher, LapackNodeCreator
+from fortran_mapper_hooks_lapack import LapackNodeEnricher, LapackNodeCreator
 
 # Create mapper with LAPACK hooks
 mapper = FortranMapper()

@@ -4,8 +4,6 @@
 			"type": "stdio",
 			"command": "pnpx",
 			"args": [
-				"-y",
-				"--package=task-master-ai",
 				"task-master-ai"
 			]
 		},
