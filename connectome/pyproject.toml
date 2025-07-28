@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "connectome"
+version = "0.1.0"
+description = "LAPACK computational connectome analysis and visualization"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    {name = "LAPACK Analysis Team"}
+]
+license = {text = "MIT"}
+keywords = ["lapack", "connectome", "computational-graph", "fortran", "neo4j"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries",
+]
+
+dependencies = [
+    "fortran-mapper>=0.1.0",
+    "connectome-hooks-fortran>=0.1.0",
+    "connectome-hooks-lapack>=0.1.0",
+    "neo4j>=5.0",
+    "psutil>=5.0",
+    "networkx>=2.8",
+    "matplotlib>=3.5",
+    "plotly>=5.0",
+    "pandas>=1.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "mypy>=1.0",
+    "ruff>=0.1",
+    "jupyter>=1.0",
+]
+visualization = [
+    "graphviz>=0.20",
+    "pygraphviz>=1.9",
+    "bokeh>=2.4",
+]
+
+[project.scripts]
+connectome = "connectome.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/bbaserdem/lapack"
+Repository = "https://github.com/bbaserdem/lapack"
+Documentation = "https://github.com/bbaserdem/lapack/tree/main/connectome"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM", "RUF"]

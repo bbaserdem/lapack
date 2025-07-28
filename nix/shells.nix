@@ -4,7 +4,6 @@
   inputs,
   system,
   uvBoilerplate,
-  projectName,
   ...
 }: let
   # UV stuff
@@ -74,13 +73,6 @@
       echo "Neo4j config not found at $PWD/neo4j-data/neo4j.conf"
       echo "Set up Neo4j data directory first, then use 'neo4j-start'"
     fi
-
-    echo ""
-    echo "Neo4j commands available:"
-    echo "  ${projectName} neo4j start   - Start Neo4j server in background"
-    echo "  ${projectName} neo4j stop    - Stop Neo4j server"
-    echo "  ${projectName} neo4j status  - Check Neo4j status"
-    echo "  ${projectName} neo4j console - Run Neo4j in foreground (Ctrl+C to stop)"
   '';
   organizeEnv = {
   };

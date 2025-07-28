@@ -34,12 +34,41 @@
     ...
   } @ inputs: let
     outputs = self;
-    projectName = "fortran-mapper";
+    pythonProject = {
+      name = "lapack";
+      directory = ./.;
+      workspaces = [
+        {
+          name = "connectome";
+          directory = ./connectome;
+          workspaces = [
+            {
+              name = "connectome-hooks-fortran";
+              directory = ./connectome/hooks/fortran;
+            }
+            {
+              name = "connectome-hooks-lapack";
+              directory = ./connectome/hooks/lapack;
+            }
+          ];
+        }
+        {
+          name = "fortran-mapper";
+          directory = ./fortran-mapper;
+          workspaces = [
+            {
+              name = "fortran-mapper-hooks-lapack";
+              directory = ./fortran-mapper/hooks/lapack;
+            }
+          ];
+        }
+      ];
+    };
   in
     flake-utils.lib.eachDefaultSystem (system: let
       # Grab UV stuff
       uvBoilerplate = import nix/uv.nix {
-        inherit inputs system projectName;
+        inherit inputs system pythonProject;
       };
       pkgs = import nixpkgs {
         inherit system;
@@ -50,16 +79,16 @@
       };
     in {
       checks = import ./nix/checks.nix {
-        inherit uvBoilerplate projectName;
+        inherit uvBoilerplate pythonProject;
       };
       apps = import ./nix/apps.nix {
-        inherit outputs pkgs uvBoilerplate projectName;
+        inherit outputs pkgs uvBoilerplate pythonProject;
       };
       packages = import ./nix/packages.nix {
-        inherit pkgs inputs system uvBoilerplate projectName;
+        inherit pkgs inputs system uvBoilerplate pythonProject;
       };
       devShells = import ./nix/shells.nix {
-        inherit pkgs inputs system uvBoilerplate projectName;
+        inherit pkgs inputs system uvBoilerplate;
       };
     });
 }

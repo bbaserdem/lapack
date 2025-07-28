@@ -1,45 +1,40 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fortran-mapper"
+name = "connectome-hooks-fortran"
 version = "0.1.0"
-description = "A flexible, extensible Fortran code mapper with hook-based customization"
+description = "Generic Fortran hooks for connectome analysis"
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "LAPACK Analysis Team"}
 ]
 license = {text = "MIT"}
-keywords = ["fortran", "code-analysis", "graph", "neo4j", "visualization"]
+keywords = ["connectome", "fortran", "hooks", "analysis"]
 classifiers = [
     "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries",
     "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries",
 ]
 
 dependencies = [
+    "fortran-mapper>=0.1.0",
     "networkx>=2.8",
-    "pydot>=1.4",
 ]
 
 [project.optional-dependencies]
-neo4j = ["neo4j>=5.0"]
-visualization = ["matplotlib>=3.5", "plotly>=5.0"]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "mypy>=1.0",
     "ruff>=0.1",
 ]
-
-[project.scripts]
-fortran-mapper = "fortran_mapper.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
