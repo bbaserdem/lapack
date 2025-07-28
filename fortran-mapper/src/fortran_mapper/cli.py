@@ -74,7 +74,9 @@ Examples:
     parse_parser.add_argument('--exclude', nargs='*', default=[],
                              help='Patterns to exclude from parsing')
     parse_parser.add_argument('--lapack', action='store_true',
-                             help='Enable LAPACK-specific hooks')
+                             help='Enable LAPACK-specific hooks (deprecated, use --hooks lapack)')
+    parse_parser.add_argument('--hooks', nargs='*', default=[],
+                             help='Hook packages to load (e.g., --hooks lapack custom)')
     parse_parser.add_argument('--verbose', '-v', action='store_true',
                              help='Enable verbose logging')
     
@@ -105,6 +107,11 @@ Examples:
     test_parser = subparsers.add_parser('test', help='Run built-in tests')
     test_parser.add_argument('--verbose', '-v', action='store_true',
                            help='Enable verbose output')
+    
+    # List hooks command
+    list_hooks_parser = subparsers.add_parser('list-hooks', help='List available hook packages')
+    list_hooks_parser.add_argument('--installed', action='store_true',
+                                  help='Show only installed hooks')
     
     # Neo4j server management commands
     neo4j_parser = subparsers.add_parser('neo4j', help='Neo4j server management')
@@ -215,6 +222,76 @@ Examples:
     return parser
 
 
+def discover_available_hooks() -> list[str]:
+    """Discover available hooks in the hooks/ directory.
+    
+    Returns:
+        List of available hook names
+    """
+    hooks_dir = Path(__file__).parent.parent.parent / 'hooks'
+    available_hooks = []
+    
+    if hooks_dir.exists():
+        for hook_dir in hooks_dir.iterdir():
+            if hook_dir.is_dir() and (hook_dir / 'pyproject.toml').exists():
+                available_hooks.append(hook_dir.name)
+    
+    return available_hooks
+
+
+def load_hook_package(hook_name: str, mapper: FortranMapper) -> bool:
+    """Load a hook package dynamically.
+    
+    Args:
+        hook_name: Name of the hook (e.g., 'lapack')
+        mapper: FortranMapper instance to register hooks with
+        
+    Returns:
+        True if hook loaded successfully, False otherwise
+    """
+    # Map of short names to package names
+    hook_packages = {
+        'lapack': 'fortran_mapper_hooks_lapack',
+        # Add more mappings as needed
+    }
+    
+    package_name = hook_packages.get(hook_name, f'fortran_mapper_hooks_{hook_name}')
+    
+    try:
+        # Try to import the hook package
+        hook_module = __import__(package_name, fromlist=['*'])
+        
+        # Look for enricher and creator classes
+        enricher_found = False
+        creator_found = False
+        
+        for attr_name in dir(hook_module):
+            attr = getattr(hook_module, attr_name)
+            if (isinstance(attr, type) and 
+                hasattr(attr, '__name__') and 
+                'Enricher' in attr.__name__):
+                mapper.register_hook("node_enricher", attr())
+                enricher_found = True
+            elif (isinstance(attr, type) and 
+                  hasattr(attr, '__name__') and 
+                  'Creator' in attr.__name__):
+                mapper.register_hook("node_creator", attr())
+                creator_found = True
+        
+        if enricher_found or creator_found:
+            print(f"✅ Loaded {hook_name} hooks")
+            return True
+        else:
+            print(f"⚠️  No hooks found in {package_name}")
+            return False
+            
+    except ImportError as e:
+        print(f"❌ Failed to load {hook_name} hooks: {e}")
+        print(f"   Install with: uv pip install {package_name}")
+        print(f"   Or for development: cd hooks/{hook_name} && uv pip install -e .")
+        return False
+
+
 def cmd_parse(args):
     """Handle parse command."""
     setup_logging(args.verbose or args.debug)
@@ -222,15 +299,15 @@ def cmd_parse(args):
     # Create mapper
     mapper = FortranMapper()
     
-    # Register LAPACK hooks if requested
-    if args.lapack:
-        if not LAPACK_HOOKS_AVAILABLE:
-            print("❌ LAPACK hooks not available. Install with: uv pip install fortran-mapper-hooks-lapack")
-            print("   Or for development: cd hooks/lapack && uv pip install -e .")
-            return 1
-        mapper.register_hook("node_enricher", LapackNodeEnricher())
-        mapper.register_hook("node_creator", LapackNodeCreator())
-        print("✅ Enabled LAPACK-specific hooks")
+    # Handle deprecated --lapack flag
+    if args.lapack and 'lapack' not in args.hooks:
+        args.hooks.append('lapack')
+    
+    # Load requested hooks
+    if args.hooks:
+        print(f"🔌 Loading hooks: {', '.join(args.hooks)}")
+        for hook_name in args.hooks:
+            load_hook_package(hook_name, mapper)
     
     # Parse extensions
     extensions = [ext.strip() for ext in args.extensions.split(',')]
@@ -871,6 +948,49 @@ def cmd_explore(args):
         driver.close()
 
 
+def cmd_list_hooks(args):
+    """Handle list-hooks command - list available hook packages."""
+    print("🔌 Available Hook Packages")
+    print("=" * 50)
+    
+    # Discover hooks in hooks/ directory
+    available_hooks = discover_available_hooks()
+    
+    # Known hook mappings
+    known_hooks = {
+        'lapack': {
+            'package': 'fortran_mapper_hooks_lapack',
+            'description': 'LAPACK-specific analysis hooks'
+        }
+    }
+    
+    for hook_name in available_hooks:
+        hook_info = known_hooks.get(hook_name, {
+            'package': f'fortran_mapper_hooks_{hook_name}',
+            'description': f'{hook_name.title()} hooks'
+        })
+        
+        # Check if installed
+        try:
+            __import__(hook_info['package'])
+            status = "✅ Installed"
+        except ImportError:
+            status = "❌ Not installed"
+            if args.installed:
+                continue
+        
+        print(f"\n{hook_name}:")
+        print(f"  Package: {hook_info['package']}")
+        print(f"  Description: {hook_info['description']}")
+        print(f"  Status: {status}")
+        
+        if status == "❌ Not installed":
+            print(f"  Install: cd hooks/{hook_name} && uv pip install -e .")
+    
+    print(f"\n💡 Usage: fortran-mapper parse <dir> --hooks {' '.join(available_hooks)}")
+    return 0
+
+
 def main():
     """Main entry point."""
     parser = create_parser()
@@ -887,6 +1007,8 @@ def main():
         return cmd_stats(args)
     elif args.command == 'test':
         return cmd_test(args)
+    elif args.command == 'list-hooks':
+        return cmd_list_hooks(args)
     elif args.command == 'neo4j':
         return cmd_neo4j(args)
     elif args.command == 'analyze':
