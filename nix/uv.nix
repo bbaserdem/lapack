@@ -176,11 +176,12 @@
   # Create editable overlay only for packages with src directories
   # Filter out packages without src directories (like the root workspace)
   packagesWithSrc = lib.filter (ws: builtins.pathExists (ws.directory + "/src")) allWorkspaces;
-  editableMembers = map (ws: ws.name) packagesWithSrc;
-
+  
+  # Create a single editable overlay for all workspace members
   editableOverlay = workspace.mkEditablePyprojectOverlay {
     root = "$REPO_ROOT";
-    members = editableMembers;
+    # Include all workspace members that have src directories
+    members = map (ws: ws.name) packagesWithSrc;
   };
 
   # Editable python set with fixups for all packages

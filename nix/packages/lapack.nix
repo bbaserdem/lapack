@@ -1,12 +1,7 @@
-{
-  pkgs,
-  inputs,
-  uvBoilerplate,
-  pythonProject,
-  ...
-}: let
+{pkgs, ...}: let
   inherit (pkgs) lib stdenv testers callPackage;
-  lapackDerivation = {
+in
+  {
     shared ? true,
     blas64 ? false,
     ...
@@ -15,7 +10,7 @@
       pname = "liblapack";
       version = "3.12.1";
 
-      src = ../.;
+      src = ../../.;
 
       nativeBuildInputs = with pkgs; [
         gfortran
@@ -85,22 +80,5 @@
         platforms = platforms.all;
         pkgConfigModules = ["lapack"];
       };
-    });
-  
-  # Create packages for all workspaces that have executable outputs
-  pythonPackages = lib.listToAttrs (
-    map (ws: {
-      name = ws.name;
-      value = uvBoilerplate.pythonSet.mkVirtualEnv
-        "${ws.name}-env"
-        uvBoilerplate.workspaces.${ws.name}.deps.default;
-    }) (lib.filter (ws: uvBoilerplate.pythonSet ? ${ws.name}) uvBoilerplate.allWorkspaces)
-  );
-in {
-  # Default lapack image
-  default = callPackage lapackDerivation {};
-  # Make lapack-reference available as the direct derivation
-  lapack-reference = callPackage lapackDerivation {};
-  # Our docker container for running swarms
-  docker-claudeFlow = import ./claudeFlow/docker.nix {inherit pkgs;};
-} // pythonPackages
+    })
+
