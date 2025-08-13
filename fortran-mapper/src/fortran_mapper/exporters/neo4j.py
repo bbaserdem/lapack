@@ -23,11 +23,19 @@ class Neo4jExporter:
         
         with driver.session() as session:
             if clear_existing:
+                print("  Clearing existing database...")
                 self._clear_database(session)
             
+            print("  Creating constraints and indexes...")
             self._create_constraints(session)
+            
+            print(f"  Creating {len(graph.nodes)} nodes in batches...")
             self._create_nodes(session, graph)
+            
+            print(f"  Creating {len(graph.relationships)} relationships in batches...")
             self._create_relationships(session, graph)
+            
+            print("  Neo4j export complete!")
     
     def _clear_database(self, session: Any) -> None:
         """Clear all nodes and relationships."""
@@ -59,11 +67,19 @@ class Neo4jExporter:
                 pass  # Index might already exist
     
     def _create_nodes(self, session: Any, graph: Graph) -> None:
-        """Create all nodes in the graph."""
+        """Create all nodes in the graph using batch transactions."""
+        # Group nodes by label for batch processing
+        nodes_by_label = {}
         for node in graph.nodes.values():
-            # Prepare properties for Cypher
-            props = {"name": node.name}
+            label = node.node_type.value
+            if hasattr(node, 'properties') and 'custom_type' in node.properties:
+                label = node.properties['custom_type']
             
+            if label not in nodes_by_label:
+                nodes_by_label[label] = []
+            
+            # Prepare properties
+            props = {"name": node.name}
             if hasattr(node, 'properties'):
                 for key, value in node.properties.items():
                     if value is not None:
@@ -73,36 +89,37 @@ class Neo4jExporter:
                         else:
                             props[key] = value
             
-            # Create node with appropriate label
-            label = node.node_type.value
-            if hasattr(node, 'properties') and 'custom_type' in node.properties:
-                label = node.properties['custom_type']
-            
-            cypher = f"MERGE (n:{label} {{name: $name}}) SET n += $props"
-            session.run(cypher, name=node.name, props=props)
+            nodes_by_label[label].append(props)
+        
+        # Batch create nodes by label
+        for label, nodes_data in nodes_by_label.items():
+            # Process in batches of 1000
+            batch_size = 1000
+            for i in range(0, len(nodes_data), batch_size):
+                batch = nodes_data[i:i + batch_size]
+                cypher = f"""
+                UNWIND $batch AS props
+                MERGE (n:{label} {{name: props.name}})
+                SET n += props
+                """
+                session.run(cypher, batch=batch)
     
     def _create_relationships(self, session: Any, graph: Graph) -> None:
-        """Create all relationships in the graph."""
+        """Create all relationships in the graph using batch transactions."""
+        # Group relationships by type for batch processing
+        rels_by_type = {}
+        
         for rel in graph.relationships:
-            # Get node types for matching
+            rel_type = rel.rel_type.value
+            if rel_type not in rels_by_type:
+                rels_by_type[rel_type] = []
+            
+            # Get node information
             from_node = graph.get_node(rel.from_node_id)
             to_node = graph.get_node(rel.to_node_id)
             
-            if from_node is None or to_node is None:
-                # Handle forward references
-                cypher = """
-                MERGE (from {node_id: $from_id})
-                MERGE (to {node_id: $to_id})
-                MERGE (from)-[r:%s]->(to)
-                SET r += $props
-                """ % rel.rel_type.value
-                
-                session.run(cypher, 
-                           from_id=rel.from_node_id,
-                           to_id=rel.to_node_id,
-                           props=rel.properties)
-            else:
-                # Use proper node matching
+            if from_node and to_node:
+                # Get labels
                 from_label = from_node.node_type.value
                 to_label = to_node.node_type.value
                 
@@ -111,17 +128,40 @@ class Neo4jExporter:
                 if hasattr(to_node, 'properties') and 'custom_type' in to_node.properties:
                     to_label = to_node.properties['custom_type']
                 
-                cypher = f"""
-                MATCH (from:{from_label} {{name: $from_name}})
-                MATCH (to:{to_label} {{name: $to_name}})
-                MERGE (from)-[r:{rel.rel_type.value}]->(to)
-                SET r += $props
-                """
+                rel_data = {
+                    'from_name': from_node.name,
+                    'to_name': to_node.name,
+                    'from_label': from_label,
+                    'to_label': to_label,
+                    'props': rel.properties or {}
+                }
+                rels_by_type[rel_type].append(rel_data)
+        
+        # Batch create relationships by type
+        for rel_type, rels_data in rels_by_type.items():
+            # Process in batches of 1000
+            batch_size = 1000
+            for i in range(0, len(rels_data), batch_size):
+                batch = rels_data[i:i + batch_size]
                 
-                session.run(cypher,
-                           from_name=from_node.name,
-                           to_name=to_node.name,
-                           props=rel.properties)
+                # Group by label pairs for more efficient matching
+                by_labels = {}
+                for rel_data in batch:
+                    key = (rel_data['from_label'], rel_data['to_label'])
+                    if key not in by_labels:
+                        by_labels[key] = []
+                    by_labels[key].append(rel_data)
+                
+                # Create relationships for each label pair
+                for (from_label, to_label), label_batch in by_labels.items():
+                    cypher = f"""
+                    UNWIND $batch AS rel
+                    MATCH (from:{from_label} {{name: rel.from_name}})
+                    MATCH (to:{to_label} {{name: rel.to_name}})
+                    MERGE (from)-[r:{rel_type}]->(to)
+                    SET r += rel.props
+                    """
+                    session.run(cypher, batch=label_batch)
     
     def export_cypher_statements(self, graph: Graph, output_path: Path) -> None:
         """Export as Cypher statements to a file."""
