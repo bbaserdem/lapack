@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Just gitignore the data directory
+/data
+
 # Git
 worktrees
 
@@ -190,7 +193,6 @@ exports/
 *.png
 *.mkv
 *.webm
-*.mp4
 
 # Claude Flow swarm data
 .swarm/
@@ -232,4 +234,3 @@ node_modules/
 # Task files
 # tasks.json
 # tasks/ 
-build-test/

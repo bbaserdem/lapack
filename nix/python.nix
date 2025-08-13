@@ -17,11 +17,6 @@
       projectRoot = "fortran-mapper/hooks/lapack";
       projectDir = "fortran-mapper/hooks/lapack/src/fortran_mapper_hooks_lapack";
     }
-    {
-      projectName = "connectome";
-      projectRoot = "connectome";
-      projectDir = "connectome/src/connectome";
-    }
   ];
   emptyRoot = true;
 }

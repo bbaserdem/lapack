@@ -1,0 +1,15 @@
+{
+  "nodes": [],
+  "relationships": [],
+  "statistics": {
+    "total_nodes": 0,
+    "total_relationships": 0,
+    "nodes_by_type": {
+      "Routine": 0,
+      "File": 0,
+      "Module": 0,
+      "Program": 0,
+      "Custom": 0
+    }
+  }
+}

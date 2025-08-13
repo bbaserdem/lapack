@@ -299,8 +299,14 @@ def cmd_parse(args):
     # Create mapper
     mapper = FortranMapper()
     
+    # Ensure args.hooks is always a list
+    if not hasattr(args, 'hooks') or args.hooks is None:
+        args.hooks = []
+    elif not isinstance(args.hooks, list):
+        args.hooks = list(args.hooks)
+    
     # Handle deprecated --lapack flag
-    if args.lapack and 'lapack' not in args.hooks:
+    if hasattr(args, 'lapack') and args.lapack and 'lapack' not in args.hooks:
         args.hooks.append('lapack')
     
     # Load requested hooks
@@ -323,11 +329,11 @@ def cmd_parse(args):
         for directory in args.directories:
             print(f"  Parsing {directory}...")
             dir_graph = mapper.parse_directory(directory, extensions)
-            # Merge graphs (simplified - just add nodes and relationships)
+            # Merge graphs - use add_node to properly update indices
             for node_id, node in dir_graph.nodes.items():
-                graph.nodes[node_id] = node
+                graph.add_node(node)
             for rel in dir_graph.relationships:
-                graph.relationships.append(rel)
+                graph.add_relationship(rel)
         
         # Show statistics
         routines = graph.get_nodes_by_type(NodeType.ROUTINE)

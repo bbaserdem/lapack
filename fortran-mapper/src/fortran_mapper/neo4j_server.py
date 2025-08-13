@@ -19,9 +19,11 @@ class Neo4jServer:
         """Initialize Neo4j server manager.
         
         Args:
-            data_dir: Path to Neo4j data directory. Defaults to ./neo4j-data
+            data_dir: Path to Neo4j data directory. 
+                     Defaults to NEO4J_DATA_DIR env var, then ./neo4j-data
         """
-        self.data_dir = Path(data_dir or os.path.join(os.getcwd(), 'neo4j-data'))
+        default_dir = os.environ.get('NEO4J_DATA_DIR', os.path.join(os.getcwd(), 'neo4j-data'))
+        self.data_dir = Path(data_dir or default_dir)
         self.config_file = self.data_dir / 'neo4j.conf'
         self.pid_file = self.data_dir / 'run' / 'neo4j.pid'
         self.log_dir = self.data_dir / 'logs'
@@ -111,6 +113,48 @@ class Neo4jServer:
         
         return False
     
+    def _create_config(self):
+        """Create Neo4j configuration file with authentication disabled."""
+        config_content = """# Neo4j configuration for fortran-mapper (Neo4j 5.x)
+
+# Directory configuration
+server.directories.data=data
+server.directories.logs=logs
+server.directories.lib=lib
+server.directories.run=run
+server.directories.plugins=plugins
+server.directories.import=import
+
+# Default database
+initial.dbms.default_database=neo4j
+
+# Network connector configuration
+server.bolt.enabled=true
+server.bolt.listen_address=:7687
+server.http.enabled=true
+server.http.listen_address=:7474
+server.default_listen_address=127.0.0.1
+
+# Disable authentication for easier access
+dbms.security.auth_enabled=false
+
+# Memory settings (adjust based on your system)
+server.memory.heap.initial_size=512m
+server.memory.heap.max_size=512m
+server.memory.pagecache.size=512m
+
+# Transaction and checkpoint settings
+db.checkpoint.iops.limit=-1
+db.tx_log.rotation.retention_policy=1 days
+
+# Logging (simplified for Neo4j 5.x)
+db.logs.query.enabled=INFO
+"""
+        self.data_dir.mkdir(parents=True, exist_ok=True)
+        with open(self.config_file, 'w') as f:
+            f.write(config_content)
+        logger.info(f"Created Neo4j configuration at {self.config_file}")
+    
     def _run_neo4j_command(self, *args) -> Tuple[int, str, str]:
         """Run neo4j command with arguments.
         
@@ -141,10 +185,14 @@ class Neo4jServer:
             print("Please ensure the Neo4j data directory is properly set up.")
             return False
         
+        # Create or update configuration file
+        self._create_config()
+        
         if self._is_running():
             logger.info("Neo4j is already running for this project")
             print("Neo4j is already running for this project")
             print("Access the browser at: http://localhost:7474")
+            print("Authentication is disabled - no login required")
             return True
         
         print("Starting Neo4j server...")
@@ -176,7 +224,7 @@ class Neo4jServer:
             if status_code == 0:
                 print("Neo4j started successfully!")
                 print("Access the browser at: http://localhost:7474")
-                print("Default credentials - username: neo4j, password: neo4j")
+                print("Authentication is disabled - no login required")
                 return True
         except Exception:
             pass

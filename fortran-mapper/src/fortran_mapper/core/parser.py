@@ -89,12 +89,13 @@ class FortranParser:
             )
             
         except subprocess.CalledProcessError as e:
-            logger.error(f"Failed to parse {file_path}: {e.stderr}")
-            return ParseResult(
-                file_path=str(file_path),
-                routines=[],
-                error=str(e)
-            )
+            logger.warning(f"fortran-src failed to parse {file_path}: {e.stderr}")
+            logger.info(f"Falling back to regex parser for {file_path}")
+            # Fall back to regex parsing
+            result = self._parse_with_regex(file_path)
+            if result.routines:
+                logger.info(f"Regex parser successfully found {len(result.routines)} routines in {file_path}")
+            return result
     
     def _parse_with_regex(self, file_path: Path) -> ParseResult:
         """Fallback regex-based parsing."""
@@ -113,7 +114,7 @@ class FortranParser:
             )
             
         except Exception as e:
-            logger.error(f"Failed to parse {file_path}: {e}")
+            logger.error(f"Regex parser failed for {file_path}: {e}")
             return ParseResult(
                 file_path=str(file_path),
                 routines=[],

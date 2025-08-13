@@ -2,6 +2,18 @@
 
 This document provides a comprehensive testing workflow to verify that the refactoring from `lapack-util` to `fortran-mapper` maintains all existing functionality.
 
+## Important: Class Name Changes
+
+The refactoring includes the following class name changes:
+- `LapackParser` → `FortranMapper` (main parser class)
+- `Neo4jClient` → `Neo4jServer` (Neo4j server management)
+
+**Correct imports:**
+```python
+from fortran_mapper import FortranMapper
+from fortran_mapper.neo4j_server import Neo4jServer
+```
+
 ## Prerequisites
 
 1. Ensure the development environment is set up:
@@ -40,7 +52,10 @@ fortran-mapper export --help
 python -c "import fortran_mapper; print(fortran_mapper.__version__)"
 
 # Test module accessibility
-python -c "from fortran_mapper import LapackParser, Neo4jClient; print('Import successful')"
+python -c "from fortran_mapper import FortranMapper; print('Import successful')"
+
+# Test Neo4j server import
+python -c "from fortran_mapper.neo4j_server import Neo4jServer; print('Neo4j server import successful')"
 ```
 
 **Expected Result**: No import errors, version should display correctly.
@@ -435,6 +450,13 @@ time fortran-mapper export json performance_test.json
 **Solution**: Use directory paths, not individual file paths. The parser uses glob patterns to find `*.f` files within directories.
 - ❌ Wrong: `fortran-mapper parse file1.f file2.f`
 - ✅ Correct: `fortran-mapper parse SRC/ BLAS/SRC/`
+
+### Issue: Python import errors (ModuleNotFoundError or ImportError)
+**Solution**: 
+- Ensure you're using the correct class names: `FortranMapper` (not `LapackParser`) and `Neo4jServer` (not `Neo4jClient`)
+- Verify the development environment is properly activated with `direnv allow` or `nix develop`
+- If the environment was recently updated, reload with `direnv reload`
+- Check that Python path includes the package: `python -c "import sys; print([p for p in sys.path if 'fortran' in p])"`
 
 ### Issue: Import/export failures
 **Solution**: Check file permissions and disk space, verify file format validity.

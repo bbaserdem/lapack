@@ -4,37 +4,12 @@
 # - fortran-mapper/: Generic Fortran code analysis library, with lapack hooks
 # - connectome/: code agnostic connectivity analysis tool, with some lapack and fortran hooks
 
-[build-system]
-requires = ["hatchling", "editables"]
-build-backend = "hatchling.build"
-
-[project]
-name = "lapack-workspace"
-version = "0.1.0"
-description = "LAPACK Analysis Workspace"
-requires-python = ">=3.13"
-dependencies = []
-
-[tool.hatch.build]
-packages = []
-
-[tool.hatch.build.targets.wheel]
-packages = []
-
 [tool.uv.workspace]
 members = [
     "fortran-mapper",
-    "connectome"
+    "fortran-mapper/hooks/lapack"
 ]
 
 # Development tools configuration for the entire workspace
-[tool.ruff]
-target-version = "py313"
-line-length = 100
-select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM", "RUF"]
-
-[tool.mypy]
-python_version = "3.13"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
+[tool.uv]
+package = false
