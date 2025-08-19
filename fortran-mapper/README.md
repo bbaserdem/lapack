@@ -9,6 +9,7 @@ A flexible, extensible Fortran code mapper with hook-based customization for ana
 - **Multiple Export Formats**: JSON, DOT, GraphML, Neo4j
 - **Graph Analysis**: Build and analyze call graphs, dependency trees
 - **Domain Adapters**: Pre-built adapters for LAPACK/BLAS and other domains
+- **Interactive Visualization**: Web-based force-directed graph visualization with D3.js
 
 ## Installation
 
@@ -93,6 +94,50 @@ graph = mapper.parse_directory("path/to/lapack/src")
 
 # Export with LAPACK-specific nodes
 mapper.export_to_neo4j(graph, driver)
+```
+
+## Command Line Interface
+
+Fortran Mapper provides a comprehensive CLI for parsing, analyzing, and visualizing Fortran code:
+
+```bash
+# Parse Fortran source and export to Neo4j
+fortran-mapper parse /path/to/src --neo4j-uri bolt://localhost:7687
+
+# Start interactive visualization server
+fortran-mapper visualize serve
+
+# Export static visualization
+fortran-mapper visualize export output.html --mode overview --limit 200
+
+# Query Neo4j database
+fortran-mapper query "MATCH (r:Routine) RETURN r.name LIMIT 10"
+
+# Export data in various formats
+fortran-mapper export json data.json
+fortran-mapper export graphml data.graphml
+fortran-mapper export cypher statements.cypher
+```
+
+### Visualization Commands
+
+The visualization module provides interactive, web-based graph exploration:
+
+```bash
+# Start visualization server (opens browser automatically)
+fortran-mapper visualize serve
+
+# Custom host and port
+fortran-mapper visualize serve --host 0.0.0.0 --port 8888
+
+# Export static HTML visualization
+fortran-mapper visualize export graph.html
+
+# Export centered on specific node
+fortran-mapper visualize export graph.html --mode centered --center-node DGEMM --depth 3
+
+# Export call hierarchy
+fortran-mapper visualize export graph.html --mode hierarchy --routine DGETRF --depth 4
 ```
 
 ## Hook System
