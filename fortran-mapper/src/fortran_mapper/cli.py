@@ -165,6 +165,35 @@ Examples:
     export_parser.add_argument('--neo4j-user', help='Neo4j username')
     export_parser.add_argument('--neo4j-password', help='Neo4j password')
     
+    # Visualize command
+    visualize_parser = subparsers.add_parser('visualize', help='Interactive graph visualization')
+    visualize_subparsers = visualize_parser.add_subparsers(dest='visualize_command', help='Visualization commands')
+    
+    # Visualize serve subcommand
+    serve_parser = visualize_subparsers.add_parser('serve', help='Start interactive visualization server')
+    serve_parser.add_argument('--host', default='127.0.0.1', help='Host to bind to (default: 127.0.0.1)')
+    serve_parser.add_argument('--port', type=int, default=8080, help='Port to listen on (default: 8080)')
+    serve_parser.add_argument('--no-browser', action='store_true', help='Do not open browser automatically')
+    serve_parser.add_argument('--neo4j-uri', default='bolt://localhost:7687',
+                              help='Neo4j URI (default: bolt://localhost:7687)')
+    serve_parser.add_argument('--neo4j-user', help='Neo4j username')
+    serve_parser.add_argument('--neo4j-password', help='Neo4j password')
+    
+    # Visualize export subcommand
+    export_viz_parser = visualize_subparsers.add_parser('export', help='Export static visualization')
+    export_viz_parser.add_argument('output', type=Path, help='Output HTML file path')
+    export_viz_parser.add_argument('--mode', choices=['overview', 'centered', 'hierarchy'], 
+                                   default='overview', help='Visualization mode')
+    export_viz_parser.add_argument('--limit', type=int, default=100, 
+                                   help='Maximum number of nodes (overview mode)')
+    export_viz_parser.add_argument('--center-node', help='Center node name or ID (centered mode)')
+    export_viz_parser.add_argument('--routine', help='Routine name (hierarchy mode)')
+    export_viz_parser.add_argument('--depth', type=int, default=2, help='Graph depth (centered/hierarchy modes)')
+    export_viz_parser.add_argument('--neo4j-uri', default='bolt://localhost:7687',
+                                   help='Neo4j URI (default: bolt://localhost:7687)')
+    export_viz_parser.add_argument('--neo4j-user', help='Neo4j username')
+    export_viz_parser.add_argument('--neo4j-password', help='Neo4j password')
+    
     # Import command
     import_parser = subparsers.add_parser('import', help='Import data to Neo4j')
     import_parser.add_argument('file', type=Path, help='File to import')
@@ -997,6 +1026,73 @@ def cmd_list_hooks(args):
     return 0
 
 
+def cmd_visualize(args):
+    """Handle visualize command."""
+    from neo4j import GraphDatabase
+    from .visualization import VisualizationServer, GraphDataGenerator
+    
+    # Create Neo4j driver
+    auth = None
+    if args.neo4j_user and args.neo4j_password:
+        auth = (args.neo4j_user, args.neo4j_password)
+    
+    driver = GraphDatabase.driver(args.neo4j_uri, auth=auth)
+    
+    try:
+        if args.visualize_command == 'serve':
+            # Start visualization server
+            server = VisualizationServer(driver, host=args.host, port=args.port)
+            print(f"🌐 Starting visualization server at http://{args.host}:{args.port}")
+            server.start(auto_open=not args.no_browser)
+            
+        elif args.visualize_command == 'export':
+            # Export static visualization
+            generator = GraphDataGenerator(driver)
+            server = VisualizationServer(driver)
+            
+            # Generate graph data based on mode
+            if args.mode == 'overview':
+                graph_data = generator.generate_overview_graph(node_limit=args.limit)
+            elif args.mode == 'centered':
+                if args.center_node:
+                    # Try to parse as ID first, then as name
+                    try:
+                        center_id = int(args.center_node)
+                        graph_data = generator.generate_centered_graph(
+                            center_node_id=center_id,
+                            depth=args.depth
+                        )
+                    except ValueError:
+                        graph_data = generator.generate_centered_graph(
+                            center_node_name=args.center_node,
+                            depth=args.depth
+                        )
+                else:
+                    graph_data = generator.generate_centered_graph(depth=args.depth)
+            elif args.mode == 'hierarchy':
+                if args.routine:
+                    graph_data = generator.generate_call_hierarchy(
+                        routine_name=args.routine,
+                        max_depth=args.depth
+                    )
+                else:
+                    print("❌ Hierarchy mode requires --routine parameter")
+                    return 1
+            
+            # Export to file
+            server.export_static_visualization(args.output, graph_data)
+            print(f"📁 Exported static visualization to: {args.output}")
+            
+        else:
+            print("❌ Please specify a subcommand: serve or export")
+            return 1
+            
+    finally:
+        driver.close()
+    
+    return 0
+
+
 def main():
     """Main entry point."""
     parser = create_parser()
@@ -1027,6 +1123,8 @@ def main():
         return cmd_import(args)
     elif args.command == 'explore':
         return cmd_explore(args)
+    elif args.command == 'visualize':
+        return cmd_visualize(args)
     else:
         print(f"❌ Unknown command: {args.command}")
         return 1
